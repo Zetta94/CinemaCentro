@@ -16,14 +16,13 @@ public class CinemaCentro extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CinemaCentro.class.getName());
     private Connection connection;
-    /**
-     * Creates new form CinemaCentro
-     */
+
     public CinemaCentro() {
         initComponents();
-        Conexion con = new Conexion("jdbc:mariadb://localhost/cinemacentro_g13", "root", "");
-        connection = con.establishConnection();
+        Conexion con = new Conexion("jdbc:mariadb://localhost:3306/cinemacentro_g13", "root", "");
+        connection = con.establishConnection(); 
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
