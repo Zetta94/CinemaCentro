@@ -1,0 +1,61 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package persistencia;
+
+/**
+ *
+ * @author PC
+ */
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author Mauricio
+ */
+
+public class Conexion {
+
+    private String url;
+    private String user;
+    private String password;
+
+    private Connection connection = null;
+
+    public Conexion(String url, String user, String password) {
+        this.url = url;
+        this.user = user;
+        this.password = password;
+    }
+
+    public Connection establishConnection() {
+        try {
+            if (connection == null || connection.isClosed() || !connection.isValid(2)) {
+                Class.forName("org.mariadb.jdbc.Driver");
+                connection = DriverManager.getConnection(url, user, password);
+                System.out.println("Conetado a la BD correctamente.");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Error al conectarse a la base de datos: " + e.getMessage());
+            int opcion = JOptionPane.showOptionDialog(
+                    null,
+                    "No se pudo conectar a la base de datos.\n\n" + e.getMessage(),
+                    "Error",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.ERROR_MESSAGE,
+                    null,
+                    new String[]{"Reintentar", "Salir"},
+                    "Reintentar"
+            );
+            if (opcion == JOptionPane.NO_OPTION) {
+                System.exit(0);
+            }
+            e.printStackTrace();
+        }
+        return connection;
+    }
+}
