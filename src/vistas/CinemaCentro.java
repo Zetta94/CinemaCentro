@@ -9,6 +9,7 @@ import persistencia.Conexion;
 import java.sql.Connection;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.border.Border;
@@ -66,7 +67,7 @@ public class CinemaCentro extends javax.swing.JFrame {
         pnlHeader.setLayout(new java.awt.BorderLayout());
 
         pnlTitulo.setForeground(new java.awt.Color(30, 41, 59));
-        pnlTitulo.setLayout(new java.awt.GridLayout());
+        pnlTitulo.setLayout(new java.awt.GridLayout(1, 0));
 
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/titulo2.png"))); // NOI18N
@@ -135,7 +136,7 @@ public class CinemaCentro extends javax.swing.JFrame {
                 .addComponent(jButton3)
                 .addGap(90, 90, 90)
                 .addComponent(jButton4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addGap(49, 49, 49))
         );
@@ -182,7 +183,9 @@ public class CinemaCentro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+Login login = new Login(this);
+abrirYCentrar(login);
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -200,6 +203,15 @@ public class CinemaCentro extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+      private void abrirYCentrar(JInternalFrame frame) {
+        escritorio.add(frame);
+        frame.pack(); 
+        frame.setVisible(true);
+
+        int x = (escritorio.getWidth() - frame.getWidth()) / 2;
+        int y = (escritorio.getHeight() - frame.getHeight()) / 2;
+        frame.setLocation(x, y);
+        }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
