@@ -11,28 +11,11 @@ public class Login extends javax.swing.JInternalFrame {
 
     public CinemaCentro cinemacentro;
 
-    public Login(CinemaCentro cinemacentro) {
-        this.cinemacentro = cinemacentro;
+    public Login() {
 
-      
         initComponents();
-
-     
-        getContentPane().setBackground(new Color(30, 41, 59));
-
-       
-        ImageIcon fondoIcono = new ImageIcon(getClass().getResource("/images/gradient.png"));
-        JLabel fondo = new JLabel(fondoIcono);
-        fondo.setBounds(0, 0, fondoIcono.getIconWidth(), fondoIcono.getIconHeight());
-        fondo.setBorder(BorderFactory.createLineBorder(new Color(191, 148, 54), 1));
-        getLayeredPane().add(fondo, JLayeredPane.FRAME_CONTENT_LAYER);
-
-       
-       Ocultar.setVisible(false);
+        Ocultar.setVisible(false);
         txtContra.setEchoChar('*');
-
-       
-     
     }
 
     /**
@@ -139,10 +122,11 @@ public class Login extends javax.swing.JInternalFrame {
                     .addComponent(lblUsuario))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblContraseña)
-                        .addComponent(imgVer, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(imgVer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblContraseña)))
                     .addComponent(Ocultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(btnIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,17 +143,17 @@ public class Login extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_UsuarioActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-this.dispose();        // TODO add your handling code here:
+        this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void imgVerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgVerMouseClicked
-       txtContra.setEchoChar((char) 0); 
+        txtContra.setEchoChar((char) 0);
         imgVer.setVisible(false);
         Ocultar.setVisible(true);
     }//GEN-LAST:event_imgVerMouseClicked
 
     private void OcultarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OcultarMouseClicked
-txtContra.setEchoChar('*'); 
+        txtContra.setEchoChar('*');
         imgVer.setVisible(true);
         Ocultar.setVisible(false);        // TODO add your handling code here:
     }//GEN-LAST:event_OcultarMouseClicked

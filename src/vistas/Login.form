@@ -71,10 +71,12 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtContra" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblContraseña" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="imgVer" alignment="1" min="-2" pref="60" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="txtContra" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblContraseña" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <Component id="Ocultar" max="32767" attributes="0"/>
               </Group>

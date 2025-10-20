@@ -27,15 +27,15 @@ public class CinemaCentro extends javax.swing.JFrame {
         initComponents();
         Conexion con = new Conexion("jdbc:mariadb://localhost:3306/cinemacentro_g13", "root", "");
         connection = con.establishConnection();
-        ImageIcon fondoIcono = new ImageIcon(getClass().getResource("/images/gradient.png"));
+        ImageIcon fondoIcono = new ImageIcon(getClass().getResource("/images/background.png"));
         JLabel fondo = new JLabel(fondoIcono);
         fondo.setBounds(0, 0, fondoIcono.getIconWidth(), fondoIcono.getIconHeight());
-        fondo.setBorder(BorderFactory.createLineBorder(new Color(191, 148, 54), 1));
+        fondo.setBorder(BorderFactory.createLineBorder(new Color(217, 192, 217), 1));
         escritorio.add(fondo, JLayeredPane.FRAME_CONTENT_LAYER);
-        getContentPane().setBackground(new Color(30, 41, 59)); 
-        pnlHeader.setBackground(new Color(30, 41, 59));
-        pnlMenu.setBackground(new Color(30, 41, 59));
-        pnlTitulo.setBackground(new Color(30, 41, 59));
+        getContentPane().setBackground(new Color(1, 0, 15));
+        pnlHeader.setBackground(new Color(1, 0, 15));
+        pnlMenu.setBackground(new Color(1, 0, 15));
+        pnlTitulo.setBackground(new Color(1, 0, 15));
 
     }
 
@@ -52,15 +52,15 @@ public class CinemaCentro extends javax.swing.JFrame {
         pnlTitulo = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
         pnlMenu = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnOnline = new javax.swing.JButton();
+        btnEntradas = new javax.swing.JButton();
+        btnAdministracion = new javax.swing.JButton();
+        btnEntradas1 = new javax.swing.JButton();
         escritorio = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(30, 41, 59));
-        setMinimumSize(new java.awt.Dimension(1024, 600));
+        setMinimumSize(new java.awt.Dimension(1280, 720));
 
         pnlHeader.setBackground(new java.awt.Color(30, 41, 59));
         pnlHeader.setForeground(new java.awt.Color(30, 41, 59));
@@ -70,7 +70,7 @@ public class CinemaCentro extends javax.swing.JFrame {
         pnlTitulo.setLayout(new java.awt.GridLayout(1, 0));
 
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/titulo2.png"))); // NOI18N
+        lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/titulo3 (1).png"))); // NOI18N
         pnlTitulo.add(lblTitulo);
 
         pnlHeader.add(pnlTitulo, java.awt.BorderLayout.CENTER);
@@ -78,39 +78,59 @@ public class CinemaCentro extends javax.swing.JFrame {
         pnlMenu.setBackground(new java.awt.Color(30, 41, 59));
         pnlMenu.setForeground(new java.awt.Color(30, 41, 59));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ticket (1).png"))); // NOI18N
-        jButton1.setText("Comprar Entradas");
-        jButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnOnline.setBackground(new java.awt.Color(0, 0, 0));
+        btnOnline.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        btnOnline.setForeground(new java.awt.Color(0, 48, 177));
+        btnOnline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/online.png"))); // NOI18N
+        btnOnline.setText("Entradas Online");
+        btnOnline.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 255))));
+        btnOnline.setContentAreaFilled(false);
+        btnOnline.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnOnline.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnOnlineActionPerformed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/settings (1).png"))); // NOI18N
-        jButton2.setText("Administracion");
-        jButton2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnEntradas.setBackground(new java.awt.Color(0, 0, 0));
+        btnEntradas.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        btnEntradas.setForeground(new java.awt.Color(0, 48, 177));
+        btnEntradas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clapperboard.png"))); // NOI18N
+        btnEntradas.setText("Cartelera");
+        btnEntradas.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 255))));
+        btnEntradas.setContentAreaFilled(false);
+        btnEntradas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnEntradas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnEntradasActionPerformed(evt);
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clapperboard (1).png"))); // NOI18N
-        jButton3.setText("Cartelera");
-        jButton3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnAdministracion.setBackground(new java.awt.Color(0, 0, 0));
+        btnAdministracion.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        btnAdministracion.setForeground(new java.awt.Color(0, 48, 177));
+        btnAdministracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/settings.png"))); // NOI18N
+        btnAdministracion.setText("Administracion");
+        btnAdministracion.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 255))));
+        btnAdministracion.setContentAreaFilled(false);
+        btnAdministracion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnAdministracion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnAdministracionActionPerformed(evt);
             }
         });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/train-ticket (1).png"))); // NOI18N
-        jButton4.setText("Entradas Online");
-        jButton4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnEntradas1.setBackground(new java.awt.Color(0, 0, 0));
+        btnEntradas1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        btnEntradas1.setForeground(new java.awt.Color(0, 48, 177));
+        btnEntradas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ticket.png"))); // NOI18N
+        btnEntradas1.setText("Entradas");
+        btnEntradas1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 255))));
+        btnEntradas1.setContentAreaFilled(false);
+        btnEntradas1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnEntradas1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnEntradas1ActionPerformed(evt);
             }
         });
 
@@ -121,24 +141,24 @@ public class CinemaCentro extends javax.swing.JFrame {
             .addGroup(pnlMenuLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnOnline, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                    .addComponent(btnEntradas, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                    .addComponent(btnAdministracion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                    .addComponent(btnEntradas1, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))
                 .addContainerGap(106, Short.MAX_VALUE))
         );
         pnlMenuLayout.setVerticalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMenuLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(jButton1)
-                .addGap(77, 77, 77)
-                .addComponent(jButton3)
-                .addGap(90, 90, 90)
-                .addComponent(jButton4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(49, 49, 49))
+                .addGap(41, 41, 41)
+                .addComponent(btnEntradas1)
+                .addGap(79, 79, 79)
+                .addComponent(btnEntradas)
+                .addGap(83, 83, 83)
+                .addComponent(btnOnline)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAdministracion)
+                .addGap(46, 46, 46))
         );
 
         escritorio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));
@@ -147,7 +167,7 @@ public class CinemaCentro extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1044, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,7 +181,7 @@ public class CinemaCentro extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 1391, Short.MAX_VALUE)
+                    .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -182,36 +202,38 @@ public class CinemaCentro extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-Login login = new Login(this);
-abrirYCentrar(login);
-
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnOnlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOnlineActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnOnlineActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnEntradasActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        Login login = new Login();
+        abrirYCentrar(login);
+        
+    }//GEN-LAST:event_btnAdministracionActionPerformed
+
+    private void btnEntradas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradas1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEntradas1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-      private void abrirYCentrar(JInternalFrame frame) {
+    private void abrirYCentrar(JInternalFrame frame) {
         escritorio.add(frame);
-        frame.pack(); 
+        frame.pack();
         frame.setVisible(true);
 
         int x = (escritorio.getWidth() - frame.getWidth()) / 2;
         int y = (escritorio.getHeight() - frame.getHeight()) / 2;
         frame.setLocation(x, y);
-        }
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -235,11 +257,11 @@ abrirYCentrar(login);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdministracion;
+    private javax.swing.JButton btnEntradas;
+    private javax.swing.JButton btnEntradas1;
+    private javax.swing.JButton btnOnline;
     private javax.swing.JDesktopPane escritorio;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel pnlHeader;
     private javax.swing.JPanel pnlMenu;
