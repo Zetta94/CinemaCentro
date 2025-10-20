@@ -9,6 +9,7 @@ import persistencia.Conexion;
 import java.sql.Connection;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -23,13 +24,14 @@ public class CinemaCentro extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CinemaCentro.class.getName());
     private Connection connection;
-    
+
     private PeliculaData peliculaData;
+
     public CinemaCentro() {
         initComponents();
         Conexion con = new Conexion("jdbc:mariadb://localhost:3306/cinemacentro_g13", "root", "");
-        
-        peliculaData =new PeliculaData(con);
+
+        peliculaData = new PeliculaData(con);
         ImageIcon fondoIcono = new ImageIcon(getClass().getResource("/images/background.png"));
         JLabel fondo = new JLabel(fondoIcono);
         fondo.setBounds(0, 0, fondoIcono.getIconWidth(), fondoIcono.getIconHeight());
@@ -216,12 +218,12 @@ public class CinemaCentro extends javax.swing.JFrame {
         // TODO add your handling code here:
         Login login = new Login(peliculaData);
         abrirYCentrar(login);
-        
-        
+
+
     }//GEN-LAST:event_btnAdministracionActionPerformed
 
     private void btnEntradas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradas1ActionPerformed
-        
+
     }//GEN-LAST:event_btnEntradas1ActionPerformed
 
     /**
@@ -235,6 +237,10 @@ public class CinemaCentro extends javax.swing.JFrame {
         int x = (escritorio.getWidth() - frame.getWidth()) / 2;
         int y = (escritorio.getHeight() - frame.getHeight()) / 2;
         frame.setLocation(x, y);
+    }
+
+    public JDesktopPane getEscritorio() {
+        return escritorio;
     }
 
     public static void main(String args[]) {

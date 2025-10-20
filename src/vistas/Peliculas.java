@@ -5,8 +5,11 @@
 package vistas;
 
 import entidades.Pelicula;
+import java.awt.Window;
+import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import org.mariadb.jdbc.Connection;
 import persistencia.Conexion;
@@ -21,36 +24,32 @@ public class Peliculas extends javax.swing.JPanel {
     /**
      * Creates new form Peliculas
      */
-     private PeliculaData peliculaData;
+    private PeliculaData peliculaData;
 
     public Peliculas(PeliculaData peliculaData) {
-        this.peliculaData=peliculaData;
+        this.peliculaData = peliculaData;
         initComponents();
         System.out.println("peliculas");
-        
-        
-        
+
         cargarTabla();
     }
-    
-    
-    private void cargarTabla() {
-    DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-    modelo.setRowCount(0);
-    for (Pelicula p : peliculaData.obtenerTodas()) {
-        modelo.addRow(new Object[]{
-            p.getTitulo(),
-            p.getDirector(),
-            p.getActores(),
-            p.getOrigen(),
-            p.getGenero(),
-            p.getEstreno(),
-            p.isEnCartelera()
-        });
-    }
-}
 
-    
+    private void cargarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0);
+        for (Pelicula p : peliculaData.obtenerTodas()) {
+            modelo.addRow(new Object[]{
+                p.getTitulo(),
+                p.getDirector(),
+                p.getActores(),
+                p.getOrigen(),
+                p.getGenero(),
+                p.getEstreno(),
+                p.isEnCartelera()
+            });
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -59,7 +58,6 @@ public class Peliculas extends javax.swing.JPanel {
         btnEliminar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        txtBuscar = new javax.swing.JTextField();
         cmbFiltro = new javax.swing.JComboBox<>();
         btnModificar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
@@ -91,12 +89,6 @@ public class Peliculas extends javax.swing.JPanel {
             }
         ));
         jScrollPane2.setViewportView(jTable1);
-
-        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBuscarActionPerformed(evt);
-            }
-        });
 
         cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sala", "Película", "Ticket", "Comprador" }));
 
@@ -138,9 +130,7 @@ public class Peliculas extends javax.swing.JPanel {
                         .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41)
+                        .addGap(180, 180, 180)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41)
@@ -157,7 +147,6 @@ public class Peliculas extends javax.swing.JPanel {
                 .addContainerGap(51, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -176,28 +165,33 @@ public class Peliculas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        AgregarPelicula agregarpeli=new AgregarPelicula(peliculaData);
-        agregarpeli.setVisible(true);
-        
+        AgregarPelicula agregarPeli = new AgregarPelicula(peliculaData);
+        abrirYCentrar(agregarPeli);
+
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    /*private void abrirYCentrar(JInternalFrame frame) {
-        getDesktopPane().add(frame);
-        frame.pack();
-        frame.setVisible(true);
+    private void abrirYCentrar(JInternalFrame frame) {
+        java.awt.Window window = SwingUtilities.getWindowAncestor(this);
+        if (window instanceof CinemaCentro) {
+            CinemaCentro main = (CinemaCentro) window;
+            JDesktopPane escritorio = main.getEscritorio();
+            escritorio.add(frame);
+            frame.pack();
+            frame.setVisible(true);
+            int x = (escritorio.getWidth() - frame.getWidth()) / 2;
+            int y = (escritorio.getHeight() - frame.getHeight()) / 2;
+            frame.setLocation(x, y);
+        }
+    }
 
-        int x = (getDesktopPane().getWidth() - frame.getWidth()) / 2;
-        int y = (getDesktopPane().getHeight() - frame.getHeight()) / 2;
-        frame.setLocation(x, y);
-    }*/
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        
-        
+
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-    
-        
+
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -215,6 +209,5 @@ public class Peliculas extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

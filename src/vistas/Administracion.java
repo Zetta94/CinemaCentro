@@ -16,9 +16,9 @@ public class Administracion extends javax.swing.JInternalFrame {
      * Creates new form Administracion
      */
     private PeliculaData peliculaData;
-    
+
     public Administracion(PeliculaData peliculaData) {
-        this.peliculaData=peliculaData;
+        this.peliculaData = peliculaData;
         initComponents();
 
         tabAdmin.addTab("Peliculas", new Peliculas(peliculaData));
