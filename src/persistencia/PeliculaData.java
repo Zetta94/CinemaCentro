@@ -147,7 +147,7 @@ public class PeliculaData {
     }
 
     public List<Pelicula> obtenerTodas() {
-        String sql = "SELECT * FROM pelicuas";
+        String sql = "SELECT * FROM peliculas";
         List<Pelicula> peliculas = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {
@@ -178,7 +178,7 @@ public class PeliculaData {
     }
 
     public Pelicula obtenerPorId(int id) {
-        String sql = "SELECT * FROM pelicuas";
+        String sql = "SELECT * FROM peliculas";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             Pelicula pelicula = new Pelicula();
             try (ResultSet rs = ps.executeQuery()) {

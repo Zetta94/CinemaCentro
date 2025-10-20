@@ -4,6 +4,8 @@
  */
 package vistas;
 
+import persistencia.PeliculaData;
+
 /**
  *
  * @author Morbo
@@ -13,10 +15,13 @@ public class Administracion extends javax.swing.JInternalFrame {
     /**
      * Creates new form Administracion
      */
-    public Administracion() {
+    private PeliculaData peliculaData;
+    
+    public Administracion(PeliculaData peliculaData) {
+        this.peliculaData=peliculaData;
         initComponents();
 
-        tabAdmin.addTab("Peliculas", new Peliculas());
+        tabAdmin.addTab("Peliculas", new Peliculas(peliculaData));
     }
 
     /**

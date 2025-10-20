@@ -8,13 +8,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import persistencia.PeliculaData;
 
 public class Login extends javax.swing.JInternalFrame {
 
     public CinemaCentro cinemacentro;
-
-    public Login() {
-
+    private PeliculaData peliculaData;
+    public Login(PeliculaData peliculaData) {
+       this.peliculaData=peliculaData;
         initComponents();
         lblOcultar.setVisible(false);
         txtContra.setEchoChar('*');
@@ -37,7 +38,7 @@ public class Login extends javax.swing.JInternalFrame {
             }
         });
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -192,8 +193,10 @@ public class Login extends javax.swing.JInternalFrame {
         char[] passwordChars = txtContra.getPassword();
         String password = new String(passwordChars);
         if (txtUsuario.getText().equalsIgnoreCase("admin") && password.equals("admin")) {
-            Administracion admin = new Administracion();
+                   
+            Administracion admin = new Administracion(peliculaData);
             abrirYCentrar(admin);
+            
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(

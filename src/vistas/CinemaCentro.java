@@ -13,6 +13,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.border.Border;
+import persistencia.PeliculaData;
 
 /**
  *
@@ -22,11 +23,13 @@ public class CinemaCentro extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CinemaCentro.class.getName());
     private Connection connection;
-
+    
+    private PeliculaData peliculaData;
     public CinemaCentro() {
         initComponents();
         Conexion con = new Conexion("jdbc:mariadb://localhost:3306/cinemacentro_g13", "root", "");
-        connection = con.establishConnection();
+        
+        peliculaData =new PeliculaData(con);
         ImageIcon fondoIcono = new ImageIcon(getClass().getResource("/images/background.png"));
         JLabel fondo = new JLabel(fondoIcono);
         fondo.setBounds(0, 0, fondoIcono.getIconWidth(), fondoIcono.getIconHeight());
@@ -211,13 +214,14 @@ public class CinemaCentro extends javax.swing.JFrame {
 
     private void btnAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracionActionPerformed
         // TODO add your handling code here:
-        Login login = new Login();
+        Login login = new Login(peliculaData);
         abrirYCentrar(login);
+        
         
     }//GEN-LAST:event_btnAdministracionActionPerformed
 
     private void btnEntradas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradas1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnEntradas1ActionPerformed
 
     /**
