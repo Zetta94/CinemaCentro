@@ -6,6 +6,8 @@ package vistas;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Login extends javax.swing.JInternalFrame {
 
@@ -14,8 +16,26 @@ public class Login extends javax.swing.JInternalFrame {
     public Login() {
 
         initComponents();
-        Ocultar.setVisible(false);
+        lblOcultar.setVisible(false);
         txtContra.setEchoChar('*');
+
+        txtContra.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    btnIniciarActionPerformed(null);
+                }
+            }
+        });
+        
+        txtUsuario.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    btnIniciarActionPerformed(null);
+                }
+            }
+        });
     }
 
     /**
@@ -28,21 +48,21 @@ public class Login extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         lblTitulo = new javax.swing.JLabel();
-        Usuario = new javax.swing.JTextField();
+        txtUsuario = new javax.swing.JTextField();
         lblUsuario = new javax.swing.JLabel();
         lblContraseña = new javax.swing.JLabel();
         btnIniciar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         txtContra = new javax.swing.JPasswordField();
-        imgVer = new javax.swing.JLabel();
-        Ocultar = new javax.swing.JLabel();
+        lblVer = new javax.swing.JLabel();
+        lblOcultar = new javax.swing.JLabel();
 
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/titulo2.png"))); // NOI18N
 
-        Usuario.addActionListener(new java.awt.event.ActionListener() {
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UsuarioActionPerformed(evt);
+                txtUsuarioActionPerformed(evt);
             }
         });
 
@@ -57,6 +77,11 @@ public class Login extends javax.swing.JInternalFrame {
         lblContraseña.setText("Contraseña:");
 
         btnIniciar.setText("Iniciar Sesion");
+        btnIniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarActionPerformed(evt);
+            }
+        });
 
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -65,17 +90,17 @@ public class Login extends javax.swing.JInternalFrame {
             }
         });
 
-        imgVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Ver.png"))); // NOI18N
-        imgVer.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Ver.png"))); // NOI18N
+        lblVer.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                imgVerMouseClicked(evt);
+                lblVerMouseClicked(evt);
             }
         });
 
-        Ocultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Ocultar.png"))); // NOI18N
-        Ocultar.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblOcultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Ocultar.png"))); // NOI18N
+        lblOcultar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                OcultarMouseClicked(evt);
+                lblOcultarMouseClicked(evt);
             }
         });
 
@@ -98,12 +123,12 @@ public class Login extends javax.swing.JInternalFrame {
                             .addComponent(lblTitulo)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                                    .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
                                     .addComponent(txtContra))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Ocultar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblOcultar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(imgVer, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(lblVer, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(33, 33, 33))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -118,16 +143,16 @@ public class Login extends javax.swing.JInternalFrame {
                 .addComponent(lblTitulo)
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblUsuario))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(imgVer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblVer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtContra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblContraseña)))
-                    .addComponent(Ocultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblOcultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(btnIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -138,36 +163,68 @@ public class Login extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void UsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsuarioActionPerformed
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_UsuarioActionPerformed
+    }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void imgVerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imgVerMouseClicked
+    private void lblVerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblVerMouseClicked
         txtContra.setEchoChar((char) 0);
-        imgVer.setVisible(false);
-        Ocultar.setVisible(true);
-    }//GEN-LAST:event_imgVerMouseClicked
+        lblVer.setVisible(false);
+        lblOcultar.setVisible(true);
+    }//GEN-LAST:event_lblVerMouseClicked
 
-    private void OcultarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OcultarMouseClicked
+    private void lblOcultarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblOcultarMouseClicked
         txtContra.setEchoChar('*');
-        imgVer.setVisible(true);
-        Ocultar.setVisible(false);        // TODO add your handling code here:
-    }//GEN-LAST:event_OcultarMouseClicked
+        lblVer.setVisible(true);
+        lblOcultar.setVisible(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_lblOcultarMouseClicked
 
+    private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
+        // TODO add your handling code here:
+        iniciarSesion();
+    }//GEN-LAST:event_btnIniciarActionPerformed
+
+    private void iniciarSesion() {
+        char[] passwordChars = txtContra.getPassword();
+        String password = new String(passwordChars);
+        if (txtUsuario.getText().equalsIgnoreCase("admin") && password.equals("admin")) {
+            Administracion admin = new Administracion();
+            abrirYCentrar(admin);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Usuario o contraseña incorrectos",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+    }
+
+    private void abrirYCentrar(JInternalFrame frame) {
+        getDesktopPane().add(frame);
+        frame.pack();
+        frame.setVisible(true);
+
+        int x = (getDesktopPane().getWidth() - frame.getWidth()) / 2;
+        int y = (getDesktopPane().getHeight() - frame.getHeight()) / 2;
+        frame.setLocation(x, y);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Ocultar;
-    private javax.swing.JTextField Usuario;
     private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JLabel imgVer;
     private javax.swing.JLabel lblContraseña;
+    private javax.swing.JLabel lblOcultar;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblUsuario;
+    private javax.swing.JLabel lblVer;
     private javax.swing.JPasswordField txtContra;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

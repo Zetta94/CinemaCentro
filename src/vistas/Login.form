@@ -37,13 +37,13 @@
                           <Component id="lblTitulo" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="Usuario" pref="246" max="32767" attributes="0"/>
+                                  <Component id="txtUsuario" pref="246" max="32767" attributes="0"/>
                                   <Component id="txtContra" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="Ocultar" min="-2" pref="27" max="-2" attributes="0"/>
+                              <Component id="lblOcultar" min="-2" pref="27" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="imgVer" min="-2" pref="27" max="-2" attributes="0"/>
+                              <Component id="lblVer" min="-2" pref="27" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
@@ -66,19 +66,19 @@
               <Component id="lblTitulo" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="Usuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="imgVer" alignment="1" min="-2" pref="60" max="-2" attributes="0"/>
+                      <Component id="lblVer" alignment="1" min="-2" pref="60" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="txtContra" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblContraseña" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="Ocultar" max="32767" attributes="0"/>
+                  <Component id="lblOcultar" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnIniciar" min="-2" pref="23" max="-2" attributes="0"/>
@@ -98,9 +98,9 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="Usuario">
+    <Component class="javax.swing.JTextField" name="txtUsuario">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="UsuarioActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtUsuarioActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblUsuario">
@@ -135,6 +135,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Iniciar Sesion"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIniciarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnSalir">
       <Properties>
@@ -146,24 +149,24 @@
     </Component>
     <Component class="javax.swing.JPasswordField" name="txtContra">
     </Component>
-    <Component class="javax.swing.JLabel" name="imgVer">
+    <Component class="javax.swing.JLabel" name="lblVer">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/images/Ver.png"/>
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imgVerMouseClicked"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblVerMouseClicked"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="Ocultar">
+    <Component class="javax.swing.JLabel" name="lblOcultar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/images/Ocultar.png"/>
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="OcultarMouseClicked"/>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblOcultarMouseClicked"/>
       </Events>
     </Component>
   </SubComponents>
