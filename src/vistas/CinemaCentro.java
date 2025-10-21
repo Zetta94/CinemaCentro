@@ -33,14 +33,22 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         peliculaData = new PeliculaData(con);
         ImageIcon fondoIcono = new ImageIcon(getClass().getResource("/images/background.png"));
-        JLabel fondo = new JLabel(fondoIcono);
-        fondo.setBounds(0, 0, fondoIcono.getIconWidth(), fondoIcono.getIconHeight());
-        fondo.setBorder(BorderFactory.createLineBorder(new Color(217, 192, 217), 1));
-        escritorio.add(fondo, JLayeredPane.FRAME_CONTENT_LAYER);
-        getContentPane().setBackground(new Color(1, 0, 15));
-        pnlHeader.setBackground(new Color(1, 0, 15));
-        pnlMenu.setBackground(new Color(1, 0, 15));
-        pnlTitulo.setBackground(new Color(1, 0, 15));
+      Color azulNoche = new Color(11, 28, 56);      // Fondo principal
+Color azulAcero = new Color(31, 45, 74);      // Paneles laterales / header
+Color azulOscuro = new Color(7, 10, 20);      // Contenido central
+Color blancoHumo = new Color(242, 242, 242);  // Texto principal
+Color grisCine = new Color(156, 163, 175);    // Texto secundario
+Color rojoCine = new Color(214, 69, 69);      // Acentos o selección
+Color azulTenue = new Color(38, 64, 107);     // Bordes suaves
+
+
+getContentPane().setBackground(azulNoche);
+pnlHeader.setBackground(azulNoche);
+pnlMenu.setBackground(azulNoche);
+pnlTitulo.setBackground(azulNoche);
+
+
+
 
     }
 
@@ -55,18 +63,17 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         pnlHeader = new javax.swing.JPanel();
         pnlTitulo = new javax.swing.JPanel();
-        lblTitulo = new javax.swing.JLabel();
         pnlMenu = new javax.swing.JPanel();
         btnOnline = new javax.swing.JButton();
         btnEntradas = new javax.swing.JButton();
         btnAdministracion = new javax.swing.JButton();
         btnEntradas1 = new javax.swing.JButton();
         escritorio = new javax.swing.JDesktopPane();
+        lblTitulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(30, 41, 59));
+        setBackground(new java.awt.Color(41, 75, 74));
         setMinimumSize(new java.awt.Dimension(1280, 720));
-        setPreferredSize(new java.awt.Dimension(1280, 720));
 
         pnlHeader.setBackground(new java.awt.Color(30, 41, 59));
         pnlHeader.setForeground(new java.awt.Color(30, 41, 59));
@@ -74,24 +81,21 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         pnlTitulo.setForeground(new java.awt.Color(30, 41, 59));
         pnlTitulo.setLayout(new java.awt.GridLayout(1, 0));
-
-        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/titulo3 (1).png"))); // NOI18N
-        pnlTitulo.add(lblTitulo);
-
         pnlHeader.add(pnlTitulo, java.awt.BorderLayout.CENTER);
 
-        pnlMenu.setBackground(new java.awt.Color(30, 41, 59));
-        pnlMenu.setForeground(new java.awt.Color(30, 41, 59));
+        pnlMenu.setBackground(new java.awt.Color(11, 28, 56));
+        pnlMenu.setForeground(new java.awt.Color(11, 28, 56));
 
         btnOnline.setBackground(new java.awt.Color(0, 0, 0));
         btnOnline.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        btnOnline.setForeground(new java.awt.Color(0, 48, 177));
-        btnOnline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/online.png"))); // NOI18N
+        btnOnline.setForeground(new java.awt.Color(204, 204, 204));
+        btnOnline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Online (2).png"))); // NOI18N
         btnOnline.setText("Entradas Online");
-        btnOnline.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 255))));
-        btnOnline.setContentAreaFilled(false);
+        btnOnline.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnOnline.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnOnline.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnOnline.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Online (2).png"))); // NOI18N
+        btnOnline.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Ticket75.png"))); // NOI18N
         btnOnline.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOnlineActionPerformed(evt);
@@ -100,12 +104,14 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         btnEntradas.setBackground(new java.awt.Color(0, 0, 0));
         btnEntradas.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        btnEntradas.setForeground(new java.awt.Color(0, 48, 177));
-        btnEntradas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clapperboard.png"))); // NOI18N
+        btnEntradas.setForeground(new java.awt.Color(204, 204, 204));
+        btnEntradas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Proyecto Creador de logotipos.png"))); // NOI18N
         btnEntradas.setText("Cartelera");
-        btnEntradas.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 255))));
-        btnEntradas.setContentAreaFilled(false);
+        btnEntradas.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnEntradas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEntradas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnEntradas.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cartelera75.png"))); // NOI18N
+        btnEntradas.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Proyecto Creador de logotipos.png"))); // NOI18N
         btnEntradas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEntradasActionPerformed(evt);
@@ -114,12 +120,14 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         btnAdministracion.setBackground(new java.awt.Color(0, 0, 0));
         btnAdministracion.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        btnAdministracion.setForeground(new java.awt.Color(0, 48, 177));
-        btnAdministracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/settings.png"))); // NOI18N
+        btnAdministracion.setForeground(new java.awt.Color(204, 204, 204));
+        btnAdministracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Admin.png"))); // NOI18N
         btnAdministracion.setText("Administracion");
-        btnAdministracion.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 255))));
-        btnAdministracion.setContentAreaFilled(false);
+        btnAdministracion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAdministracion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAdministracion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnAdministracion.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Admin.png"))); // NOI18N
+        btnAdministracion.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Admin75.png"))); // NOI18N
         btnAdministracion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdministracionActionPerformed(evt);
@@ -128,44 +136,24 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         btnEntradas1.setBackground(new java.awt.Color(0, 0, 0));
         btnEntradas1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        btnEntradas1.setForeground(new java.awt.Color(0, 48, 177));
-        btnEntradas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ticket.png"))); // NOI18N
+        btnEntradas1.setForeground(new java.awt.Color(204, 204, 204));
+        btnEntradas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Tickets (2).png"))); // NOI18N
         btnEntradas1.setText("Entradas");
-        btnEntradas1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 255))));
-        btnEntradas1.setContentAreaFilled(false);
+        btnEntradas1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnEntradas1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEntradas1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnEntradas1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Tickets (2).png"))); // NOI18N
+        btnEntradas1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TIcket76.png"))); // NOI18N
         btnEntradas1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEntradas1ActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
-        pnlMenu.setLayout(pnlMenuLayout);
-        pnlMenuLayout.setHorizontalGroup(
-            pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMenuLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnOnline, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                    .addComponent(btnEntradas, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                    .addComponent(btnAdministracion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                    .addComponent(btnEntradas1, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))
-                .addContainerGap(106, Short.MAX_VALUE))
-        );
-        pnlMenuLayout.setVerticalGroup(
-            pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMenuLayout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(btnEntradas1)
-                .addGap(79, 79, 79)
-                .addComponent(btnEntradas)
-                .addGap(83, 83, 83)
-                .addComponent(btnOnline)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAdministracion)
-                .addGap(46, 46, 46))
-        );
+        escritorio.setBackground(new java.awt.Color(11, 28, 56));
+        escritorio.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        escritorio.setForeground(new java.awt.Color(11, 28, 56));
+        escritorio.setToolTipText("");
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
@@ -175,33 +163,75 @@ public class CinemaCentro extends javax.swing.JFrame {
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 598, Short.MAX_VALUE)
+            .addGap(0, 778, Short.MAX_VALUE)
         );
+
+        javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
+        pnlMenu.setLayout(pnlMenuLayout);
+        pnlMenuLayout.setHorizontalGroup(
+            pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMenuLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnOnline, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                    .addComponent(btnEntradas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAdministracion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEntradas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(escritorio)
+                .addContainerGap())
+        );
+        pnlMenuLayout.setVerticalGroup(
+            pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMenuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnEntradas1)
+                .addGap(18, 18, 18)
+                .addComponent(btnEntradas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnOnline)
+                .addGap(18, 18, 18)
+                .addComponent(btnAdministracion)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(escritorio, javax.swing.GroupLayout.Alignment.TRAILING)
+        );
+
+        btnEntradas1.getAccessibleContext().setAccessibleDescription("");
+
+        lblTitulo.setBackground(new java.awt.Color(11, 28, 56));
+        lblTitulo.setForeground(new java.awt.Color(11, 28, 56));
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Proyecto Cambiar tamaño de imagen-1 (3).png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 1268, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(escritorio)))
-                .addContainerGap())
+                        .addGap(46, 46, 46)
+                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 1224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(escritorio)
-                    .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        lblTitulo.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
