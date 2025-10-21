@@ -9,12 +9,13 @@ import java.util.*;
 import javax.swing.JOptionPane;
 
 public class ProyeccionData {
+    
     private Connection con = null;
     private PeliculaData peliculaData;
     private SalaData salaData;
 
     public ProyeccionData(Conexion conexion) {
-        con = conexion.getConexion();
+        this.con = conexion.establishConnection();
         peliculaData = new PeliculaData(conexion);
         salaData = new SalaData(conexion);
     }

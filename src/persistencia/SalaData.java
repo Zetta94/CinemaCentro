@@ -10,10 +10,9 @@ public class SalaData {
     private Connection con = null;
 
     public SalaData(Conexion conexion) {
-        con = conexion.getConexion();
+        this.con = conexion.establishConnection();
     }
 
-   
 
     public void guardarSala(Sala s) {
         String sql = "INSERT INTO sala (nroSala, apta3D, capacidad, estado) VALUES (?, ?, ?, ?)";
