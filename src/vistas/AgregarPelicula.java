@@ -5,6 +5,11 @@
 package vistas;
 
 import entidades.Pelicula;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import javax.swing.JOptionPane;
 import persistencia.PeliculaData;
 
@@ -19,19 +24,33 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
      */
     private PeliculaData peliculaData;
     
+    
     public AgregarPelicula(PeliculaData peliculaData) {
         this.peliculaData= peliculaData;
+        
         initComponents();
         cargarComboGeneros();
+         botones.add(bNo);
+        botones.add(bSi);
     }
     private void cargarComboGeneros() {
-        String[] generos = {"Acción", "Animación", "Aventura", "Ciencia Ficción", 
+        String[] generos = {"seleccione","Acción", "Animación", "Aventura", "Ciencia Ficción", 
             "Comedia", "Documental", "Drama", "Fantasía", 
             "Terror", "Romance", "Suspenso"
         };
         cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(generos));
     }
-
+    
+    private void limpiarCampos(){
+      txtTitulo.setText("");
+      txtDirector.setText("");
+      txtActores.setText("");
+      txtOrigen.setText("");
+      cbxGenero.setSelectedIndex(0);
+      dateEstreno.setDate(null);
+      botones.clearSelection();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,6 +60,7 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        botones = new javax.swing.ButtonGroup();
         txtTitulo = new javax.swing.JTextField();
         btnSalir = new javax.swing.JButton();
         dateEstreno = new com.toedter.calendar.JDateChooser();
@@ -56,6 +76,9 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        bSi = new javax.swing.JRadioButton();
+        bNo = new javax.swing.JRadioButton();
 
         txtTitulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,6 +121,17 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Estreno");
 
+        jLabel8.setText("En Cartelera");
+
+        bSi.setText("si");
+        bSi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSiActionPerformed(evt);
+            }
+        });
+
+        bNo.setText("no");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -119,16 +153,21 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
                                 .addGap(37, 37, 37)
                                 .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(bSi)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(bNo))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE))
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtActores, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtActores, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cbxGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(dateEstreno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
@@ -136,7 +175,7 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
                         .addComponent(btnGurardar)
                         .addGap(18, 18, 18)
                         .addComponent(btnSalir)))
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addContainerGap(113, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,14 +191,14 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(txtDirector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtActores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtActores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5)
-                    .addComponent(txtOrigen))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(cbxGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -167,7 +206,12 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(dateEstreno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(bSi)
+                    .addComponent(bNo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGurardar)
                     .addComponent(btnSalir))
@@ -186,6 +230,7 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnGurardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGurardarActionPerformed
+        
         String titulo= txtTitulo.getText();
         String director= txtDirector.getText();
         String actor= txtActores.getText();
@@ -193,8 +238,8 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
         String genero=(String) cbxGenero.getSelectedItem();
         java.util.Date fechaEstreno = dateEstreno.getDate();
 
-        if (titulo.isEmpty() || director.isEmpty() || actor.isEmpty() ||
-            origen.isEmpty() || genero == null || fechaEstreno == null) {
+        LocalDate fechaLocalEstreno = fechaEstreno.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        if (titulo.isEmpty() || director.isEmpty() || actor.isEmpty() ||origen.isEmpty() || genero == null || fechaEstreno == null) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos");
             return;
         }
@@ -204,6 +249,23 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
         peli.setActores(actor);
         peli.setOrigen(origen);
         peli.setGenero(genero);
+        peli.setEstreno(fechaLocalEstreno);
+        
+        boolean encartelera=bSi.isSelected();
+        peli.setEnCartelera(encartelera);
+        
+        
+        boolean creado=peliculaData.crearPelicula(peli);
+        
+        if(creado){
+            javax.swing.JOptionPane.showMessageDialog(this,
+                        "Pelicula "+peli.getTitulo()+" guardado con éxito.",
+                        "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+         limpiarCampos(); 
+         return;
+        }
+        
+        
 
     }//GEN-LAST:event_btnGurardarActionPerformed
 
@@ -211,8 +273,15 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_cbxGeneroActionPerformed
 
+    private void bSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bSiActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton bNo;
+    private javax.swing.JRadioButton bSi;
+    private javax.swing.ButtonGroup botones;
     private javax.swing.JButton btnGurardar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cbxGenero;
@@ -224,6 +293,7 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField txtActores;
     private javax.swing.JTextField txtDirector;
     private javax.swing.JTextField txtOrigen;
