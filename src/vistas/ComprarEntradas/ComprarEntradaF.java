@@ -26,27 +26,27 @@ public class ComprarEntradaF extends javax.swing.JInternalFrame {
     private int pasoActual = 1;
     private CardLayout layout;
     private EntradasListener listener;
-    
+
     private Comprador comprador;
     private Pelicula pelicula;
     private Proyeccion proyeccion;
     private List<Lugar> asientosSeleccionados;
-    
+
     public ComprarEntradaF() {
         initComponents();
-        
+
         JPanel paso1 = new DatosComprador();
         JPanel paso2 = new SeleccionPelicula();
         JPanel paso3 = new SeleccionAsientos();
         JPanel paso4 = new Confirmar();
-        
+
         pnlPrincipal.add(paso1, "paso1");
         pnlPrincipal.add(paso2, "paso2");
         pnlPrincipal.add(paso3, "paso3");
         pnlPrincipal.add(paso4, "paso4");
-        
+
         btnAnterior.setEnabled(false);
-        
+
         layout = (CardLayout) pnlPrincipal.getLayout();
     }
 
@@ -122,41 +122,49 @@ public class ComprarEntradaF extends javax.swing.JInternalFrame {
         volver();
     }//GEN-LAST:event_btnAnteriorActionPerformed
 
-    
-     private void avanzar() {
-         
-         Component actual = pnlPrincipal.getComponent(pasoActual - 1);
+    private void avanzar() {
 
-        if (actual instanceof EntradasListener<?> listener) {
-            if (!listener.validarDatos()) return;
+        Component actual = pnlPrincipal.getComponent(pasoActual - 1);
 
+        if (actual instanceof EntradasListener) {
+            EntradasListener<?> listener = (EntradasListener<?>) actual;
+            if (!listener.validarDatos()) {
+                return;
+            }
             Object datos = listener.guardarDatos();
-
             switch (pasoActual) {
-                case 1 -> comprador = (Comprador) datos;
-                case 2 -> pelicula = (Pelicula) datos;
-                case 3 -> asientosSeleccionados = (List<Lugar>) datos;
+                case 1:
+                    comprador = (Comprador) datos;
+                    break;
+                case 2:
+                    pelicula = (Pelicula) datos;
+                    break;
+                case 3:
+                    asientosSeleccionados = (List<Lugar>) datos;
+                    break;
+                default:
+                    break;
             }
         }
-         
+
         if (pasoActual < 3) {
             pasoActual++;
-            layout.show(pnlPrincipal,"paso" + pasoActual);
+            layout.show(pnlPrincipal, "paso" + pasoActual);
             btnAnterior.setEnabled(true);
         }
-        
+
         if (pasoActual == 3) {
             btnSiguiente.setText("Confirmar");
         }
     }
-    
+
     private void volver() {
         if (pasoActual > 1) {
             pasoActual--;
             layout.show(pnlPrincipal, "paso" + pasoActual);
             btnSiguiente.setText("Siguiente");
         }
-        
+
         if (pasoActual == 1) {
             btnAnterior.setEnabled(false);
         }
