@@ -33,7 +33,7 @@ public class CinemaCentro extends javax.swing.JFrame {
         ImageIcon fondoIcono = new ImageIcon(getClass().getResource("/images/fnd.png"));
         JLabel fondo = new JLabel(fondoIcono);
         fondo.setBounds(0, 0, fondoIcono.getIconWidth(), fondoIcono.getIconHeight());
-        fondo.setBorder(BorderFactory.createLineBorder(new Color(217, 192, 217), 1));
+        fondo.setBorder(BorderFactory.createLineBorder(new Color(8, 64, 107), 1));
         escritorio.add(fondo, JLayeredPane.FRAME_CONTENT_LAYER);
 
         Color azulNoche = new Color(11, 28, 56);
@@ -47,7 +47,7 @@ public class CinemaCentro extends javax.swing.JFrame {
         getContentPane().setBackground(azulNoche);
         pnlHeader.setBackground(azulNoche);
         pnlMenu.setBackground(azulTenue);
-        pnlTitulo.setBackground(azulNoche);
+        pnlTitulo.setBackground(azulTenue);
 
     }
 
@@ -73,17 +73,19 @@ public class CinemaCentro extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(41, 75, 74));
         setMinimumSize(new java.awt.Dimension(1280, 720));
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
         pnlHeader.setBackground(new java.awt.Color(30, 41, 59));
         pnlHeader.setForeground(new java.awt.Color(30, 41, 59));
         pnlHeader.setLayout(new java.awt.BorderLayout());
 
         pnlTitulo.setForeground(new java.awt.Color(30, 41, 59));
-        pnlTitulo.setLayout(new java.awt.GridLayout(1, 0));
+        pnlTitulo.setLayout(new java.awt.GridLayout());
 
+        lblTitulo.setBackground(new java.awt.Color(8, 64, 107));
+        lblTitulo.setForeground(new java.awt.Color(8, 64, 107));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Proyecto Cambiar tamaño de imagen-1 (3).png"))); // NOI18N
+        lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Titulo.png"))); // NOI18N
+        lblTitulo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pnlTitulo.add(lblTitulo);
 
         pnlHeader.add(pnlTitulo, java.awt.BorderLayout.CENTER);
@@ -94,6 +96,7 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         btnOnline.setBackground(new java.awt.Color(0, 0, 0));
         btnOnline.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        btnOnline.setForeground(new java.awt.Color(204, 204, 204));
         btnOnline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Online (2).png"))); // NOI18N
         btnOnline.setText("Entradas Online");
         btnOnline.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -108,6 +111,7 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         btnEntradas.setBackground(new java.awt.Color(0, 0, 0));
         btnEntradas.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        btnEntradas.setForeground(new java.awt.Color(204, 204, 204));
         btnEntradas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cartelera.png"))); // NOI18N
         btnEntradas.setText("Cartelera");
         btnEntradas.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -122,6 +126,7 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         btnAdministracion.setBackground(new java.awt.Color(0, 0, 0));
         btnAdministracion.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        btnAdministracion.setForeground(new java.awt.Color(204, 204, 204));
         btnAdministracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Admin.png"))); // NOI18N
         btnAdministracion.setText("Administracion");
         btnAdministracion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -136,6 +141,7 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         btnEntradas1.setBackground(new java.awt.Color(0, 0, 0));
         btnEntradas1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        btnEntradas1.setForeground(new java.awt.Color(204, 204, 204));
         btnEntradas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Tickets (2).png"))); // NOI18N
         btnEntradas1.setText("Entradas");
         btnEntradas1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -171,11 +177,14 @@ public class CinemaCentro extends javax.swing.JFrame {
                 .addComponent(btnEntradas)
                 .addGap(83, 83, 83)
                 .addComponent(btnOnline)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(btnAdministracion)
                 .addGap(46, 46, 46))
         );
 
+        escritorio.setBackground(new java.awt.Color(8, 64, 107));
+        escritorio.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        escritorio.setForeground(new java.awt.Color(8, 64, 107));
         escritorio.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         escritorio.setDebugGraphicsOptions(javax.swing.DebugGraphics.LOG_OPTION);
 
@@ -183,7 +192,7 @@ public class CinemaCentro extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 497, Short.MAX_VALUE)
+            .addGap(0, 554, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,7 +206,7 @@ public class CinemaCentro extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                    .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 849, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
