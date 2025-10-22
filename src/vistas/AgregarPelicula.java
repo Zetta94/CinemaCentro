@@ -27,7 +27,7 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
     private PeliculaData peliculaData = Context.getPeliculaData();
     private PeliculaListener listener;
 
-    public void setListener(PeliculaListener listener) {
+    public void setPeliculasListener(PeliculaListener listener) {
         this.listener = listener;
     }
 

@@ -172,7 +172,7 @@ public class Peliculas extends javax.swing.JPanel {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         AgregarPelicula agregarPeli = new AgregarPelicula();
-        agregarPeli.setListener(()->cargarTabla());
+        agregarPeli.setPeliculasListener(()->cargarTabla());
         abrirYCentrar(agregarPeli);
 
     }//GEN-LAST:event_btnAgregarActionPerformed
