@@ -49,7 +49,7 @@ public class ProyeccionData {
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Pelicula peli = peliculaData.buscarPelicula(rs.getInt("idPelicula"));
+                Pelicula peli = peliculaData.obtenerPorId(rs.getInt("idPelicula"));
                 Sala sala = salaData.buscarSala(rs.getInt("idSala"));
 
                 Proyeccion p = new Proyeccion(

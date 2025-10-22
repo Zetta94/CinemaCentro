@@ -178,8 +178,9 @@ public class PeliculaData {
     }
 
     public Pelicula obtenerPorId(int id) {
-        String sql = "SELECT * FROM peliculas";
+        String sql = "SELECT * FROM peliculas WHERE idPelicula = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
             Pelicula pelicula = new Pelicula();
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -205,28 +206,34 @@ public class PeliculaData {
             return null;
         }
     }
-    
-    public Pelicula buscarPelicula(int idPelicula) {
-        String sql = "SELECT * FROM peliculas WHERE idPelicula = ?";
+
+    public List<Pelicula> obtenerPeliculasEnCartelera() {
+        String sql = "SELECT * FROM peliculas WHERE enCartelera = 1";
+        List<Pelicula> peliculas = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, idPelicula);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                Pelicula p = new Pelicula();
-                p.setIdPelicula(rs.getInt("idPelicula"));
-                p.setTitulo(rs.getString("titulo"));
-                p.setDirector(rs.getString("director"));
-                p.setActores(rs.getString("actores"));
-                p.setOrigen(rs.getString("origen"));
-                p.setGenero(rs.getString("genero"));
-                p.setEstreno(rs.getDate("estreno").toLocalDate());
-                p.setEnCartelera(rs.getBoolean("enCartelera"));
-                return p;
-            } else {
-                return null;
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Pelicula pelicula = new Pelicula();
+                    pelicula.setTitulo(rs.getString("titulo"));
+                    pelicula.setDirector(rs.getString("director"));
+                    pelicula.setActores(rs.getString("actores"));
+                    pelicula.setOrigen(rs.getString("origen"));
+                    pelicula.setGenero(rs.getString("genero"));
+                    pelicula.setEstreno(rs.getDate("estreno").toLocalDate());
+                    pelicula.setEnCartelera(rs.getBoolean("enCartelera"));
+                    peliculas.add(pelicula);
+                }
             }
+
+            return peliculas;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al buscar película por ID: " + ex.getMessage());
+            JOptionPane.showMessageDialog(
+                    null,
+                    "No se pudo obtener las películas",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            ex.printStackTrace();
             return null;
         }
     }
