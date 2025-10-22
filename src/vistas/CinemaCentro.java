@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.border.Border;
 import persistencia.Context;
+import vistas.ComprarEntradas.ComprarEntradaF;
 
 /**
  *
@@ -25,23 +26,23 @@ public class CinemaCentro extends javax.swing.JFrame {
 
     public CinemaCentro() {
         initComponents();
-        
-      
+        escritorio.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+
         Conexion con = new Conexion("jdbc:mariadb://localhost:3306/cinemacentro_g13", "root", "");
         Context.inicializar(con);
-          ImageIcon fondoIcono = new ImageIcon(getClass().getResource("/images/fnd.png"));
+        ImageIcon fondoIcono = new ImageIcon(getClass().getResource("/images/fnd.png"));
         JLabel fondo = new JLabel(fondoIcono);
         fondo.setBounds(0, 0, fondoIcono.getIconWidth(), fondoIcono.getIconHeight());
         fondo.setBorder(BorderFactory.createLineBorder(new Color(217, 192, 217), 1));
         escritorio.add(fondo, JLayeredPane.FRAME_CONTENT_LAYER);
-       
-        Color azulNoche = new Color(11, 28, 56);      
-        Color azulAcero = new Color(31, 45, 74);     
-        Color azulOscuro = new Color(7, 10, 20);     
-        Color blancoHumo = new Color(242, 242, 242);  
-        Color grisCine = new Color(156, 163, 175);    
-        Color rojoCine = new Color(214, 69, 69);     
-        Color azulTenue = new Color(38, 64, 107);     
+
+        Color azulNoche = new Color(11, 28, 56);
+        Color azulAcero = new Color(31, 45, 74);
+        Color azulOscuro = new Color(7, 10, 20);
+        Color blancoHumo = new Color(242, 242, 242);
+        Color grisCine = new Color(156, 163, 175);
+        Color rojoCine = new Color(214, 69, 69);
+        Color azulTenue = new Color(38, 64, 107);
 
         getContentPane().setBackground(azulNoche);
         pnlHeader.setBackground(azulNoche);
@@ -93,7 +94,6 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         btnOnline.setBackground(new java.awt.Color(0, 0, 0));
         btnOnline.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        btnOnline.setForeground(new java.awt.Color(204, 204, 204));
         btnOnline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Online (2).png"))); // NOI18N
         btnOnline.setText("Entradas Online");
         btnOnline.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -108,7 +108,6 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         btnEntradas.setBackground(new java.awt.Color(0, 0, 0));
         btnEntradas.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        btnEntradas.setForeground(new java.awt.Color(204, 204, 204));
         btnEntradas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cartelera.png"))); // NOI18N
         btnEntradas.setText("Cartelera");
         btnEntradas.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -123,7 +122,6 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         btnAdministracion.setBackground(new java.awt.Color(0, 0, 0));
         btnAdministracion.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        btnAdministracion.setForeground(new java.awt.Color(204, 204, 204));
         btnAdministracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Admin.png"))); // NOI18N
         btnAdministracion.setText("Administracion");
         btnAdministracion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -138,7 +136,6 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         btnEntradas1.setBackground(new java.awt.Color(0, 0, 0));
         btnEntradas1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        btnEntradas1.setForeground(new java.awt.Color(204, 204, 204));
         btnEntradas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Tickets (2).png"))); // NOI18N
         btnEntradas1.setText("Entradas");
         btnEntradas1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -238,7 +235,8 @@ public class CinemaCentro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdministracionActionPerformed
 
     private void btnEntradas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradas1ActionPerformed
-
+        ComprarEntradaF comprarEntrada = new ComprarEntradaF();
+        abrirYCentrar(comprarEntrada);
     }//GEN-LAST:event_btnEntradas1ActionPerformed
 
     /**

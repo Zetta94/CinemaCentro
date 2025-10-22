@@ -153,6 +153,7 @@ public class PeliculaData {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Pelicula pelicula = new Pelicula();
+                    pelicula.setIdPelicula(rs.getInt("idPelicula"));
                     pelicula.setTitulo(rs.getString("titulo"));
                     pelicula.setDirector(rs.getString("director"));
                     pelicula.setActores(rs.getString("actores"));

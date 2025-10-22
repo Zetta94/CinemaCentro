@@ -105,12 +105,6 @@ public class Proyeccion {
    // toString //
     @Override
     public String toString() {
-        return "Proyección de \"" + (pelicula != null ? pelicula.getTitulo() : "Sin asignar") + "\"" +
-                " en Sala " + (sala != null ? sala.getNroSala() : "N/A") +
-                " | Idioma: " + idioma +
-                (es3D ? " | 3D" : " | 2D") +
-                (subtitulada ? " | Subtitulada" : " | Doblada") +
-                " | Horario: " + horaInicio + " - " + horaFin +
-                " | Precio: $" + precio;
+        return "Sala: " + sala + " - " + "Horario: " + horaInicio;
     }
 }

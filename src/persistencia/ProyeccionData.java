@@ -70,4 +70,33 @@ public class ProyeccionData {
         }
         return lista;
     }
+    
+    public List<Proyeccion> listarProyeccionesPorId(int peliculaId) {
+        List<Proyeccion> lista = new ArrayList<>();
+        String sql = "SELECT * FROM proyeccion WHERE idPelicula = ?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1,peliculaId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Pelicula peli = peliculaData.obtenerPorId(rs.getInt("idPelicula"));
+                Sala sala = salaData.buscarSala(rs.getInt("idSala"));
+
+                Proyeccion p = new Proyeccion(
+                    rs.getInt("idProyeccion"),
+                    peli,
+                    sala,
+                    rs.getString("idioma"),
+                    rs.getBoolean("es3D"),
+                    rs.getBoolean("subtitulada"),
+                    rs.getTime("horaInicio").toLocalTime(),
+                    rs.getTime("horaFin").toLocalTime(),
+                    rs.getDouble("precio")
+                );
+                lista.add(p);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar Proyecciones: " + ex.getMessage());
+        }
+        return lista;
+    }
 }

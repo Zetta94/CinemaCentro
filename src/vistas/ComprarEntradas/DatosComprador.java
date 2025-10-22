@@ -4,17 +4,68 @@
  */
 package vistas.ComprarEntradas;
 
+import entidades.Comprador;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import javax.swing.JOptionPane;
+import listeners.EntradasListener;
+
 /**
  *
  * @author Morbo
  */
-public class DatosComprador extends javax.swing.JPanel {
+public class DatosComprador extends javax.swing.JPanel implements EntradasListener {
 
     /**
      * Creates new form DatosComprador
      */
     public DatosComprador() {
         initComponents();
+    }
+
+    String dni;
+    String nombre;
+    java.util.Date fechaNac;
+    LocalDate fechaNacLocal;
+
+    @Override
+    public boolean validarDatos() {
+        dni = txtDni.getText();
+        nombre = txtNombre.getText();
+        fechaNac = dateFecha.getDate();
+
+        if (dni.isEmpty() || nombre.isEmpty() || fechaNac == null) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos");
+            return false;
+        }
+
+        if (!dni.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "El DNI debe contener solo números");
+            return false;
+        }
+
+        fechaNacLocal = fechaNac.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate hoy = LocalDate.now();
+        Period edad = Period.between(fechaNacLocal, hoy);
+        int anios = edad.getYears();
+
+        if (anios < 18) {
+            JOptionPane.showMessageDialog(this, "Debe tener mas de 18 años para comprar una entrada");
+            return false;
+        }
+
+        if (fechaNacLocal.isAfter(LocalDate.now())) {
+            JOptionPane.showMessageDialog(this, "La fecha de nacimiento no puede ser futura");
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public Comprador guardarDatos() {
+        return new Comprador(dni, nombre, fechaNacLocal);
     }
 
     /**
@@ -26,19 +77,91 @@ public class DatosComprador extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblTitulo = new javax.swing.JLabel();
+        lblDni = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
+        lblFecha = new javax.swing.JLabel();
+        lblPago = new javax.swing.JLabel();
+        txtDni = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        dateFecha = new com.toedter.calendar.JDateChooser();
+        cbxPago = new javax.swing.JComboBox<>();
+
+        setMinimumSize(new java.awt.Dimension(882, 396));
+        setPreferredSize(new java.awt.Dimension(882, 396));
+
+        lblTitulo.setText("Ingresar datos");
+
+        lblDni.setText("DNI: ");
+
+        lblNombre.setText("Nombre:");
+
+        lblFecha.setText("Fecha de nacimiento:");
+
+        lblPago.setText("Medio de pago:");
+
+        cbxPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Transferencia", "Tarjeta", " " }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblPago)
+                    .addComponent(lblFecha)
+                    .addComponent(lblNombre)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(7, 7, 7)
+                            .addComponent(lblTitulo)
+                            .addGap(32, 32, 32))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(114, 114, 114)
+                            .addComponent(lblDni))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtDni)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                    .addComponent(dateFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbxPago, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(479, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblTitulo)
+                .addGap(57, 57, 57)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDni)
+                    .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombre)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblFecha)
+                    .addComponent(dateFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblPago)
+                    .addComponent(cbxPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(175, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbxPago;
+    private com.toedter.calendar.JDateChooser dateFecha;
+    private javax.swing.JLabel lblDni;
+    private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblPago;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JTextField txtDni;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

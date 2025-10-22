@@ -15,7 +15,7 @@ public class SalaData {
 
 
     public void guardarSala(Sala s) {
-        String sql = "INSERT INTO sala (nroSala, apta3D, capacidad, estado) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO salas (nroSala, apta3D, capacidad, estado) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, s.getNroSala());
             ps.setBoolean(2, s.isApta3D());
@@ -34,7 +34,7 @@ public class SalaData {
     }
 
     public void modificarSala(Sala s) {
-        String sql = "UPDATE sala SET nroSala=?, apta3D=?, capacidad=?, estado=? WHERE idSala=?";
+        String sql = "UPDATE salas SET nroSala=?, apta3D=?, capacidad=?, estado=? WHERE idSala=?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, s.getNroSala());
             ps.setBoolean(2, s.isApta3D());
@@ -49,7 +49,7 @@ public class SalaData {
     }
 
     public void eliminarSala(int id) {
-        String sql = "DELETE FROM sala WHERE idSala=?";
+        String sql = "DELETE FROM salas WHERE idSala=?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
             ps.executeUpdate();
@@ -61,7 +61,7 @@ public class SalaData {
 
     public Sala buscarSala(int id) {
         Sala s = null;
-        String sql = "SELECT * FROM sala WHERE idSala=?";
+        String sql = "SELECT * FROM salas WHERE idSala=?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -82,7 +82,7 @@ public class SalaData {
 
     public List<Sala> listarSalas() {
         List<Sala> lista = new ArrayList<>();
-        try (PreparedStatement ps = con.prepareStatement("SELECT * FROM sala")) {
+        try (PreparedStatement ps = con.prepareStatement("SELECT * FROM salas")) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Sala s = new Sala(

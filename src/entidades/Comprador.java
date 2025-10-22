@@ -8,17 +8,16 @@ package entidades;
  *
  * @author Manuel Zuñiga
  */
-
 import java.time.LocalDate;
 
 public class Comprador {
 
-    private int idComprador;        
+    private int idComprador;
     private String dni;
     private String nombre;
     private LocalDate fechaNac;
     private String password;
-    private String medioPago;     
+    private String medioPago;
 
     public Comprador() {
     }
@@ -30,6 +29,12 @@ public class Comprador {
         this.fechaNac = fechaNac;
         this.password = password;
         this.medioPago = medioPago;
+    }
+
+    public Comprador(String dni, String nombre, LocalDate fechaNac) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.fechaNac = fechaNac;
     }
 
     public int getIdComprador() {
@@ -81,4 +86,3 @@ public class Comprador {
     }
 
 }
-

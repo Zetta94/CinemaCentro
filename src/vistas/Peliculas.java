@@ -29,10 +29,6 @@ public class Peliculas extends javax.swing.JPanel {
     private PeliculaData peliculaData = Context.getPeliculaData();
     private PeliculaListener listener;
 
-    public void setPeliculaChangeListener(PeliculaListener listener) {
-        this.listener = listener;
-    }
-
     public Peliculas() {
         initComponents();
         System.out.println("peliculas");

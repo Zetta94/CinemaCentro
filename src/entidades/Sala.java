@@ -1,14 +1,15 @@
-
 package entidades;
 
 public class Sala {
+
     private int idSala;
     private int nroSala;
     private boolean apta3D;
     private int capacidad;
     private boolean estado;
 
-    public Sala() {}
+    public Sala() {
+    }
 
     public Sala(int idSala, int nroSala, boolean apta3D, int capacidad, boolean estado) {
         this.idSala = idSala;
@@ -63,9 +64,6 @@ public class Sala {
     // toString //
     @Override
     public String toString() {
-        return "Sala N° " + nroSala +
-                (apta3D ? " (3D)" : " (2D)") +
-                " - Capacidad: " + capacidad +
-                " - Estado: " + (estado ? "Activa" : "Inactiva");
+        return String.valueOf(nroSala);
     }
 }

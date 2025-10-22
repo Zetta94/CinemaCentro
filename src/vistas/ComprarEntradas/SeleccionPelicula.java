@@ -4,6 +4,13 @@
  */
 package vistas.ComprarEntradas;
 
+import entidades.Pelicula;
+import entidades.Proyeccion;
+import java.util.List;
+import persistencia.Context;
+import persistencia.PeliculaData;
+import persistencia.ProyeccionData;
+
 /**
  *
  * @author Morbo
@@ -13,8 +20,33 @@ public class SeleccionPelicula extends javax.swing.JPanel {
     /**
      * Creates new form SeleccionPelicula
      */
+    private PeliculaData peliculaData = Context.getPeliculaData();
+    private ProyeccionData proyeccionData = Context.getProyeccionData();
+
     public SeleccionPelicula() {
         initComponents();
+        llenarComboPeliculas();
+        cbxProyecciones.setEnabled(false);
+
+        cbxPelicula.addActionListener(e -> {
+            if (cbxPelicula.getSelectedItem() == null) {
+                cbxProyecciones.removeAllItems();
+                cbxProyecciones.setEnabled(false);
+                return;
+            }
+            llenarComboProyecciones();
+            cbxProyecciones.setEnabled(true);
+        });
+
+        cbxProyecciones.addActionListener(e -> {
+            if (cbxProyecciones.getSelectedItem() != null) {
+                Proyeccion proyeccionSelecionada = (Proyeccion) cbxProyecciones.getSelectedItem();
+                txtaDetalles.setText(proyeccionSelecionada.getPelicula().getTitulo());
+            } else {
+                txtaDetalles.setText("No hay proyecciones disponibles");
+            }
+        });
+
     }
 
     /**
@@ -26,19 +58,111 @@ public class SeleccionPelicula extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblTitulo = new javax.swing.JLabel();
+        lblPelicula = new javax.swing.JLabel();
+        lblProyeccion = new javax.swing.JLabel();
+        lblLugares = new javax.swing.JLabel();
+        cbxPelicula = new javax.swing.JComboBox<>();
+        scrDetalles = new javax.swing.JScrollPane();
+        txtaDetalles = new javax.swing.JTextArea();
+        cbxProyecciones = new javax.swing.JComboBox<>();
+        lblLugaresDisponibles = new javax.swing.JLabel();
+
+        setMinimumSize(new java.awt.Dimension(882, 396));
+        setName(""); // NOI18N
+        setPreferredSize(new java.awt.Dimension(882, 396));
+
+        lblTitulo.setText("seleccionar pelicula");
+
+        lblPelicula.setText("Pelicula:");
+
+        lblProyeccion.setText("Proyeccion:");
+
+        lblLugares.setText("Lugares disponibles");
+
+        txtaDetalles.setColumns(20);
+        txtaDetalles.setRows(5);
+        scrDetalles.setViewportView(txtaDetalles);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblTitulo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(164, 164, 164)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(scrDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblLugares)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblLugaresDisponibles))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(lblPelicula)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(lblProyeccion)
+                            .addGap(167, 167, 167)
+                            .addComponent(cbxProyecciones, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(287, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblTitulo)
+                .addGap(57, 57, 57)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPelicula)
+                    .addComponent(cbxPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblProyeccion)
+                    .addComponent(cbxProyecciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblLugares)
+                    .addComponent(lblLugaresDisponibles))
+                .addGap(32, 32, 32)
+                .addComponent(scrDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(45, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void llenarComboPeliculas() {
+        List<Pelicula> peliculas = peliculaData.obtenerTodas();
+        cbxPelicula.removeAllItems();
+        cbxPelicula.addItem(null);
+        for (Pelicula pelicula : peliculas) {
+            cbxPelicula.addItem(pelicula);
+        }
+    }
+
+    private void llenarComboProyecciones() {
+        cbxProyecciones.removeAllItems();
+        Pelicula peliculaSeleccionada = (Pelicula) cbxPelicula.getSelectedItem();
+        System.out.println(peliculaSeleccionada.getIdPelicula());
+        List<Proyeccion> proyecciones = proyeccionData.listarProyeccionesPorId(peliculaSeleccionada.getIdPelicula());
+        for (Proyeccion proyeccion : proyecciones) {
+            cbxProyecciones.addItem(proyeccion);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<Pelicula> cbxPelicula;
+    private javax.swing.JComboBox<Proyeccion> cbxProyecciones;
+    private javax.swing.JLabel lblLugares;
+    private javax.swing.JLabel lblLugaresDisponibles;
+    private javax.swing.JLabel lblPelicula;
+    private javax.swing.JLabel lblProyeccion;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JScrollPane scrDetalles;
+    private javax.swing.JTextArea txtaDetalles;
     // End of variables declaration//GEN-END:variables
 }
