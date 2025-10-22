@@ -15,6 +15,7 @@ import listeners.PeliculaListener;
 import org.mariadb.jdbc.Connection;
 import persistencia.Conexion;
 import persistencia.Context;
+import static persistencia.Context.getPeliculaData;
 import persistencia.PeliculaData;
 
 /**
@@ -28,6 +29,8 @@ public class Peliculas extends javax.swing.JPanel {
      */
     private PeliculaData peliculaData = Context.getPeliculaData();
     private PeliculaListener listener;
+    private DefaultTableModel modelo;
+    private Connection connection;
 
     public Peliculas() {
         initComponents();
@@ -37,10 +40,16 @@ public class Peliculas extends javax.swing.JPanel {
     }
 
     private void cargarTabla() {
-        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        modelo = new DefaultTableModel(
+            new Object[]{"ID", "Título", "Director", "Actores", "Origen", "Género", "Estreno", "En cartelera"}, 
+            0
+        );
+        jtblePeliculas.setModel(modelo);
+        //DefaultTableModel modelo = (DefaultTableModel) jtblePeliculas.getModel();
         modelo.setRowCount(0);
         for (Pelicula p : peliculaData.obtenerTodas()) {
             modelo.addRow(new Object[]{
+                p.getIdPelicula(), 
                 p.getTitulo(),
                 p.getDirector(),
                 p.getActores(),
@@ -59,7 +68,7 @@ public class Peliculas extends javax.swing.JPanel {
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtblePeliculas = new javax.swing.JTable();
         cmbFiltro = new javax.swing.JComboBox<>();
         btnModificar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
@@ -78,8 +87,13 @@ public class Peliculas extends javax.swing.JPanel {
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Eliminar.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtblePeliculas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -90,7 +104,7 @@ public class Peliculas extends javax.swing.JPanel {
                 "Título", "Director", "Actores", "Origen", "Género", "Estreno", "En cartelera"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(jtblePeliculas);
 
         cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sala", "Película", "Ticket", "Comprador" }));
 
@@ -206,6 +220,34 @@ public class Peliculas extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        
+         int filaSeleccionada = jtblePeliculas.getSelectedRow();
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione una película para eliminar.");
+        return;
+    }
+    
+    int confirmacion = JOptionPane.showConfirmDialog(
+            this,
+            "¿Está seguro de eliminar esta película?",
+            "Confirmar eliminación",
+            JOptionPane.YES_NO_OPTION
+    );
+       
+    if (confirmacion == JOptionPane.YES_OPTION) {
+        
+        int idPelicula = (int) modelo.getValueAt(filaSeleccionada, 0);
+
+        
+        peliculaData.eliminarPelicula(idPelicula);
+
+        
+        modelo.removeRow(filaSeleccionada);
+    }
+    
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
@@ -216,6 +258,6 @@ public class Peliculas extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cmbFiltro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jtblePeliculas;
     // End of variables declaration//GEN-END:variables
 }
