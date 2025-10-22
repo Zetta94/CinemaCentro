@@ -28,7 +28,7 @@ public class Peliculas extends javax.swing.JPanel {
      */
     private PeliculaData peliculaData = Context.getPeliculaData();
     private PeliculaListener listener;
-    
+
     public void setPeliculaChangeListener(PeliculaListener listener) {
         this.listener = listener;
     }
@@ -172,7 +172,12 @@ public class Peliculas extends javax.swing.JPanel {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         AgregarPelicula agregarPeli = new AgregarPelicula();
-        agregarPeli.setPeliculasListener(()->cargarTabla());
+        agregarPeli.setPeliculasListener(new PeliculaListener() {
+            @Override
+            public void actualizarLista() {
+                cargarTabla();
+            }
+        });
         abrirYCentrar(agregarPeli);
 
     }//GEN-LAST:event_btnAgregarActionPerformed
