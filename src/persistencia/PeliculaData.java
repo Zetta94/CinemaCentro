@@ -238,4 +238,17 @@ public class PeliculaData {
             return null;
         }
     }
+    
+    public void eliminarPelicula(int id) {
+    String sql = "DELETE FROM peliculas WHERE idPelicula = ?";
+    try {
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, id);
+        ps.executeUpdate();
+        ps.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al eliminar película: " + ex.getMessage());
+    }
+}
+    
 }
