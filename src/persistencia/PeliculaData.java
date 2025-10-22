@@ -84,9 +84,9 @@ public class PeliculaData {
         }
     }
 
-    public List<Pelicula> buscarPeliculas(String titulo, String genero, Boolean enCartelera) {
+    public List<Pelicula> buscarPeliculas(String titulo, String genero, Integer enCartelera) {
         StringBuilder sql = new StringBuilder(
-                "SELECT id, titulo, director, actores, origen, genero, estreno, enCartelera FROM peliculas WHERE 1=1"
+                "SELECT idPelicula, titulo, director, actores, origen, genero, estreno, enCartelera FROM peliculas WHERE 1=1"
         );
         List<Object> params = new ArrayList<>();
 
@@ -114,8 +114,8 @@ public class PeliculaData {
                 Object p = params.get(i);
                 if (p instanceof String) {
                     ps.setString(i + 1, (String) p);
-                } else if (p instanceof Boolean) {
-                    ps.setBoolean(i + 1, (Boolean) p);
+                } else if (p instanceof Integer) {
+                    ps.setInt(i + 1, (Integer) p);
                 }
             }
 
