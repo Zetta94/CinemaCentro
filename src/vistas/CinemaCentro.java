@@ -6,7 +6,6 @@ package vistas;
 
 import java.awt.Color;
 import persistencia.Conexion;
-import java.sql.Connection;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
@@ -14,7 +13,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.border.Border;
-import persistencia.PeliculaData;
+import persistencia.Context;
 
 /**
  *
@@ -23,32 +22,27 @@ import persistencia.PeliculaData;
 public class CinemaCentro extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CinemaCentro.class.getName());
-    private Connection connection;
-
-    private PeliculaData peliculaData;
 
     public CinemaCentro() {
         initComponents();
+        
+        //Inicializar conexion mediante el contexto
         Conexion con = new Conexion("jdbc:mariadb://localhost:3306/cinemacentro_g13", "root", "");
-
-        peliculaData = new PeliculaData(con);
+        Context.inicializar(con);
+        
         ImageIcon fondoIcono = new ImageIcon(getClass().getResource("/images/background.png"));
-      Color azulNoche = new Color(11, 28, 56);      // Fondo principal
-Color azulAcero = new Color(31, 45, 74);      // Paneles laterales / header
-Color azulOscuro = new Color(7, 10, 20);      // Contenido central
-Color blancoHumo = new Color(242, 242, 242);  // Texto principal
-Color grisCine = new Color(156, 163, 175);    // Texto secundario
-Color rojoCine = new Color(214, 69, 69);      // Acentos o selección
-Color azulTenue = new Color(38, 64, 107);     // Bordes suaves
+        Color azulNoche = new Color(11, 28, 56);      // Fondo principal
+        Color azulAcero = new Color(31, 45, 74);      // Paneles laterales / header
+        Color azulOscuro = new Color(7, 10, 20);      // Contenido central
+        Color blancoHumo = new Color(242, 242, 242);  // Texto principal
+        Color grisCine = new Color(156, 163, 175);    // Texto secundario
+        Color rojoCine = new Color(214, 69, 69);      // Acentos o selección
+        Color azulTenue = new Color(38, 64, 107);     // Bordes suaves
 
-
-getContentPane().setBackground(azulNoche);
-pnlHeader.setBackground(azulNoche);
-pnlMenu.setBackground(azulNoche);
-pnlTitulo.setBackground(azulNoche);
-
-
-
+        getContentPane().setBackground(azulNoche);
+        pnlHeader.setBackground(azulNoche);
+        pnlMenu.setBackground(azulNoche);
+        pnlTitulo.setBackground(azulNoche);
 
     }
 
@@ -246,7 +240,7 @@ pnlTitulo.setBackground(azulNoche);
 
     private void btnAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracionActionPerformed
         // TODO add your handling code here:
-        Login login = new Login(peliculaData);
+        Login login = new Login();
         abrirYCentrar(login);
 
 

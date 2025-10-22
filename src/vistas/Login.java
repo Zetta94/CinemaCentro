@@ -12,10 +12,7 @@ import persistencia.PeliculaData;
 
 public class Login extends javax.swing.JInternalFrame {
 
-    public CinemaCentro cinemacentro;
-    private PeliculaData peliculaData;
-    public Login(PeliculaData peliculaData) {
-       this.peliculaData=peliculaData;
+    public Login() {
         initComponents();
         lblOcultar.setVisible(false);
         txtContra.setEchoChar('*');
@@ -28,7 +25,7 @@ public class Login extends javax.swing.JInternalFrame {
                 }
             }
         });
-        
+
         txtUsuario.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -38,7 +35,7 @@ public class Login extends javax.swing.JInternalFrame {
             }
         });
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -193,10 +190,10 @@ public class Login extends javax.swing.JInternalFrame {
         char[] passwordChars = txtContra.getPassword();
         String password = new String(passwordChars);
         if (txtUsuario.getText().equalsIgnoreCase("admin") && password.equals("admin")) {
-                   
-            Administracion admin = new Administracion(peliculaData);
+
+            Administracion admin = new Administracion();
             abrirYCentrar(admin);
-            
+
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(

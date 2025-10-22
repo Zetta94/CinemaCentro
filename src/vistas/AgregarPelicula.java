@@ -11,6 +11,8 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import javax.swing.JOptionPane;
+import listeners.PeliculaListener;
+import persistencia.Context;
 import persistencia.PeliculaData;
 
 /**
@@ -22,35 +24,38 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
     /**
      * Creates new form AgregarPelicula
      */
-    private PeliculaData peliculaData;
-    
-    
-    public AgregarPelicula(PeliculaData peliculaData) {
-        this.peliculaData= peliculaData;
-        
+    private PeliculaData peliculaData = Context.getPeliculaData();
+    private PeliculaListener listener;
+
+    public void setListener(PeliculaListener listener) {
+        this.listener = listener;
+    }
+
+    public AgregarPelicula() {
         initComponents();
         cargarComboGeneros();
-         botones.add(bNo);
+        botones.add(bNo);
         botones.add(bSi);
     }
+
     private void cargarComboGeneros() {
-        String[] generos = {"seleccione","Acción", "Animación", "Aventura", "Ciencia Ficción", 
-            "Comedia", "Documental", "Drama", "Fantasía", 
+        String[] generos = {"seleccione", "Acción", "Animación", "Aventura", "Ciencia Ficción",
+            "Comedia", "Documental", "Drama", "Fantasía",
             "Terror", "Romance", "Suspenso"
         };
         cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(generos));
     }
-    
-    private void limpiarCampos(){
-      txtTitulo.setText("");
-      txtDirector.setText("");
-      txtActores.setText("");
-      txtOrigen.setText("");
-      cbxGenero.setSelectedIndex(0);
-      dateEstreno.setDate(null);
-      botones.clearSelection();
+
+    private void limpiarCampos() {
+        txtTitulo.setText("");
+        txtDirector.setText("");
+        txtActores.setText("");
+        txtOrigen.setText("");
+        cbxGenero.setSelectedIndex(0);
+        dateEstreno.setDate(null);
+        botones.clearSelection();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -230,42 +235,43 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnGurardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGurardarActionPerformed
-        
-        String titulo= txtTitulo.getText();
-        String director= txtDirector.getText();
-        String actor= txtActores.getText();
-        String origen= txtOrigen.getText();
-        String genero=(String) cbxGenero.getSelectedItem();
+
+        String titulo = txtTitulo.getText();
+        String director = txtDirector.getText();
+        String actor = txtActores.getText();
+        String origen = txtOrigen.getText();
+        String genero = (String) cbxGenero.getSelectedItem();
         java.util.Date fechaEstreno = dateEstreno.getDate();
 
         LocalDate fechaLocalEstreno = fechaEstreno.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        if (titulo.isEmpty() || director.isEmpty() || actor.isEmpty() ||origen.isEmpty() || genero == null || fechaEstreno == null) {
+        if (titulo.isEmpty() || director.isEmpty() || actor.isEmpty() || origen.isEmpty() || genero == null || fechaEstreno == null) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos");
             return;
         }
-        Pelicula peli=new Pelicula();
+        Pelicula peli = new Pelicula();
         peli.setTitulo(titulo);
         peli.setDirector(director);
         peli.setActores(actor);
         peli.setOrigen(origen);
         peli.setGenero(genero);
         peli.setEstreno(fechaLocalEstreno);
-        
-        boolean encartelera=bSi.isSelected();
+
+        boolean encartelera = bSi.isSelected();
         peli.setEnCartelera(encartelera);
-        
-        
-        boolean creado=peliculaData.crearPelicula(peli);
-        
-        if(creado){
+
+        boolean creado = peliculaData.crearPelicula(peli);
+
+        if (creado) {
             javax.swing.JOptionPane.showMessageDialog(this,
-                        "Pelicula "+peli.getTitulo()+" guardado con éxito.",
-                        "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-         limpiarCampos(); 
-         return;
+                    "Pelicula " + peli.getTitulo() + " guardado con éxito.",
+                    "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            limpiarCampos();
+            if (listener != null) {
+                listener.actualizarLista();
+            }
+            return;
         }
-        
-        
+
 
     }//GEN-LAST:event_btnGurardarActionPerformed
 

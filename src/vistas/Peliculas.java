@@ -11,8 +11,10 @@ import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import listeners.PeliculaListener;
 import org.mariadb.jdbc.Connection;
 import persistencia.Conexion;
+import persistencia.Context;
 import persistencia.PeliculaData;
 
 /**
@@ -24,10 +26,14 @@ public class Peliculas extends javax.swing.JPanel {
     /**
      * Creates new form Peliculas
      */
-    private PeliculaData peliculaData;
+    private PeliculaData peliculaData = Context.getPeliculaData();
+    private PeliculaListener listener;
+    
+    public void setPeliculaChangeListener(PeliculaListener listener) {
+        this.listener = listener;
+    }
 
-    public Peliculas(PeliculaData peliculaData) {
-        this.peliculaData = peliculaData;
+    public Peliculas() {
         initComponents();
         System.out.println("peliculas");
 
@@ -165,7 +171,8 @@ public class Peliculas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        AgregarPelicula agregarPeli = new AgregarPelicula(peliculaData);
+        AgregarPelicula agregarPeli = new AgregarPelicula();
+        agregarPeli.setListener(()->cargarTabla());
         abrirYCentrar(agregarPeli);
 
     }//GEN-LAST:event_btnAgregarActionPerformed
