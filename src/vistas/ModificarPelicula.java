@@ -77,7 +77,7 @@ public class ModificarPelicula extends javax.swing.JInternalFrame {
         bSi = new javax.swing.JRadioButton();
         bNo = new javax.swing.JRadioButton();
         txtOrigen = new javax.swing.JTextField();
-        Modificar = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         panel1.setBackground(new java.awt.Color(51, 51, 51));
         panel1.setForeground(new java.awt.Color(38, 64, 107));
@@ -86,31 +86,31 @@ public class ModificarPelicula extends javax.swing.JInternalFrame {
         lblDirector.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblDirector.setForeground(new java.awt.Color(255, 204, 0));
         lblDirector.setText("Director:");
-        panel1.add(lblDirector, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, -1, 20));
+        panel1.add(lblDirector, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, -1, 20));
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 204, 0));
         lblTitulo.setText("Titulo:");
-        panel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, -1, 20));
+        panel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 150, -1, 20));
 
         lblActores.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblActores.setForeground(new java.awt.Color(255, 204, 0));
         lblActores.setText("Actores:");
-        panel1.add(lblActores, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, -1, 20));
+        panel1.add(lblActores, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, -1, 20));
 
         cbxGenero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxGeneroActionPerformed(evt);
             }
         });
-        panel1.add(cbxGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 260, 170, 30));
+        panel1.add(cbxGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, 170, 30));
 
         txtTitulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTituloActionPerformed(evt);
             }
         });
-        panel1.add(txtTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, 170, 30));
+        panel1.add(txtTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, 170, 30));
 
         btnSalir.setBackground(new java.awt.Color(102, 102, 102));
         btnSalir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -122,18 +122,18 @@ public class ModificarPelicula extends javax.swing.JInternalFrame {
                 btnSalirActionPerformed(evt);
             }
         });
-        panel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 400, 100, 30));
+        panel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 450, 100, 30));
 
         lblOrigen.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblOrigen.setForeground(new java.awt.Color(255, 204, 0));
         lblOrigen.setText("Origen:");
-        panel1.add(lblOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, -1, 20));
-        panel1.add(dateEstreno, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, 170, 30));
+        panel1.add(lblOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, -1, 20));
+        panel1.add(dateEstreno, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 350, 170, 30));
 
         lblGenero.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblGenero.setForeground(new java.awt.Color(255, 204, 0));
         lblGenero.setText("Genero:");
-        panel1.add(lblGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, -1, 20));
+        panel1.add(lblGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, -1, 20));
 
         btnGurardar.setBackground(new java.awt.Color(102, 0, 0));
         btnGurardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -145,25 +145,25 @@ public class ModificarPelicula extends javax.swing.JInternalFrame {
                 btnGurardarActionPerformed(evt);
             }
         });
-        panel1.add(btnGurardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 400, 100, 30));
+        panel1.add(btnGurardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 450, 100, 30));
 
         lblEstreno.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblEstreno.setForeground(new java.awt.Color(255, 204, 0));
         lblEstreno.setText("Estreno:");
-        panel1.add(lblEstreno, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 300, -1, 20));
+        panel1.add(lblEstreno, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 350, -1, 20));
 
         txtDirector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDirectorActionPerformed(evt);
             }
         });
-        panel1.add(txtDirector, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 170, 30));
+        panel1.add(txtDirector, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, 170, 30));
 
         lblCartelera.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCartelera.setForeground(new java.awt.Color(255, 204, 0));
         lblCartelera.setText("En Cartelera:");
-        panel1.add(lblCartelera, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, -1, 20));
-        panel1.add(txtActores, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 170, 30));
+        panel1.add(lblCartelera, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 390, -1, 20));
+        panel1.add(txtActores, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 230, 170, 30));
 
         botones.add(bSi);
         bSi.setForeground(new java.awt.Color(255, 204, 51));
@@ -174,7 +174,7 @@ public class ModificarPelicula extends javax.swing.JInternalFrame {
                 bSiActionPerformed(evt);
             }
         });
-        panel1.add(bSi, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, -1, 20));
+        panel1.add(bSi, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 390, -1, 20));
 
         botones.add(bNo);
         bNo.setForeground(new java.awt.Color(255, 204, 51));
@@ -184,24 +184,17 @@ public class ModificarPelicula extends javax.swing.JInternalFrame {
                 bNoActionPerformed(evt);
             }
         });
-        panel1.add(bNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 340, -1, 20));
-        panel1.add(txtOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 220, 170, 30));
+        panel1.add(bNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 390, -1, 20));
+        panel1.add(txtOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 270, 170, 30));
 
-        Modificar.setBackground(new java.awt.Color(31, 45, 74));
-        Modificar.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        Modificar.setForeground(new java.awt.Color(204, 153, 0));
-        Modificar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Modificar.setText("Modificar Pelicula");
-        Modificar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        Modificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Modificar.setOpaque(true);
-        panel1.add(Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 540, 80));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ModificarPeli.png"))); // NOI18N
+        panel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, -50, 420, 280));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
+            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,7 +260,6 @@ public class ModificarPelicula extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Modificar;
     private javax.swing.JRadioButton bNo;
     private javax.swing.JRadioButton bSi;
     private javax.swing.ButtonGroup botones;
@@ -275,6 +267,7 @@ public class ModificarPelicula extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cbxGenero;
     private com.toedter.calendar.JDateChooser dateEstreno;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblActores;
     private javax.swing.JLabel lblCartelera;
     private javax.swing.JLabel lblDirector;
