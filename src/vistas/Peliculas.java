@@ -2,6 +2,7 @@ package vistas;
 
 import entidades.Pelicula;
 import java.awt.Window;
+import java.util.List;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -31,7 +32,7 @@ public class Peliculas extends javax.swing.JPanel {
     public Peliculas() {
         initComponents();
         System.out.println("peliculas");
-
+        cargarComboGeneros();
         cargarTabla();
     }
 
@@ -65,10 +66,14 @@ public class Peliculas extends javax.swing.JPanel {
         btnEliminar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtblePeliculas = new javax.swing.JTable();
-        cmbFiltro = new javax.swing.JComboBox<>();
         btnModificar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        cbxGenero = new javax.swing.JComboBox<>();
+        cbxCartelera = new javax.swing.JComboBox<>();
+        lblGenero = new javax.swing.JLabel();
+        lblCartelera = new javax.swing.JLabel();
+        txtfTitulo = new javax.swing.JTextField();
+        lbltitulo = new javax.swing.JLabel();
 
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Agregar.png"))); // NOI18N
         btnAgregar.setText("Agregar");
@@ -101,8 +106,6 @@ public class Peliculas extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(jtblePeliculas);
 
-        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sala", "Película", "Ticket", "Comprador" }));
-
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Modificar.png"))); // NOI18N
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -119,7 +122,21 @@ public class Peliculas extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setText("Nombre");
+        cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxGenero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxGeneroActionPerformed(evt);
+            }
+        });
+
+        cbxCartelera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todas", "Si", "No" }));
+
+        lblGenero.setText("Genero:");
+
+        lblCartelera.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblCartelera.setText("Cartelera");
+
+        lbltitulo.setText("Titulo:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -128,31 +145,39 @@ public class Peliculas extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(76, 76, 76)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(53, Short.MAX_VALUE))
+                        .addComponent(lbltitulo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(61, 61, 61)
+                        .addComponent(lblGenero)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblCartelera)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbxCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(51, Short.MAX_VALUE)
+                .addContainerGap(40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(cbxGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblGenero)
+                    .addComponent(lblCartelera)
+                    .addComponent(txtfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbltitulo)
+                    .addComponent(cbxCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -224,9 +249,55 @@ public class Peliculas extends javax.swing.JPanel {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
+        try {
+            String titulo = txtfTitulo.getText().trim();
+            String genero = (String) cbxGenero.getSelectedItem();
+            String carteleraSeleccion = (String) cbxCartelera.getSelectedItem();
+            Integer enCartelera = null;
+            
+            if (genero.equals("Todas"))
+                genero="";
 
+            if (carteleraSeleccion.equalsIgnoreCase("sí")) {
+                enCartelera = 1;
+            } else if (carteleraSeleccion.equalsIgnoreCase("no")) {
+                enCartelera = 0;
+            }
+
+            List<Pelicula> peliculasBuscadas = peliculaData.buscarPeliculas(titulo, genero, enCartelera);
+ 
+         cargarResultados(peliculasBuscadas);
+
+            if (peliculasBuscadas.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No se encontraron películas con esos filtros.");
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error al buscar películas: " + ex.getMessage());
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
-
+        private void cargarComboGeneros() {
+        String[] generos = {"Todas", "Acción", "Animación", "Aventura", "Ciencia Ficción",
+            "Comedia", "Documental", "Drama", "Fantasía",
+            "Terror", "Romance", "Suspenso"
+        };
+        cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(generos));
+    }
+        private void cargarResultados(List<Pelicula>resultados) {
+        modelo.setRowCount(0);
+        for (Pelicula p : resultados) {
+            modelo.addRow(new Object[]{
+                p.getIdPelicula(),
+                p.getTitulo(),
+                p.getDirector(),
+                p.getActores(),
+                p.getOrigen(),
+                p.getGenero(),
+                p.getEstreno(),
+                p.isEnCartelera()
+            });
+        }
+        }
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 
         int filaSeleccionada = jtblePeliculas.getSelectedRow();
@@ -253,15 +324,23 @@ public class Peliculas extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void cbxGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxGeneroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxGeneroActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JComboBox<String> cmbFiltro;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox<String> cbxCartelera;
+    private javax.swing.JComboBox<String> cbxGenero;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jtblePeliculas;
+    private javax.swing.JLabel lblCartelera;
+    private javax.swing.JLabel lblGenero;
+    private javax.swing.JLabel lbltitulo;
+    private javax.swing.JTextField txtfTitulo;
     // End of variables declaration//GEN-END:variables
 }
