@@ -1,4 +1,3 @@
-
 package vistas;
 
 import entidades.Pelicula;
@@ -38,15 +37,15 @@ public class Peliculas extends javax.swing.JPanel {
 
     private void cargarTabla() {
         modelo = new DefaultTableModel(
-            new Object[]{"ID", "Título", "Director", "Actores", "Origen", "Género", "Estreno", "En cartelera"}, 
-            0
+                new Object[]{"ID", "Título", "Director", "Actores", "Origen", "Género", "Estreno", "En cartelera"},
+                0
         );
         jtblePeliculas.setModel(modelo);
         //DefaultTableModel modelo = (DefaultTableModel) jtblePeliculas.getModel();
         modelo.setRowCount(0);
         for (Pelicula p : peliculaData.obtenerTodas()) {
             modelo.addRow(new Object[]{
-                p.getIdPelicula(), 
+                p.getIdPelicula(),
                 p.getTitulo(),
                 p.getDirector(),
                 p.getActores(),
@@ -195,27 +194,31 @@ public class Peliculas extends javax.swing.JPanel {
     }
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
- int filaSeleccionada = jtblePeliculas.getSelectedRow();
+        int filaSeleccionada = jtblePeliculas.getSelectedRow();
 
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Seleccione una película para modificar.");
-        return;
-    }
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una película para modificar.");
+            return;
+        }
 
-  
-    int idPelicula = (int) jtblePeliculas.getValueAt(filaSeleccionada, 0);
+        int idPelicula = (int) jtblePeliculas.getValueAt(filaSeleccionada, 0);
 
-  
-    Pelicula peliculaSeleccionada = peliculaData.obtenerPorId(idPelicula);
+        Pelicula peliculaSeleccionada = peliculaData.obtenerPorId(idPelicula);
 
-    if (peliculaSeleccionada == null) {
-        JOptionPane.showMessageDialog(this, "No se pudo obtener la información de la película.");
-        return;
-    }
+        if (peliculaSeleccionada == null) {
+            JOptionPane.showMessageDialog(this, "No se pudo obtener la información de la película.");
+            return;
+        }
 
-  
-    ModificarPelicula modificarPelicula = new ModificarPelicula(peliculaSeleccionada);
-    abrirYCentrar(modificarPelicula);
+        ModificarPelicula modificarPelicula = new ModificarPelicula(peliculaSeleccionada);
+        modificarPelicula.setPeliculasListener(new PeliculaListener() {
+            @Override
+            public void actualizarLista() {
+                cargarTabla();
+            }
+        });
+
+        abrirYCentrar(modificarPelicula);
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -225,31 +228,29 @@ public class Peliculas extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        
-         int filaSeleccionada = jtblePeliculas.getSelectedRow();
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Por favor, seleccione una película para eliminar.");
-        return;
-    }
-    
-    int confirmacion = JOptionPane.showConfirmDialog(
-            this,
-            "¿Está seguro de eliminar esta película?",
-            "Confirmar eliminación",
-            JOptionPane.YES_NO_OPTION
-    );
-       
-    if (confirmacion == JOptionPane.YES_OPTION) {
-        
-        int idPelicula = (int) modelo.getValueAt(filaSeleccionada, 0);
 
-        
-        peliculaData.eliminarPelicula(idPelicula);
+        int filaSeleccionada = jtblePeliculas.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione una película para eliminar.");
+            return;
+        }
 
-        
-        modelo.removeRow(filaSeleccionada);
-    }
-    
+        int confirmacion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Está seguro de eliminar esta película?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+
+            int idPelicula = (int) modelo.getValueAt(filaSeleccionada, 0);
+
+            peliculaData.eliminarPelicula(idPelicula);
+
+            modelo.removeRow(filaSeleccionada);
+        }
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
 

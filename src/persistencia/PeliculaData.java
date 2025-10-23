@@ -120,6 +120,7 @@ public class PeliculaData {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Pelicula p = new Pelicula();
+                     p.setIdPelicula(rs.getInt("idPelicula"));
                     p.setTitulo(rs.getString("titulo"));
                     p.setDirector(rs.getString("director"));
                     p.setActores(rs.getString("actores"));
@@ -183,6 +184,7 @@ public class PeliculaData {
             Pelicula pelicula = new Pelicula();
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
+                     pelicula.setIdPelicula(rs.getInt("idPelicula"));
                     pelicula.setTitulo(rs.getString("titulo"));
                     pelicula.setDirector(rs.getString("director"));
                     pelicula.setActores(rs.getString("actores"));
@@ -213,6 +215,7 @@ public class PeliculaData {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Pelicula pelicula = new Pelicula();
+                     pelicula.setIdPelicula(rs.getInt("idPelicula"));
                     pelicula.setTitulo(rs.getString("titulo"));
                     pelicula.setDirector(rs.getString("director"));
                     pelicula.setActores(rs.getString("actores"));

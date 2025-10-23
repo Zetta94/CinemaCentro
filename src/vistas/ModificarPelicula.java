@@ -240,16 +240,13 @@ public class ModificarPelicula extends javax.swing.JInternalFrame {
 
             boolean actualizado = peliculaData.editarPelicula(pelicula, pelicula.getIdPelicula());
 
-            if (!actualizado) {
+            if (actualizado) {
                 JOptionPane.showMessageDialog(this, "Película actualizada correctamente.");
                 if (listener != null) {
                     listener.actualizarLista();
                 }
                 dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "No se pudo actualizar la película.");
-            }
-
+            } 
         
         
     
