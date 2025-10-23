@@ -100,7 +100,7 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
 
         lblPago.setText("Medio de pago:");
 
-        cbxPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Transferencia", "Tarjeta", " " }));
+        cbxPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Transferencia", "Tarjeta" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -114,8 +114,7 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addGap(7, 7, 7)
-                            .addComponent(lblTitulo)
-                            .addGap(32, 32, 32))
+                            .addComponent(lblTitulo))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(114, 114, 114)
                             .addComponent(lblDni))))

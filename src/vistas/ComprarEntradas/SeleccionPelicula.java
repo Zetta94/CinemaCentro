@@ -7,6 +7,7 @@ package vistas.ComprarEntradas;
 import entidades.Pelicula;
 import entidades.Proyeccion;
 import java.util.List;
+import listeners.EntradasListener;
 import persistencia.Context;
 import persistencia.PeliculaData;
 import persistencia.ProyeccionData;
@@ -15,7 +16,7 @@ import persistencia.ProyeccionData;
  *
  * @author Morbo
  */
-public class SeleccionPelicula extends javax.swing.JPanel {
+public class SeleccionPelicula extends javax.swing.JPanel implements EntradasListener {
 
     /**
      * Creates new form SeleccionPelicula
@@ -152,6 +153,16 @@ public class SeleccionPelicula extends javax.swing.JPanel {
         for (Proyeccion proyeccion : proyecciones) {
             cbxProyecciones.addItem(proyeccion);
         }
+    }
+    
+    @Override
+    public boolean validarDatos() {
+        return false;
+    }
+    
+    @Override
+    public Proyeccion guardarDatos() {
+        return new Proyeccion();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
