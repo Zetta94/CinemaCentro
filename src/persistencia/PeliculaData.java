@@ -54,35 +54,33 @@ public class PeliculaData {
         }
     }
 
-    public boolean editarPelicula(Pelicula pelicula, int id) {
-        String sql = "UPDATE peliculas SET titulo = ?, director = ?, actores = ?, origen = ?, genero = ?, estreno = ?, enCartelera = ? WHERE id = ?";
+ public boolean editarPelicula(Pelicula pelicula, int id) {
+    String sql = "UPDATE peliculas SET titulo = ?, director = ?, actores = ?, origen = ?, genero = ?, estreno = ?, enCartelera = ? WHERE idPelicula = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, pelicula.getTitulo());
-            ps.setString(2, pelicula.getDirector());
-            ps.setString(3, pelicula.getActores());
-            ps.setString(4, pelicula.getOrigen());
-            ps.setString(5, pelicula.getGenero());
-            ps.setDate(6, java.sql.Date.valueOf(pelicula.getEstreno()));
-            ps.setBoolean(7, pelicula.isEnCartelera());
-            ps.setInt(8, id);
-            int updated = ps.executeUpdate();
-            if (updated > 0) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "No se pudo actualizar la película",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            ex.printStackTrace();
-            return false;
-        }
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setString(1, pelicula.getTitulo());
+        ps.setString(2, pelicula.getDirector());
+        ps.setString(3, pelicula.getActores());
+        ps.setString(4, pelicula.getOrigen());
+        ps.setString(5, pelicula.getGenero());
+        ps.setDate(6, java.sql.Date.valueOf(pelicula.getEstreno()));
+        ps.setBoolean(7, pelicula.isEnCartelera());
+        ps.setInt(8, id);
+        
+        int updated = ps.executeUpdate();
+        return updated > 0;
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(
+                null,
+                "No se pudo actualizar la película",
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+        );
+        ex.printStackTrace();
+        return false;
     }
+}
 
     public List<Pelicula> buscarPeliculas(String titulo, String genero, Integer enCartelera) {
         StringBuilder sql = new StringBuilder(
