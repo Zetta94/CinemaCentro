@@ -33,15 +33,12 @@ public class Peliculas extends javax.swing.JPanel {
         initComponents();
         System.out.println("peliculas");
         cargarComboGeneros();
+        modelo = (DefaultTableModel) jtblePeliculas.getModel();
         cargarTabla();
     }
 
     private void cargarTabla() {
-        modelo = new DefaultTableModel(
-                new Object[]{"ID", "Título", "Director", "Actores", "Origen", "Género", "Estreno", "En cartelera"},
-                0
-        );
-        jtblePeliculas.setModel(modelo);
+        
         //DefaultTableModel modelo = (DefaultTableModel) jtblePeliculas.getModel();
         modelo.setRowCount(0);
         for (Pelicula p : peliculaData.obtenerTodas()) {
@@ -95,15 +92,23 @@ public class Peliculas extends javax.swing.JPanel {
 
         jtblePeliculas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Título", "Director", "Actores", "Origen", "Género", "Estreno", "En cartelera"
+                "ID", "Título", "Director", "Actores", "Origen", "Género", "Estreno", "En cartelera"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(jtblePeliculas);
 
         btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Modificar.png"))); // NOI18N
@@ -170,14 +175,15 @@ public class Peliculas extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(40, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblGenero)
-                    .addComponent(lblCartelera)
-                    .addComponent(txtfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbltitulo)
-                    .addComponent(cbxCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbxCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbxGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblGenero)
+                        .addComponent(lblCartelera)
+                        .addComponent(txtfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbltitulo)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -258,7 +264,7 @@ public class Peliculas extends javax.swing.JPanel {
             if (genero.equals("Todas"))
                 genero="";
 
-            if (carteleraSeleccion.equalsIgnoreCase("sí")) {
+            if (carteleraSeleccion.equalsIgnoreCase("si")) {
                 enCartelera = 1;
             } else if (carteleraSeleccion.equalsIgnoreCase("no")) {
                 enCartelera = 0;
