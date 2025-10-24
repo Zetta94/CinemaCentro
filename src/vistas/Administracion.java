@@ -33,6 +33,7 @@ public class Administracion extends javax.swing.JInternalFrame {
 
         tabAdmin = new javax.swing.JTabbedPane();
 
+        setBackground(new java.awt.Color(51, 51, 51));
         setClosable(true);
         setMinimumSize(new java.awt.Dimension(900, 500));
         setPreferredSize(new java.awt.Dimension(900, 500));
