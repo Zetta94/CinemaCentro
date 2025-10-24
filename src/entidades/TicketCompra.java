@@ -18,7 +18,9 @@ public class TicketCompra {
     private LocalDate fechaFuncion;
     private double monto;
     private Comprador comprador;       
-    private Lugar lugar;               
+    private Lugar lugar; 
+    private int idComprador;
+
 
     public TicketCompra() {
     }
@@ -81,4 +83,13 @@ public class TicketCompra {
         this.lugar = lugar;
     }
 
+  public int getIdComprador() {
+    return idComprador;
 }
+
+public void setIdComprador(int idComprador) {
+    this.idComprador = idComprador;
+    
+ }
+}
+
