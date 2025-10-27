@@ -7,6 +7,7 @@ package vistas.ComprarEntradas;
 import entidades.Pelicula;
 import entidades.Proyeccion;
 import java.util.List;
+import javax.swing.JOptionPane;
 import listeners.EntradasListener;
 import persistencia.Context;
 import persistencia.PeliculaData;
@@ -136,10 +137,14 @@ public class SeleccionPelicula extends javax.swing.JPanel implements EntradasLis
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private int lugares;
+    
     private void llenarComboPeliculas() {
         List<Pelicula> peliculas = peliculaData.obtenerTodas();
         cbxPelicula.removeAllItems();
-        cbxPelicula.addItem(null);
+        Pelicula peliculaNull = new Pelicula();
+        peliculaNull.setTitulo("Seleccione...");
+        cbxPelicula.addItem(peliculaNull);
         for (Pelicula pelicula : peliculas) {
             cbxPelicula.addItem(pelicula);
         }
@@ -148,7 +153,6 @@ public class SeleccionPelicula extends javax.swing.JPanel implements EntradasLis
     private void llenarComboProyecciones() {
         cbxProyecciones.removeAllItems();
         Pelicula peliculaSeleccionada = (Pelicula) cbxPelicula.getSelectedItem();
-        System.out.println(peliculaSeleccionada.getIdPelicula());
         List<Proyeccion> proyecciones = proyeccionData.listarProyeccionesPorId(peliculaSeleccionada.getIdPelicula());
         for (Proyeccion proyeccion : proyecciones) {
             cbxProyecciones.addItem(proyeccion);
@@ -157,11 +161,21 @@ public class SeleccionPelicula extends javax.swing.JPanel implements EntradasLis
     
     @Override
     public boolean validarDatos() {
-        return false;
+        if(cbxPelicula.getSelectedIndex() == 0) {
+             JOptionPane.showMessageDialog(this, "Seleccione una película", "Error", JOptionPane.ERROR);
+             return false;
+        }
+        if(lugares == 0) {
+            JOptionPane.showMessageDialog(this, "No hay lugares disponibles en la proyección seleccionada", "Error", JOptionPane.ERROR);
+            return false;
+        }
+        return true;
     }
     
     @Override
     public Proyeccion guardarDatos() {
+        Proyeccion proyeccion = new Proyeccion();
+        proyeccion.set
         return new Proyeccion();
     }
 

@@ -36,12 +36,12 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
         fechaNac = dateFecha.getDate();
 
         if (dni.isEmpty() || nombre.isEmpty() || fechaNac == null) {
-            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos");
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos", "Error", JOptionPane.ERROR);
             return false;
         }
 
         if (!dni.matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "El DNI debe contener solo números");
+            JOptionPane.showMessageDialog(this, "El DNI debe contener solo números", "Error", JOptionPane.ERROR);
             return false;
         }
 
@@ -51,12 +51,12 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
         int anios = edad.getYears();
 
         if (anios < 18) {
-            JOptionPane.showMessageDialog(this, "Debe tener mas de 18 años para comprar una entrada");
+            JOptionPane.showMessageDialog(this, "Debe tener mas de 18 años para comprar una entrada", "Error", JOptionPane.ERROR);
             return false;
         }
 
         if (fechaNacLocal.isAfter(LocalDate.now())) {
-            JOptionPane.showMessageDialog(this, "La fecha de nacimiento no puede ser futura");
+            JOptionPane.showMessageDialog(this, "La fecha de nacimiento no puede ser futura", "Error", JOptionPane.ERROR);
             return false;
         }
 
