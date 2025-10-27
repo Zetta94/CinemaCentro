@@ -88,6 +88,7 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
         cbxPago = new javax.swing.JComboBox<>();
 
         setMinimumSize(new java.awt.Dimension(882, 396));
+        setName(""); // NOI18N
         setPreferredSize(new java.awt.Dimension(882, 396));
 
         lblTitulo.setText("Ingresar datos");

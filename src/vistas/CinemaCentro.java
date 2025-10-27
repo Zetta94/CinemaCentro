@@ -15,6 +15,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.border.Border;
 import persistencia.Context;
 import vistas.ComprarEntradas.ComprarEntradaF;
+import vista.ComprarEntradasOnline.ComprarEntradasOnline;
 
 /**
  *
@@ -228,7 +229,8 @@ public class CinemaCentro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOnlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOnlineActionPerformed
-        // TODO add your handling code here:
+        ComprarEntradasOnline comprarEntrada = new ComprarEntradasOnline();
+        abrirYCentrar(comprarEntrada);
     }//GEN-LAST:event_btnOnlineActionPerformed
 
     private void btnEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradasActionPerformed
