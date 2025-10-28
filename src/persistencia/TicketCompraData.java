@@ -5,6 +5,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class TicketCompraData {
 
@@ -27,10 +28,18 @@ public class TicketCompraData {
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 ticket.setIdTicket(rs.getInt(1));
-                System.out.println("Ticket guardado con ID: " + ticket.getIdTicket());
+              JOptionPane.showMessageDialog(
+                        null,
+                        "Ticket guardado correctamente con ID: " + ticket.getIdTicket(),
+                        "Exito",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (SQLException ex) {
-            System.out.println("Error al guardar ticket: " + ex.getMessage());
+           JOptionPane.showMessageDialog(
+                    null,
+                    "Error al guardar el ticket:\n" + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -40,10 +49,25 @@ public class TicketCompraData {
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idTicket);
             int exito = ps.executeUpdate();
-            if (exito == 1) System.out.println("Ticket eliminado correctamente.");
-            else System.out.println("No se encontró el ticket.");
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Ticket eliminado correctamente.",
+                        "Exito",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "No se encontró el ticket deseado.",
+                        "Aviso",
+                        JOptionPane.WARNING_MESSAGE);
+            }
         } catch (SQLException ex) {
-            System.out.println("Error al eliminar ticket: " + ex.getMessage());
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Error al eliminar el ticket:\n" + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -57,9 +81,26 @@ public class TicketCompraData {
             ps.setInt(4, t.getIdComprador());
             ps.setInt(5, t.getIdTicket());
             int exito = ps.executeUpdate();
-            if (exito == 1) System.out.println("Ticket actualizado correctamente.");
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Ticket actualizado correctamente.",
+                        "Exito",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+              else {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "No se encontró el ticket a actualizar.",
+                        "Aviso",
+                        JOptionPane.WARNING_MESSAGE);
+            }
         } catch (SQLException ex) {
-            System.out.println("Error al actualizar ticket: " + ex.getMessage());
+           JOptionPane.showMessageDialog(
+                    null,
+                    "Error al actualizar el ticket:\n" + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -79,8 +120,19 @@ public class TicketCompraData {
                 t.setMonto(rs.getDouble("monto"));
                 t.setIdComprador(rs.getInt("idComprador"));
             }
+            else {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "No se encontró el ticket con ID: " + idTicket,
+                        "Aviso",
+                        JOptionPane.WARNING_MESSAGE);
+            }
         } catch (SQLException ex) {
-            System.out.println("Error al buscar ticket: " + ex.getMessage());
+           JOptionPane.showMessageDialog(
+                    null,
+                    "Error al buscar el ticket:\n" + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
         return t;
     }
@@ -102,7 +154,11 @@ public class TicketCompraData {
                 lista.add(t);
             }
         } catch (SQLException ex) {
-            System.out.println("Error al listar tickets: " + ex.getMessage());
+              JOptionPane.showMessageDialog(
+                    null,
+                    "Error al listar los tickets:\n" + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
         return lista;
     }
@@ -124,7 +180,11 @@ public class TicketCompraData {
                 lista.add(t);
             }
         } catch (SQLException ex) {
-            System.out.println("Error al listar tickets por fecha: " + ex.getMessage());
+           JOptionPane.showMessageDialog(
+                    null,
+                    "Error al listar tickets por fecha:\n" + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
         return lista;
     }
@@ -152,7 +212,11 @@ public class TicketCompraData {
             }
         }
     } catch (SQLException ex) {
-        System.out.println("Error al listar tickets por pelicula: " + ex.getMessage());
+       JOptionPane.showMessageDialog(
+                    null,
+                    "Error al listar tickets por pelicula:\n" + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
     }
     return lista;
 }
@@ -168,14 +232,23 @@ public class TicketCompraData {
                + "LIMIT 5";
     try (Statement st = con.createStatement();
          ResultSet rs = st.executeQuery(sql)) {
-        System.out.println("Peliculas mas vistas:");
+         StringBuilder sb = new StringBuilder("Peliculas mas vistas:\n");
         while (rs.next()) {
-            System.out.printf(" - %s: %d entradas%n",
-                    rs.getString("titulo"),
-                    rs.getInt("entradasVendidas"));
+            sb.append(" - ").append(rs.getString("titulo"))
+                  .append(": ").append(rs.getInt("entradasVendidas"))
+                  .append(" entradas\n");
         }
+        JOptionPane.showMessageDialog(
+                    null,
+                    sb.toString(),
+                    "Ranking de peliculas",
+                    JOptionPane.INFORMATION_MESSAGE);
     } catch (SQLException ex) {
-        System.out.println("Error al generar ranking: " + ex.getMessage());
+        JOptionPane.showMessageDialog(
+                    null,
+                    "Error al generar ranking:\n" + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
     }
   }
 }    
