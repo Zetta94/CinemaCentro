@@ -10,8 +10,8 @@ public class TicketCompraData {
 
     private Connection con = null;
 
-    public TicketCompraData() {
-        con = Conexion.getConexion();
+    public TicketCompraData(Conexion conexion) {
+        con = conexion.establishConnection();
     }
 
     // Alta //

@@ -17,11 +17,17 @@ public class Context {
     private static PeliculaData peliculaData;
     private static ProyeccionData proyeccionData;
     private static SalaData salaData;
+    private static LugaresData lugaresData;
+    private static CompradorData compradorData;
+    private static TicketCompraData ticketCompraData;
 
     public static void inicializar(Conexion conexion) {
         peliculaData = new PeliculaData(conexion);
         proyeccionData = new ProyeccionData(conexion);
         salaData = new SalaData(conexion);
+        lugaresData = new LugaresData(conexion);
+        compradorData = new CompradorData(conexion);
+        ticketCompraData = new TicketCompraData(conexion);
     }
 
     public static PeliculaData getPeliculaData() {
@@ -34,6 +40,18 @@ public class Context {
     
     public static SalaData getSalaData() {
         return salaData;
+    }
+    
+    public static LugaresData getLugaresData() {
+        return lugaresData;
+    }
+    
+    public static CompradorData getCompradorData() {
+        return compradorData;
+    }
+    
+    public static TicketCompraData getTicketCompraData() {
+        return ticketCompraData;
     }
     
     

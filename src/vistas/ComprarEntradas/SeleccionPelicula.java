@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import listeners.EntradasListener;
 import persistencia.Context;
+import persistencia.LugaresData;
 import persistencia.PeliculaData;
 import persistencia.ProyeccionData;
 
@@ -24,6 +25,7 @@ public class SeleccionPelicula extends javax.swing.JPanel implements EntradasLis
      */
     private PeliculaData peliculaData = Context.getPeliculaData();
     private ProyeccionData proyeccionData = Context.getProyeccionData();
+    private LugaresData lugaresData = Context.getLugaresData();
 
     public SeleccionPelicula() {
         initComponents();
@@ -43,7 +45,8 @@ public class SeleccionPelicula extends javax.swing.JPanel implements EntradasLis
         cbxProyecciones.addActionListener(e -> {
             if (cbxProyecciones.getSelectedItem() != null) {
                 Proyeccion proyeccionSelecionada = (Proyeccion) cbxProyecciones.getSelectedItem();
-                txtaDetalles.setText(proyeccionSelecionada.getPelicula().getTitulo());
+                obtenerLugares();
+                llenarInfo();
             } else {
                 txtaDetalles.setText("No hay proyecciones disponibles");
             }
@@ -69,6 +72,7 @@ public class SeleccionPelicula extends javax.swing.JPanel implements EntradasLis
         txtaDetalles = new javax.swing.JTextArea();
         cbxProyecciones = new javax.swing.JComboBox<>();
         lblLugaresDisponibles = new javax.swing.JLabel();
+        lblLugaresModificable = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(882, 396));
         setName(""); // NOI18N
@@ -102,7 +106,9 @@ public class SeleccionPelicula extends javax.swing.JPanel implements EntradasLis
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblLugares)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblLugaresDisponibles))))
+                                .addComponent(lblLugaresDisponibles)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblLugaresModificable))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addComponent(lblPelicula)
@@ -130,7 +136,8 @@ public class SeleccionPelicula extends javax.swing.JPanel implements EntradasLis
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLugares)
-                    .addComponent(lblLugaresDisponibles))
+                    .addComponent(lblLugaresDisponibles)
+                    .addComponent(lblLugaresModificable))
                 .addGap(32, 32, 32)
                 .addComponent(scrDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(45, Short.MAX_VALUE))
@@ -138,7 +145,7 @@ public class SeleccionPelicula extends javax.swing.JPanel implements EntradasLis
     }// </editor-fold>//GEN-END:initComponents
 
     private int lugares;
-    
+
     private void llenarComboPeliculas() {
         List<Pelicula> peliculas = peliculaData.obtenerTodas();
         cbxPelicula.removeAllItems();
@@ -158,25 +165,49 @@ public class SeleccionPelicula extends javax.swing.JPanel implements EntradasLis
             cbxProyecciones.addItem(proyeccion);
         }
     }
-    
+
+    private void obtenerLugares() {
+        Proyeccion proyeccionSelecionada = (Proyeccion) cbxProyecciones.getSelectedItem();
+        if (proyeccionSelecionada == null) {
+            lblLugaresModificable.setText("0");
+            return;
+        }
+        lugares = lugaresData.ObtenerLugaresDisponibles(proyeccionSelecionada.getIdProyeccion());
+        lblLugaresModificable.setText(String.valueOf(lugares));
+    }
+
+    private void llenarInfo() {
+        Proyeccion proyeccionSelecionada = (Proyeccion) cbxProyecciones.getSelectedItem();
+        Pelicula peliculaSeleccionada = (Pelicula) cbxPelicula.getSelectedItem();
+        if (proyeccionSelecionada == null || peliculaSeleccionada == null) {
+            return;
+        }
+
+        txtaDetalles.setText(
+                "Pelicula: " + peliculaSeleccionada.getTitulo() + "\n"
+                + "Sala: " + proyeccionSelecionada.getSala().getNroSala() + "\n"
+                + "Horario de inicio: " + proyeccionSelecionada.getHoraInicio() + "\n"
+                + "Horario de fin: " + proyeccionSelecionada.getHoraFin() + "\n"
+        );
+    }
+
     @Override
     public boolean validarDatos() {
-        if(cbxPelicula.getSelectedIndex() == 0) {
-             JOptionPane.showMessageDialog(this, "Seleccione una película", "Error", JOptionPane.ERROR);
-             return false;
+        if (cbxPelicula.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Seleccione una película", "Error", JOptionPane.ERROR);
+            return false;
         }
-        if(lugares == 0) {
+        if (lugares == 0) {
             JOptionPane.showMessageDialog(this, "No hay lugares disponibles en la proyección seleccionada", "Error", JOptionPane.ERROR);
             return false;
         }
         return true;
     }
-    
+
     @Override
     public Proyeccion guardarDatos() {
-        Proyeccion proyeccion = new Proyeccion();
-        proyeccion.set
-        return new Proyeccion();
+        Proyeccion proyeccionSelecionada = (Proyeccion) cbxProyecciones.getSelectedItem();
+        return proyeccionSelecionada ;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -184,6 +215,7 @@ public class SeleccionPelicula extends javax.swing.JPanel implements EntradasLis
     private javax.swing.JComboBox<Proyeccion> cbxProyecciones;
     private javax.swing.JLabel lblLugares;
     private javax.swing.JLabel lblLugaresDisponibles;
+    private javax.swing.JLabel lblLugaresModificable;
     private javax.swing.JLabel lblPelicula;
     private javax.swing.JLabel lblProyeccion;
     private javax.swing.JLabel lblTitulo;

@@ -4,6 +4,12 @@
  */
 package vistas.ComprarEntradas;
 
+import entidades.Lugar;
+import java.util.List;
+import javax.swing.JButton;
+import persistencia.Context;
+import persistencia.LugaresData;
+
 /**
  *
  * @author Morbo
@@ -13,8 +19,17 @@ public class SeleccionAsientos extends javax.swing.JPanel {
     /**
      * Creates new form SeleccionAsientos
      */
+    private int idProyeccion = -1;
+    private LugaresData lugaresData = Context.getLugaresData();
+
+    public void setIdProyeccion(int id) {
+        this.idProyeccion = id;
+        cargarMapaAsientos();
+    }
+
     public SeleccionAsientos() {
         initComponents();
+
     }
 
     /**
@@ -48,7 +63,40 @@ public class SeleccionAsientos extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void cargarMapaAsientos() {
+        System.out.println("Ejecutando sql con la id " + idProyeccion);
+        List<Lugar> ocupados = lugaresData.obtenerLugaresOcupados(idProyeccion);
 
+        this.removeAll();
+        this.setLayout(new java.awt.GridLayout(4, 6, 5, 5));
+
+        for (char fila = 'A'; fila <= 'D'; fila++) {
+            for (int numero = 1; numero <= 6; numero++) {
+                boolean estaOcupado = false;
+                for (Lugar l : ocupados) {
+                    System.out.println(l.getFila() + l.getNumero());
+                    if (l.getFila().equals(String.valueOf(fila)) && l.getNumero() == numero) {
+                        estaOcupado = true;
+                        break;
+                    }
+                }
+
+                JButton btn = new JButton(fila + String.valueOf(numero));
+                btn.setEnabled(!estaOcupado);
+
+                if (estaOcupado) {
+                    btn.setBackground(java.awt.Color.RED);
+                } else {
+                    btn.setBackground(java.awt.Color.GREEN);
+                }
+
+                this.add(btn);
+            }
+        }
+
+        this.revalidate();
+        this.repaint();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables

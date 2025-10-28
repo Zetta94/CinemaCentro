@@ -28,17 +28,21 @@ public class ComprarEntradaF extends javax.swing.JInternalFrame {
     private EntradasListener listener;
 
     private Comprador comprador;
-    private Pelicula pelicula;
     private Proyeccion proyeccion;
     private List<Lugar> asientosSeleccionados;
+
+    DatosComprador paso1;
+    SeleccionPelicula paso2;
+    SeleccionAsientos paso3;
+    Confirmar paso4;
 
     public ComprarEntradaF() {
         initComponents();
 
-        JPanel paso1 = new DatosComprador();
-        JPanel paso2 = new SeleccionPelicula();
-        JPanel paso3 = new SeleccionAsientos();
-        JPanel paso4 = new Confirmar();
+        paso1 = new DatosComprador();
+        paso2 = new SeleccionPelicula();
+        paso3 = new SeleccionAsientos();
+        paso4 = new Confirmar();
 
         pnlPrincipal.add(paso1, "paso1");
         pnlPrincipal.add(paso2, "paso2");
@@ -137,7 +141,7 @@ public class ComprarEntradaF extends javax.swing.JInternalFrame {
                     comprador = (Comprador) datos;
                     break;
                 case 2:
-                    pelicula = (Pelicula) datos;
+                    proyeccion = (Proyeccion) datos;
                     break;
                 case 3:
                     asientosSeleccionados = (List<Lugar>) datos;
@@ -149,6 +153,9 @@ public class ComprarEntradaF extends javax.swing.JInternalFrame {
 
         if (pasoActual < 3) {
             pasoActual++;
+            if (pasoActual == 3) {
+                paso3.setIdProyeccion(proyeccion.getIdProyeccion());
+            }
             layout.show(pnlPrincipal, "paso" + pasoActual);
             btnAnterior.setEnabled(true);
         }

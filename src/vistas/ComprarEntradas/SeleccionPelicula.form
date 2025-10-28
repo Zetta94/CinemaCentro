@@ -39,6 +39,8 @@
                               <Component id="lblLugares" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="lblLugaresDisponibles" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblLugaresModificable" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -78,6 +80,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblLugares" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblLugaresDisponibles" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblLugaresModificable" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               <Component id="scrDetalles" min="-2" pref="144" max="-2" attributes="0"/>
@@ -143,6 +146,8 @@
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="lblLugaresDisponibles">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblLugaresModificable">
     </Component>
   </SubComponents>
 </Form>
