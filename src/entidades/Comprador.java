@@ -31,7 +31,7 @@ public class Comprador {
         this.medioPago = medioPago;
     }
 
-    public Comprador(String dni, String nombre, LocalDate fechaNac) {
+    public Comprador(String dni, String nombre, LocalDate fechaNac, String medioPago) {
         this.dni = dni;
         this.nombre = nombre;
         this.fechaNac = fechaNac;

@@ -8,6 +8,7 @@ import entidades.Comprador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -46,6 +47,36 @@ public class CompradorData {
             );
             ex.printStackTrace();
             return false;
+        }
+    }
+    
+    public Comprador obtenerCompradorPorDni (String dni) {
+        String sql = "SELECT * FROM compradores WHERE dni = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, dni);
+            Comprador comprador = new Comprador();
+            try(ResultSet rs = ps.executeQuery()) {
+                if(rs.next()) {
+                    comprador.setIdComprador(rs.getInt("idComprador"));
+                    comprador.setDni(rs.getString("dni"));
+                    comprador.setNombre(rs.getString("nombre"));
+                    comprador.setFechaNac(rs.getDate("fechaNac").toLocalDate());
+                    comprador.setPassword(rs.getString("password"));
+                    comprador.setMedioPago(rs.getString("medioPago"));
+                } else {
+                    return null;
+                }
+            }
+            return comprador;
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "No se pudo crear el comprador",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            ex.printStackTrace();
+            return null;
         }
     }
 }

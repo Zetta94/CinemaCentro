@@ -15,7 +15,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.border.Border;
 import persistencia.Context;
 import vistas.ComprarEntradas.ComprarEntradaF;
-import vista.ComprarEntradasOnline.ComprarEntradasOnline;
+import vistas.ComprarEntradasOnline.ComprarEntradasOnline;
 
 /**
  *

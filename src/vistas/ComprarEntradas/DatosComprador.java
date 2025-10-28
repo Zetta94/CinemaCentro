@@ -8,8 +8,11 @@ import entidades.Comprador;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import listeners.EntradasListener;
+import persistencia.CompradorData;
+import persistencia.Context;
 
 /**
  *
@@ -20,28 +23,55 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
     /**
      * Creates new form DatosComprador
      */
+    private CompradorData compradorData = Context.getCompradorData();
+
     public DatosComprador() {
         initComponents();
+        txtNombre.setEnabled(false);
+        dateFecha.setEnabled(false);
+        cbxPago.setEnabled(false);
+        lblError.setVisible(false);
     }
 
     String dni;
     String nombre;
     java.util.Date fechaNac;
     LocalDate fechaNacLocal;
+    String fechaPago;
+
+    private void obtenerComprador(String dni) {
+        Comprador comprador = compradorData.obtenerCompradorPorDni(dni);
+        System.out.println(comprador);
+        if (comprador != null) {
+            lblError.setVisible(false);
+            txtNombre.setText(comprador.getNombre());
+            dateFecha.setDate(Date.from(comprador.getFechaNac().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            cbxPago.setEnabled(true);
+        } else {
+            lblError.setVisible(true);
+            txtNombre.setText("");
+            txtNombre.setEnabled(true);
+            dateFecha.setCalendar(null);
+            dateFecha.setEnabled(true);
+            cbxPago.setSelectedIndex(0);
+            cbxPago.setEnabled(true);
+        }
+    }
 
     @Override
     public boolean validarDatos() {
         dni = txtDni.getText();
         nombre = txtNombre.getText();
         fechaNac = dateFecha.getDate();
+        fechaPago = (String) cbxPago.getSelectedItem();
 
         if (dni.isEmpty() || nombre.isEmpty() || fechaNac == null) {
-            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos", "Error", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         if (!dni.matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "El DNI debe contener solo números", "Error", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(this, "El DNI debe contener solo números", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -51,12 +81,12 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
         int anios = edad.getYears();
 
         if (anios < 18) {
-            JOptionPane.showMessageDialog(this, "Debe tener mas de 18 años para comprar una entrada", "Error", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(this, "Debe tener mas de 18 años para comprar una entrada", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         if (fechaNacLocal.isAfter(LocalDate.now())) {
-            JOptionPane.showMessageDialog(this, "La fecha de nacimiento no puede ser futura", "Error", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(this, "La fecha de nacimiento no puede ser futura", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -65,7 +95,7 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
 
     @Override
     public Comprador guardarDatos() {
-        return new Comprador(dni, nombre, fechaNacLocal);
+        return new Comprador(dni, nombre, fechaNacLocal, fechaPago);
     }
 
     /**
@@ -86,6 +116,8 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
         txtNombre = new javax.swing.JTextField();
         dateFecha = new com.toedter.calendar.JDateChooser();
         cbxPago = new javax.swing.JComboBox<>();
+        btnBuscar = new javax.swing.JButton();
+        lblError = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(882, 396));
         setName(""); // NOI18N
@@ -102,6 +134,16 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
         lblPago.setText("Medio de pago:");
 
         cbxPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Transferencia", "Tarjeta" }));
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        lblError.setForeground(new java.awt.Color(255, 51, 51));
+        lblError.setText("Comprador no encontrado. Complete sus datos");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -121,11 +163,15 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
                             .addComponent(lblDni))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtDni)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-                    .addComponent(dateFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbxPago, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(479, Short.MAX_VALUE))
+                    .addComponent(lblError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtDni)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                        .addComponent(dateFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cbxPago, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(35, 35, 35)
+                .addComponent(btnBuscar)
+                .addContainerGap(371, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,8 +181,11 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
                 .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDni)
-                    .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblError)
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombre)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -148,15 +197,22 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblPago)
                     .addComponent(cbxPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(175, Short.MAX_VALUE))
+                .addContainerGap(152, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        obtenerComprador(txtDni.getText());
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JComboBox<String> cbxPago;
     private com.toedter.calendar.JDateChooser dateFecha;
     private javax.swing.JLabel lblDni;
+    private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblPago;

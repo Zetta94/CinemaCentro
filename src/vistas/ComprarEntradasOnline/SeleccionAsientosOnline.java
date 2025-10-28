@@ -2,18 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package vista.ComprarEntradasOnline;
+package vistas.ComprarEntradasOnline;
 
 /**
  *
  * @author tomas
  */
-public class ConfirmarOnline extends javax.swing.JPanel {
+public class SeleccionAsientosOnline extends javax.swing.JPanel {
 
     /**
-     * Creates new form ConfirmarOnline
+     * Creates new form SeleccionAsientosOnline
      */
-    public ConfirmarOnline() {
+    public SeleccionAsientosOnline() {
         initComponents();
     }
 

@@ -65,13 +65,14 @@ public class LugaresData {
         String sql = "SELECT fila, numero FROM lugares WHERE idProyeccion = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, idProyeccion);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Lugar l = new Lugar();
-                l.setFila(rs.getString("fila"));
-                l.setNumero(rs.getInt("numero"));
-                l.setOcupado(true);
-                ocupados.add(l);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Lugar l = new Lugar();
+                    l.setFila(rs.getString("fila"));
+                    l.setNumero(rs.getInt("numero"));
+                    l.setOcupado(true);
+                    ocupados.add(l);
+                }
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(

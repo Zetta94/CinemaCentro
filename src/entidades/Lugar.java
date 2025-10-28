@@ -8,15 +8,13 @@ package entidades;
  *
  * @author Manuel Zuñiga
  */
-
 public class Lugar {
 
-    private int idLugar;          
-    private String fila;           
-    private int numero;            
-    private boolean ocupado;       
-    private int idFuncion;        
-
+    private int idLugar;
+    private String fila;
+    private int numero;
+    private boolean ocupado;
+    private int idFuncion;
 
     public Lugar() {
     }
@@ -69,5 +67,8 @@ public class Lugar {
         this.idFuncion = idFuncion;
     }
 
+    @Override
+    public String toString() {
+        return fila + numero;
+    }
 }
-

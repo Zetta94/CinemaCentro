@@ -43,12 +43,17 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="txtDni" max="32767" attributes="0"/>
-                  <Component id="txtNombre" pref="251" max="32767" attributes="0"/>
-                  <Component id="dateFecha" alignment="0" max="32767" attributes="0"/>
-                  <Component id="cbxPago" max="32767" attributes="0"/>
+                  <Component id="lblError" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="txtDni" max="32767" attributes="0"/>
+                      <Component id="txtNombre" pref="251" max="32767" attributes="0"/>
+                      <Component id="dateFecha" alignment="0" max="32767" attributes="0"/>
+                      <Component id="cbxPago" max="32767" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="479" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+              <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="371" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -61,8 +66,11 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblDni" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtDni" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="lblError" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblNombre" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtNombre" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -77,7 +85,7 @@
                   <Component id="lblPago" min="-2" max="-2" attributes="0"/>
                   <Component id="cbxPago" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="175" max="32767" attributes="0"/>
+              <EmptySpace pref="152" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -127,6 +135,22 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnBuscar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Buscar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblError">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="33" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Comprador no encontrado. Complete sus datos"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
