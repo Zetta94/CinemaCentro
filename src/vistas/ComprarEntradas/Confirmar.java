@@ -24,11 +24,6 @@ public class Confirmar extends javax.swing.JPanel {
      * Creates new form Confirmar
      */
     
-    private CompradorData compradorData = Context.getCompradorData();
-    private ProyeccionData proyeccionData = Context.getProyeccionData();
-    private LugaresData lugaresData = Context.getLugaresData();
-    private TicketCompraData ticketCompraData = Context.getTicketCompraData();
-    
     private Comprador comprador;
     private Proyeccion proyeccion;
     private List<Lugar> lugares;
