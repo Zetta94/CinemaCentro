@@ -11,7 +11,7 @@ public class TicketCompraData {
     private Connection con = null;
 
     public TicketCompraData(Conexion conexion) {
-        con = conexion.establishConnection();
+        con = Conexion.getConexion();
     }
 
     // Alta //
@@ -131,51 +131,51 @@ public class TicketCompraData {
 
     //  Tickets por pelicula //
     public List<TicketCompra> listarTicketsPorPelicula(int idPelicula) {
-        List<TicketCompra> lista = new ArrayList<>();
-        String sql = """
-            SELECT DISTINCT tc.* FROM ticketcompra tc
-            JOIN detalleticket dt ON tc.idTicket = dt.idTicket
-            JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion
-            WHERE pr.idPelicula = ?
-        """;
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, idPelicula);
-            ResultSet rs = ps.executeQuery();
+    List<TicketCompra> lista = new ArrayList<>();
+    String sql = "SELECT DISTINCT tc.* FROM ticketcompra tc "
+               + "JOIN detalleticket dt ON tc.idTicket = dt.idTicket "
+               + "JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion "
+               + "WHERE pr.idPelicula = ?";
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, idPelicula);
+        try (ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 TicketCompra t = new TicketCompra();
                 t.setIdTicket(rs.getInt("idTicket"));
-                t.setFechaCompra(rs.getDate("fechaCompra").toLocalDate());
-                t.setFechaFuncion(rs.getDate("fechaFuncion").toLocalDate());
+                Date dCompra = rs.getDate("fechaCompra");
+                Date dFuncion = rs.getDate("fechaFuncion");
+                if (dCompra != null) t.setFechaCompra(dCompra.toLocalDate());
+                if (dFuncion != null) t.setFechaFuncion(dFuncion.toLocalDate());
                 t.setMonto(rs.getDouble("monto"));
                 t.setIdComprador(rs.getInt("idComprador"));
                 lista.add(t);
             }
-        } catch (SQLException ex) {
-            System.out.println("Error al listar tickets por pelicula: " + ex.getMessage());
         }
-        return lista;
+    } catch (SQLException ex) {
+        System.out.println("Error al listar tickets por pelicula: " + ex.getMessage());
     }
+    return lista;
+}
 
     // Peliculas mas vistas //
     public void peliculasMasVistas() {
-        String sql = """
-            SELECT p.titulo, COUNT(dt.idDetalle) AS entradasVendidas
-            FROM pelicula p
-            JOIN proyeccion pr ON p.idPelicula = pr.idPelicula
-            JOIN detalleticket dt ON pr.idProyeccion = dt.idProyeccion
-            GROUP BY p.titulo
-            ORDER BY entradasVendidas DESC
-            LIMIT 5;
-        """;
-        try (Statement st = con.createStatement(); ResultSet rs = st.executeQuery(sql)) {
-            System.out.println("Peliculas mas vistas:");
-            while (rs.next()) {
-                System.out.printf(" - %s: %d entradas\n",
-                        rs.getString("titulo"),
-                        rs.getInt("entradasVendidas"));
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error al generar ranking: " + ex.getMessage());
+    String sql = "SELECT p.titulo, COUNT(dt.idDetalle) AS entradasVendidas "
+               + "FROM pelicula p "
+               + "JOIN proyeccion pr ON p.idPelicula = pr.idPelicula "
+               + "JOIN detalleticket dt ON pr.idProyeccion = dt.idProyeccion "
+               + "GROUP BY p.titulo "
+               + "ORDER BY entradasVendidas DESC "
+               + "LIMIT 5";
+    try (Statement st = con.createStatement();
+         ResultSet rs = st.executeQuery(sql)) {
+        System.out.println("Peliculas mas vistas:");
+        while (rs.next()) {
+            System.out.printf(" - %s: %d entradas%n",
+                    rs.getString("titulo"),
+                    rs.getInt("entradasVendidas"));
         }
+    } catch (SQLException ex) {
+        System.out.println("Error al generar ranking: " + ex.getMessage());
     }
-}
+  }
+}    
