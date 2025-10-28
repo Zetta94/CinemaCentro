@@ -1,12 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package vistas.ComprarEntradas;
 
 import entidades.Lugar;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -14,15 +12,8 @@ import listeners.EntradasListener;
 import persistencia.Context;
 import persistencia.LugaresData;
 
-/**
- *
- * @author Morbo
- */
 public class SeleccionAsientos extends javax.swing.JPanel implements EntradasListener {
 
-    /**
-     * Creates new form SeleccionAsientos
-     */
     private int idProyeccion = -1;
     private double precio = 0;
     private LugaresData lugaresData = Context.getLugaresData();
@@ -35,11 +26,37 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
         cargarMapaAsientos();
     }
 
-    public SeleccionAsientos() {
-        initComponents();
-        lstInfo.setModel(modeloLista);
-    }
+   public SeleccionAsientos() {
+    initComponents();
+    lstInfo.setModel(modeloLista);
 
+    // 🎨 Colores personalizados
+    Color fondoGeneral = new Color(33, 33, 33);
+    Color fondoPanel = new Color(45, 45, 45);
+    Color fondoInfo = new Color(50, 50, 50);
+    Color textoClaro = new Color(230, 230, 230);
+
+    // Fondo principal
+    setBackground(fondoGeneral);
+    setForeground(textoClaro);
+
+    // Panel de asientos
+    pnlAsientos.setBackground(fondoPanel);
+    pnlAsientos.setBorder(BorderFactory.createLineBorder(new Color(70, 70, 70), 1));
+
+    // Panel de información
+    pnlInfo.setBackground(fondoInfo);
+    pnlInfo.setBorder(BorderFactory.createLineBorder(new Color(70, 70, 70), 1));
+
+    // Etiquetas y lista
+    lblTitulo.setBackground(fondoGeneral);
+    lblSeleccionados.setForeground(textoClaro);
+    lblPrecio.setForeground(textoClaro);
+    lblSeleccionadosModificable.setForeground(textoClaro);
+    lblPrecioModificable.setForeground(textoClaro);
+    lstInfo.setBackground(new Color(60, 60, 60));
+    lstInfo.setForeground(textoClaro);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,7 +79,7 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
         setMinimumSize(new java.awt.Dimension(882, 396));
         setPreferredSize(new java.awt.Dimension(882, 396));
 
-        lblTitulo.setText("seleccionar asientos");
+        lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/sa.png"))); // NOI18N
 
         pnlAsientos.setMinimumSize(new java.awt.Dimension(689, 362));
         pnlAsientos.setPreferredSize(new java.awt.Dimension(689, 362));
@@ -75,8 +92,10 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
         );
         pnlAsientosLayout.setVerticalGroup(
             pnlAsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 362, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
+
+        pnlInfo.setBackground(new java.awt.Color(51, 51, 51));
 
         lblSeleccionados.setText("Seleccionados:");
 
@@ -124,31 +143,32 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblTitulo)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(12, 12, 12)
+                .addComponent(pnlAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblTitulo)
+                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlAsientos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pnlAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void cargarMapaAsientos() {
+  public void cargarMapaAsientos() {
         List<Lugar> ocupados = lugaresData.obtenerLugaresOcupados(idProyeccion);
 
         pnlAsientos.removeAll();
@@ -157,8 +177,7 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
         for (char fila = 'A'; fila <= 'D'; fila++) {
             for (int numero = 1; numero <= 6; numero++) {
                 boolean ocupado = false;
-                final char filaActual = fila;
-                final int numeroActual = numero;
+
                 for (Lugar l : ocupados) {
                     if (l.getFila().equals(String.valueOf(fila)) && l.getNumero() == numero) {
                         ocupado = true;
@@ -166,28 +185,33 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
                     }
                 }
 
+                final char filaActual = fila;
+                final int numeroActual = numero;
                 JButton btn = new JButton(fila + String.valueOf(numero));
-                btn.setEnabled(!ocupado);
+                btn.setBorder(null);
+                btn.setContentAreaFilled(false);
 
                 if (ocupado) {
-                    btn.setBackground(java.awt.Color.RED);
+                    btn.setEnabled(false);
+                    btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/butaca.png")));
                 } else {
-                    btn.setBackground(java.awt.Color.GREEN);
+                    btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/butaca1.png")));
                 }
 
-                btn.addActionListener(new java.awt.event.ActionListener() {
-                    @Override
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if (!ocupado) {
+                    btn.addActionListener(evt -> {
                         Lugar seleccionado = null;
                         for (Lugar elegido : elegidos) {
-                            if (elegido.getFila().equals(String.valueOf(filaActual)) && elegido.getNumero() == numeroActual) {
+                            if (elegido.getFila().equals(String.valueOf(filaActual)) &&
+                                elegido.getNumero() == numeroActual) {
                                 seleccionado = elegido;
                                 break;
                             }
                         }
+
                         if (seleccionado != null) {
                             elegidos.remove(seleccionado);
-                            btn.setBackground(java.awt.Color.GREEN);
+                            btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/butaca1.png")));
                         } else {
                             Lugar nuevo = new Lugar();
                             nuevo.setFila(String.valueOf(filaActual));
@@ -195,37 +219,39 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
                             nuevo.setOcupado(false);
                             nuevo.setIdFuncion(idProyeccion);
                             elegidos.add(nuevo);
-                            btn.setBackground(java.awt.Color.YELLOW);
+                            btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/butaca.png")));
                         }
+
                         cargarInfo();
-                    }
-                });
+                    });
+                }
 
                 pnlAsientos.add(btn);
             }
         }
+
         pnlAsientos.revalidate();
         pnlAsientos.repaint();
     }
-    
+
     private void cargarInfo() {
         lblSeleccionadosModificable.setText(String.valueOf(elegidos.size()));
         modeloLista.clear();
-        for(Lugar lugar : elegidos) {
+        for (Lugar lugar : elegidos) {
             modeloLista.addElement(lugar.toString());
         }
         lblPrecioModificable.setText("$" + String.valueOf(elegidos.size() * precio));
     }
-    
+
     @Override
     public boolean validarDatos() {
-        if(elegidos.size() == 0) {
+        if (elegidos.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Seleccione por lo menos un lugar", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
-    }    
-    
+    }
+
     @Override
     public List<Lugar> guardarDatos() {
         return elegidos;
