@@ -176,6 +176,9 @@ public class ComprarEntradaF extends javax.swing.JInternalFrame {
             if (pasoActual == 3) {
                 paso3.setProyeccionData(proyeccion.getIdProyeccion(), proyeccion.getPrecio());
             }
+            if(pasoActual == 4) {
+                paso4.setData(comprador, proyeccion, asientosSeleccionados);
+            }
             layout.show(pnlPrincipal, "paso" + pasoActual);
             btnAnterior.setEnabled(true);
         }

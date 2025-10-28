@@ -86,6 +86,7 @@ public class SeleccionPelicula extends javax.swing.JPanel implements EntradasLis
 
         lblLugares.setText("Lugares disponibles");
 
+        txtaDetalles.setEditable(false);
         txtaDetalles.setColumns(20);
         txtaDetalles.setRows(5);
         scrDetalles.setViewportView(txtaDetalles);
