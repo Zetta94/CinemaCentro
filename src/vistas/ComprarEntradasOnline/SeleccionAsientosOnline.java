@@ -4,17 +4,69 @@
  */
 package vistas.ComprarEntradasOnline;
 
+import entidades.Lugar;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import listeners.EntradasListener;
+import persistencia.Context;
+import persistencia.LugaresData;
+
 /**
  *
  * @author tomas
  */
-public class SeleccionAsientosOnline extends javax.swing.JPanel {
+public class SeleccionAsientosOnline extends javax.swing.JPanel implements EntradasListener {
 
     /**
      * Creates new form SeleccionAsientosOnline
      */
+    
+     private int idProyeccion = -1;
+    private double precio = 0;
+    private LugaresData lugaresData = Context.getLugaresData();
+    private List<Lugar> elegidos = new ArrayList<>();
+    private DefaultListModel<String> modeloLista = new DefaultListModel<>();
+
+    public void setProyeccionData(int id, double precio) {
+        this.idProyeccion = id;
+        this.precio = precio;
+        cargarMapaAsientos();
+    }
     public SeleccionAsientosOnline() {
         initComponents();
+        lstInfo.setModel(modeloLista);
+
+    // 🎨 Colores personalizados
+    Color fondoGeneral = new Color(33, 33, 33);
+    Color fondoPanel = new Color(45, 45, 45);
+    Color fondoInfo = new Color(50, 50, 50);
+    Color textoClaro = new Color(230, 230, 230);
+
+    // Fondo principal
+    setBackground(fondoGeneral);
+    setForeground(textoClaro);
+
+    // Panel de asientos
+    pnlAsientos.setBackground(fondoPanel);
+    pnlAsientos.setBorder(BorderFactory.createLineBorder(new Color(70, 70, 70), 1));
+
+    // Panel de información
+    pnlInfo.setBackground(fondoInfo);
+    pnlInfo.setBorder(BorderFactory.createLineBorder(new Color(70, 70, 70), 1));
+
+    // Etiquetas y lista
+    lblTitulo.setBackground(fondoGeneral);
+    lblSeleccionados.setForeground(textoClaro);
+    lblPrecio.setForeground(textoClaro);
+    lblSeleccionadosModificable.setForeground(textoClaro);
+    lblPrecioModificable.setForeground(textoClaro);
+    lstInfo.setBackground(new Color(60, 60, 60));
+    lstInfo.setForeground(textoClaro);
     }
 
     /**
@@ -26,19 +78,204 @@ public class SeleccionAsientosOnline extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblTitulo = new javax.swing.JLabel();
+        pnlAsientos = new javax.swing.JPanel();
+        pnlInfo = new javax.swing.JPanel();
+        lblSeleccionados = new javax.swing.JLabel();
+        lblSeleccionadosModificable = new javax.swing.JLabel();
+        lblPrecio = new javax.swing.JLabel();
+        scrInfo = new javax.swing.JScrollPane();
+        lstInfo = new javax.swing.JList<>();
+        lblPrecioModificable = new javax.swing.JLabel();
+
+        lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/sa.png"))); // NOI18N
+
+        pnlAsientos.setMinimumSize(new java.awt.Dimension(689, 362));
+
+        javax.swing.GroupLayout pnlAsientosLayout = new javax.swing.GroupLayout(pnlAsientos);
+        pnlAsientos.setLayout(pnlAsientosLayout);
+        pnlAsientosLayout.setHorizontalGroup(
+            pnlAsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 689, Short.MAX_VALUE)
+        );
+        pnlAsientosLayout.setVerticalGroup(
+            pnlAsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        pnlInfo.setBackground(new java.awt.Color(51, 51, 51));
+
+        lblSeleccionados.setText("Seleccionados:");
+
+        lblPrecio.setText("Precio:");
+        lblPrecio.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        lstInfo.setEnabled(false);
+        scrInfo.setViewportView(lstInfo);
+
+        javax.swing.GroupLayout pnlInfoLayout = new javax.swing.GroupLayout(pnlInfo);
+        pnlInfo.setLayout(pnlInfoLayout);
+        pnlInfoLayout.setHorizontalGroup(
+            pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInfoLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblPrecioModificable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(scrInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(lblPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInfoLayout.createSequentialGroup()
+                        .addComponent(lblSeleccionados)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblSeleccionadosModificable)
+                        .addGap(0, 77, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        pnlInfoLayout.setVerticalGroup(
+            pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlInfoLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSeleccionados)
+                    .addComponent(lblSeleccionadosModificable))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPrecioModificable)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(pnlAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pnlAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+public void cargarMapaAsientos() {
+        List<Lugar> ocupados = lugaresData.obtenerLugaresOcupados(idProyeccion);
+
+        pnlAsientos.removeAll();
+        pnlAsientos.setLayout(new java.awt.GridLayout(4, 6, 5, 5));
+
+        for (char fila = 'A'; fila <= 'D'; fila++) {
+            for (int numero = 1; numero <= 6; numero++) {
+                boolean ocupado = false;
+
+                for (Lugar l : ocupados) {
+                    if (l.getFila().equals(String.valueOf(fila)) && l.getNumero() == numero) {
+                        ocupado = true;
+                        break;
+                    }
+                }
+
+                final char filaActual = fila;
+                final int numeroActual = numero;
+                JButton btn = new JButton(fila + String.valueOf(numero));
+                btn.setBorder(null);
+                btn.setContentAreaFilled(false);
+
+                if (ocupado) {
+                    btn.setEnabled(false);
+                    btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/butaca.png")));
+                } else {
+                    btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/butaca1.png")));
+                }
+
+                if (!ocupado) {
+                    btn.addActionListener(evt -> {
+                        Lugar seleccionado = null;
+                        for (Lugar elegido : elegidos) {
+                            if (elegido.getFila().equals(String.valueOf(filaActual)) &&
+                                elegido.getNumero() == numeroActual) {
+                                seleccionado = elegido;
+                                break;
+                            }
+                        }
+
+                        if (seleccionado != null) {
+                            elegidos.remove(seleccionado);
+                            btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/butaca1.png")));
+                        } else {
+                            Lugar nuevo = new Lugar();
+                            nuevo.setFila(String.valueOf(filaActual));
+                            nuevo.setNumero(numeroActual);
+                            nuevo.setOcupado(false);
+                            nuevo.setIdFuncion(idProyeccion);
+                            elegidos.add(nuevo);
+                            btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/butaca.png")));
+                        }
+
+                        cargarInfo();
+                    });
+                }
+
+                pnlAsientos.add(btn);
+            }
+        }
+
+        pnlAsientos.revalidate();
+        pnlAsientos.repaint();
+    }
+
+    private void cargarInfo() {
+        lblSeleccionadosModificable.setText(String.valueOf(elegidos.size()));
+        modeloLista.clear();
+        for (Lugar lugar : elegidos) {
+            modeloLista.addElement(lugar.toString());
+        }
+        lblPrecioModificable.setText("$" + String.valueOf(elegidos.size() * precio));
+    }
+    @Override
+    public boolean validarDatos() {
+        if (elegidos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Seleccione por lo menos un lugar", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public List<Lugar> guardarDatos() {
+        return elegidos;
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel lblPrecio;
+    private javax.swing.JLabel lblPrecioModificable;
+    private javax.swing.JLabel lblSeleccionados;
+    private javax.swing.JLabel lblSeleccionadosModificable;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JList<String> lstInfo;
+    private javax.swing.JPanel pnlAsientos;
+    private javax.swing.JPanel pnlAsientos1;
+    private javax.swing.JPanel pnlInfo;
+    private javax.swing.JScrollPane scrInfo;
     // End of variables declaration//GEN-END:variables
+
+    
 }
