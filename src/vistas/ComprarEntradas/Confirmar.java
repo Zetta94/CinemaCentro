@@ -13,6 +13,7 @@ import persistencia.Context;
 import persistencia.LugaresData;
 import persistencia.ProyeccionData;
 import persistencia.TicketCompraData;
+import servicios.CompraServicio;
 
 /**
  *
@@ -23,7 +24,7 @@ public class Confirmar extends javax.swing.JPanel {
     /**
      * Creates new form Confirmar
      */
-    
+    private CompraServicio compraServicio = new CompraServicio();
     private Comprador comprador;
     private Proyeccion proyeccion;
     private List<Lugar> lugares;
@@ -49,6 +50,7 @@ public class Confirmar extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(882, 396));
 
@@ -57,6 +59,13 @@ public class Confirmar extends javax.swing.JPanel {
         jTextField1.setEditable(false);
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -64,10 +73,13 @@ public class Confirmar extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextField1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 814, Short.MAX_VALUE)))
+                        .addGap(0, 818, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -76,17 +88,28 @@ public class Confirmar extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        cargarDatos();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void cargarDatos() {
-        
+        boolean guardado = compraServicio.guardarCompra(comprador, lugares, proyeccion);
+        if(guardado) {
+            System.out.println("Guardado en bd correctamente");
+        }
     }
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables

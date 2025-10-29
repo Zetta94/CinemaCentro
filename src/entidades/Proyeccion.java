@@ -1,6 +1,7 @@
 
 package entidades;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Proyeccion {
@@ -12,11 +13,12 @@ public class Proyeccion {
     private boolean subtitulada;
     private LocalTime horaInicio;
     private LocalTime horaFin;
+    private LocalDate fecha;
     private double precio;
 
     public Proyeccion() {}
 
-    public Proyeccion(int idProyeccion, Pelicula pelicula, Sala sala, String idioma, boolean es3D, boolean subtitulada, LocalTime horaInicio, LocalTime horaFin, double precio) {
+    public Proyeccion(int idProyeccion, Pelicula pelicula, Sala sala, String idioma, boolean es3D, boolean subtitulada, LocalTime horaInicio, LocalTime horaFin, LocalDate fecha, double precio) {
         this.idProyeccion = idProyeccion;
         this.pelicula = pelicula;
         this.sala = sala;
@@ -25,6 +27,7 @@ public class Proyeccion {
         this.subtitulada = subtitulada;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
+        this.fecha = fecha;
         this.precio = precio;
     }
 
@@ -59,6 +62,10 @@ public class Proyeccion {
 
     public LocalTime getHoraFin() {
         return horaFin;
+    }
+    
+    public LocalDate getFecha() {
+        return fecha;
     }
 
     public double getPrecio() {
@@ -96,6 +103,10 @@ public class Proyeccion {
 
     public void setHoraFin(LocalTime horaFin) {
         this.horaFin = horaFin;
+    }
+    
+    public void setFecha (LocalDate fecha) {
+        this.fecha = fecha;
     }
 
     public void setPrecio(double precio) {

@@ -14,17 +14,17 @@ public class Lugar {
     private String fila;
     private int numero;
     private boolean ocupado;
-    private int idFuncion;
+    private int idProyeccion;
 
     public Lugar() {
     }
 
-    public Lugar(int idLugar, String fila, int numero, boolean ocupado, int idFuncion) {
-        this.idLugar = idLugar;
+    public Lugar(int idProyeccion, String fila, int numero, boolean ocupado, int idFuncion) {
+        this.idLugar = idProyeccion;
         this.fila = fila;
         this.numero = numero;
         this.ocupado = ocupado;
-        this.idFuncion = idFuncion;
+        this.idProyeccion = idFuncion;
     }
 
     public int getIdLugar() {
@@ -59,12 +59,12 @@ public class Lugar {
         this.ocupado = ocupado;
     }
 
-    public int getIdFuncion() {
-        return idFuncion;
+    public int getIdProyeccion() {
+        return idProyeccion;
     }
 
-    public void setIdFuncion(int idFuncion) {
-        this.idFuncion = idFuncion;
+    public void setIdProyeccion(int idFuncion) {
+        this.idProyeccion = idFuncion;
     }
 
     @Override

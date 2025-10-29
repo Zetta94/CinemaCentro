@@ -14,7 +14,7 @@ import java.util.List;
 public class DetalleTicket {
 
     private int idDetalle;         
-    private int idFuncion;          
+    private int idProyeccion;          
     private List<Lugar> lugares;    
     private int cantidad;          
     private double subtotal;        
@@ -23,15 +23,23 @@ public class DetalleTicket {
     public DetalleTicket() {
     }
 
-    public DetalleTicket(int idDetalle, int idFuncion, List<Lugar> lugares, int cantidad, double subtotal, TicketCompra ticket) {
+    public DetalleTicket(int idDetalle, int idProyeccion, List<Lugar> lugares, int cantidad, double subtotal, TicketCompra ticket) {
         this.idDetalle = idDetalle;
-        this.idFuncion = idFuncion;
+        this.idProyeccion = idProyeccion;
         this.lugares = lugares;
         this.cantidad = cantidad;
         this.subtotal = subtotal;
         this.ticket = ticket;
     }
-
+    
+    public DetalleTicket(int idProyeccion, List<Lugar> lugares, int cantidad, double subtotal, TicketCompra ticket) {
+        this.idProyeccion = idProyeccion;
+        this.lugares = lugares;
+        this.cantidad = cantidad;
+        this.subtotal = subtotal;
+        this.ticket = ticket;
+    }
+  
     public int getIdDetalle() {
         return idDetalle;
     }
@@ -41,11 +49,11 @@ public class DetalleTicket {
     }
 
     public int getIdFuncion() {
-        return idFuncion;
+        return idProyeccion;
     }
 
     public void setIdFuncion(int idFuncion) {
-        this.idFuncion = idFuncion;
+        this.idProyeccion = idFuncion;
     }
 
     public List<Lugar> getLugares() {

@@ -8,31 +8,32 @@ package entidades;
  *
  * @author Manuel Zuñiga
  */
-
 import java.time.LocalDate;
 
 public class TicketCompra {
 
-    private int idTicket;               
+    private int idTicket;
     private LocalDate fechaCompra;
     private LocalDate fechaFuncion;
     private double monto;
-    private Comprador comprador;       
-    private Lugar lugar; 
     private int idComprador;
-
 
     public TicketCompra() {
     }
 
-    public TicketCompra(int idTicket, LocalDate fechaCompra, LocalDate fechaFuncion,
-                        double monto, Comprador comprador, Lugar lugar) {
+    public TicketCompra(int idTicket, LocalDate fechaCompra, LocalDate fechaFuncion, double monto, int idComprador) {
         this.idTicket = idTicket;
         this.fechaCompra = fechaCompra;
         this.fechaFuncion = fechaFuncion;
         this.monto = monto;
-        this.comprador = comprador;
-        this.lugar = lugar;
+        this.idComprador = idComprador;
+    }
+
+    public TicketCompra(LocalDate fechaCompra, LocalDate fechaFuncion, double monto, int idComprador) {
+        this.fechaCompra = fechaCompra;
+        this.fechaFuncion = fechaFuncion;
+        this.monto = monto;
+        this.idComprador = idComprador;
     }
 
     public int getIdTicket() {
@@ -67,29 +68,12 @@ public class TicketCompra {
         this.monto = monto;
     }
 
-    public Comprador getComprador() {
-        return comprador;
+    public int getIdComprador() {
+        return idComprador;
     }
 
-    public void setComprador(Comprador comprador) {
-        this.comprador = comprador;
-    }
+    public void setIdComprador(int idComprador) {
+        this.idComprador = idComprador;
 
-    public Lugar getLugar() {
-        return lugar;
     }
-
-    public void setLugar(Lugar lugar) {
-        this.lugar = lugar;
-    }
-
-  public int getIdComprador() {
-    return idComprador;
 }
-
-public void setIdComprador(int idComprador) {
-    this.idComprador = idComprador;
-    
- }
-}
-

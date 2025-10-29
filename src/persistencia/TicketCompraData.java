@@ -16,8 +16,8 @@ public class TicketCompraData {
     }
 
     // Alta //
-    public void guardarTicket(TicketCompra ticket) {
-        String sql = "INSERT INTO ticketcompra (fechaCompra, fechaFuncion, monto, idComprador) VALUES (?, ?, ?, ?)";
+    public int guardarTicket(TicketCompra ticket) {
+        String sql = "INSERT INTO tickets (fechaCompra, fechaFuncion, monto, idComprador) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setDate(1, Date.valueOf(ticket.getFechaCompra()));
             ps.setDate(2, Date.valueOf(ticket.getFechaFuncion()));
@@ -28,18 +28,20 @@ public class TicketCompraData {
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 ticket.setIdTicket(rs.getInt(1));
-              JOptionPane.showMessageDialog(
+                JOptionPane.showMessageDialog(
                         null,
                         "Ticket guardado correctamente con ID: " + ticket.getIdTicket(),
                         "Exito",
                         JOptionPane.INFORMATION_MESSAGE);
-            }
+                return ticket.getIdTicket();
+            } else return -1;
         } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(
+            JOptionPane.showMessageDialog(
                     null,
                     "Error al guardar el ticket:\n" + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
+            return -1;
         }
     }
 
@@ -87,8 +89,7 @@ public class TicketCompraData {
                         "Ticket actualizado correctamente.",
                         "Exito",
                         JOptionPane.INFORMATION_MESSAGE);
-            }
-              else {
+            } else {
                 JOptionPane.showMessageDialog(
                         null,
                         "No se encontró el ticket a actualizar.",
@@ -96,7 +97,7 @@ public class TicketCompraData {
                         JOptionPane.WARNING_MESSAGE);
             }
         } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(
+            JOptionPane.showMessageDialog(
                     null,
                     "Error al actualizar el ticket:\n" + ex.getMessage(),
                     "Error",
@@ -119,8 +120,7 @@ public class TicketCompraData {
                 t.setFechaFuncion(rs.getDate("fechaFuncion").toLocalDate());
                 t.setMonto(rs.getDouble("monto"));
                 t.setIdComprador(rs.getInt("idComprador"));
-            }
-            else {
+            } else {
                 JOptionPane.showMessageDialog(
                         null,
                         "No se encontró el ticket con ID: " + idTicket,
@@ -128,7 +128,7 @@ public class TicketCompraData {
                         JOptionPane.WARNING_MESSAGE);
             }
         } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(
+            JOptionPane.showMessageDialog(
                     null,
                     "Error al buscar el ticket:\n" + ex.getMessage(),
                     "Error",
@@ -142,8 +142,7 @@ public class TicketCompraData {
         List<TicketCompra> lista = new ArrayList<>();
         String sql = "SELECT * FROM ticketcompra";
 
-        try (Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+        try (Statement st = con.createStatement(); ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
                 TicketCompra t = new TicketCompra();
                 t.setIdTicket(rs.getInt("idTicket"));
@@ -154,7 +153,7 @@ public class TicketCompraData {
                 lista.add(t);
             }
         } catch (SQLException ex) {
-              JOptionPane.showMessageDialog(
+            JOptionPane.showMessageDialog(
                     null,
                     "Error al listar los tickets:\n" + ex.getMessage(),
                     "Error",
@@ -180,7 +179,7 @@ public class TicketCompraData {
                 lista.add(t);
             }
         } catch (SQLException ex) {
-           JOptionPane.showMessageDialog(
+            JOptionPane.showMessageDialog(
                     null,
                     "Error al listar tickets por fecha:\n" + ex.getMessage(),
                     "Error",
@@ -191,64 +190,67 @@ public class TicketCompraData {
 
     //  Tickets por pelicula //
     public List<TicketCompra> listarTicketsPorPelicula(int idPelicula) {
-    List<TicketCompra> lista = new ArrayList<>();
-    String sql = "SELECT DISTINCT tc.* FROM ticketcompra tc "
-               + "JOIN detalleticket dt ON tc.idTicket = dt.idTicket "
-               + "JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion "
-               + "WHERE pr.idPelicula = ?";
-    try (PreparedStatement ps = con.prepareStatement(sql)) {
-        ps.setInt(1, idPelicula);
-        try (ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                TicketCompra t = new TicketCompra();
-                t.setIdTicket(rs.getInt("idTicket"));
-                Date dCompra = rs.getDate("fechaCompra");
-                Date dFuncion = rs.getDate("fechaFuncion");
-                if (dCompra != null) t.setFechaCompra(dCompra.toLocalDate());
-                if (dFuncion != null) t.setFechaFuncion(dFuncion.toLocalDate());
-                t.setMonto(rs.getDouble("monto"));
-                t.setIdComprador(rs.getInt("idComprador"));
-                lista.add(t);
+        List<TicketCompra> lista = new ArrayList<>();
+        String sql = "SELECT DISTINCT tc.* FROM ticketcompra tc "
+                + "JOIN detalleticket dt ON tc.idTicket = dt.idTicket "
+                + "JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion "
+                + "WHERE pr.idPelicula = ?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idPelicula);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    TicketCompra t = new TicketCompra();
+                    t.setIdTicket(rs.getInt("idTicket"));
+                    Date dCompra = rs.getDate("fechaCompra");
+                    Date dFuncion = rs.getDate("fechaFuncion");
+                    if (dCompra != null) {
+                        t.setFechaCompra(dCompra.toLocalDate());
+                    }
+                    if (dFuncion != null) {
+                        t.setFechaFuncion(dFuncion.toLocalDate());
+                    }
+                    t.setMonto(rs.getDouble("monto"));
+                    t.setIdComprador(rs.getInt("idComprador"));
+                    lista.add(t);
+                }
             }
-        }
-    } catch (SQLException ex) {
-       JOptionPane.showMessageDialog(
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(
                     null,
                     "Error al listar tickets por pelicula:\n" + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
+        }
+        return lista;
     }
-    return lista;
-}
 
     // Peliculas mas vistas //
     public void peliculasMasVistas() {
-    String sql = "SELECT p.titulo, COUNT(dt.idDetalle) AS entradasVendidas "
-               + "FROM pelicula p "
-               + "JOIN proyeccion pr ON p.idPelicula = pr.idPelicula "
-               + "JOIN detalleticket dt ON pr.idProyeccion = dt.idProyeccion "
-               + "GROUP BY p.titulo "
-               + "ORDER BY entradasVendidas DESC "
-               + "LIMIT 5";
-    try (Statement st = con.createStatement();
-         ResultSet rs = st.executeQuery(sql)) {
-         StringBuilder sb = new StringBuilder("Peliculas mas vistas:\n");
-        while (rs.next()) {
-            sb.append(" - ").append(rs.getString("titulo"))
-                  .append(": ").append(rs.getInt("entradasVendidas"))
-                  .append(" entradas\n");
-        }
-        JOptionPane.showMessageDialog(
+        String sql = "SELECT p.titulo, COUNT(dt.idDetalle) AS entradasVendidas "
+                + "FROM pelicula p "
+                + "JOIN proyeccion pr ON p.idPelicula = pr.idPelicula "
+                + "JOIN detalleticket dt ON pr.idProyeccion = dt.idProyeccion "
+                + "GROUP BY p.titulo "
+                + "ORDER BY entradasVendidas DESC "
+                + "LIMIT 5";
+        try (Statement st = con.createStatement(); ResultSet rs = st.executeQuery(sql)) {
+            StringBuilder sb = new StringBuilder("Peliculas mas vistas:\n");
+            while (rs.next()) {
+                sb.append(" - ").append(rs.getString("titulo"))
+                        .append(": ").append(rs.getInt("entradasVendidas"))
+                        .append(" entradas\n");
+            }
+            JOptionPane.showMessageDialog(
                     null,
                     sb.toString(),
                     "Ranking de peliculas",
                     JOptionPane.INFORMATION_MESSAGE);
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(
                     null,
                     "Error al generar ranking:\n" + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
+        }
     }
-  }
-}    
+}

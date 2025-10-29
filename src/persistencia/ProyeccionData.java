@@ -1,4 +1,3 @@
-
 package persistencia;
 
 import entidades.Pelicula;
@@ -9,7 +8,7 @@ import java.util.*;
 import javax.swing.JOptionPane;
 
 public class ProyeccionData {
-    
+
     private Connection con = null;
     private PeliculaData peliculaData;
     private SalaData salaData;
@@ -21,7 +20,7 @@ public class ProyeccionData {
     }
 
     public void guardarProyeccion(Proyeccion p) {
-        String sql = "INSERT INTO proyeccion (idPelicula, idSala, idioma, es3D, subtitulada, horaInicio, horaFin, precio) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO proyeccion (idPelicula, idSala, idioma, es3D, subtitulada, horaInicio, horaFin, fecha, precio) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, p.getPelicula().getIdPelicula());
             ps.setInt(2, p.getSala().getIdSala());
@@ -30,7 +29,8 @@ public class ProyeccionData {
             ps.setBoolean(5, p.isSubtitulada());
             ps.setTime(6, Time.valueOf(p.getHoraInicio()));
             ps.setTime(7, Time.valueOf(p.getHoraFin()));
-            ps.setDouble(8, p.getPrecio());
+            ps.setDate(8, java.sql.Date.valueOf(p.getFecha()));
+            ps.setDouble(9, p.getPrecio());
             ps.executeUpdate();
 
             ResultSet rs = ps.getGeneratedKeys();
@@ -53,15 +53,16 @@ public class ProyeccionData {
                 Sala sala = salaData.buscarSala(rs.getInt("idSala"));
 
                 Proyeccion p = new Proyeccion(
-                    rs.getInt("idProyeccion"),
-                    peli,
-                    sala,
-                    rs.getString("idioma"),
-                    rs.getBoolean("es3D"),
-                    rs.getBoolean("subtitulada"),
-                    rs.getTime("horaInicio").toLocalTime(),
-                    rs.getTime("horaFin").toLocalTime(),
-                    rs.getDouble("precio")
+                        rs.getInt("idProyeccion"),
+                        peli,
+                        sala,
+                        rs.getString("idioma"),
+                        rs.getBoolean("es3D"),
+                        rs.getBoolean("subtitulada"),
+                        rs.getTime("horaInicio").toLocalTime(),
+                        rs.getTime("horaFin").toLocalTime(),
+                        rs.getDate("fecha").toLocalDate(),
+                        rs.getDouble("precio")
                 );
                 lista.add(p);
             }
@@ -70,27 +71,28 @@ public class ProyeccionData {
         }
         return lista;
     }
-    
+
     public List<Proyeccion> listarProyeccionesPorId(int peliculaId) {
         List<Proyeccion> lista = new ArrayList<>();
         String sql = "SELECT * FROM proyeccion WHERE idPelicula = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1,peliculaId);
+            ps.setInt(1, peliculaId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Pelicula peli = peliculaData.obtenerPorId(rs.getInt("idPelicula"));
                 Sala sala = salaData.buscarSala(rs.getInt("idSala"));
 
                 Proyeccion p = new Proyeccion(
-                    rs.getInt("idProyeccion"),
-                    peli,
-                    sala,
-                    rs.getString("idioma"),
-                    rs.getBoolean("es3D"),
-                    rs.getBoolean("subtitulada"),
-                    rs.getTime("horaInicio").toLocalTime(),
-                    rs.getTime("horaFin").toLocalTime(),
-                    rs.getDouble("precio")
+                        rs.getInt("idProyeccion"),
+                        peli,
+                        sala,
+                         rs.getString("idioma"),
+                        rs.getBoolean("es3D"),
+                        rs.getBoolean("subtitulada"),
+                        rs.getTime("horaInicio").toLocalTime(),
+                        rs.getTime("horaFin").toLocalTime(),
+                        rs.getDate("fecha").toLocalDate(),
+                        rs.getDouble("precio")
                 );
                 lista.add(p);
             }

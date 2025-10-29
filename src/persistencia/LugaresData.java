@@ -9,6 +9,7 @@ import entidades.Lugar;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,32 @@ public class LugaresData {
 
     public LugaresData(Conexion conexion) {
         this.connection = conexion.establishConnection();
+    }
+
+    public int guardarLugar(Lugar lugar) {
+        String sql = "INSERT INTO lugares (fila, numero, ocupado, idProyeccion) VALUES (?,?,?,?)";
+        try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, lugar.getFila());
+            ps.setInt(2, lugar.getNumero());
+            ps.setBoolean(3, true);
+            ps.setInt(4, lugar.getIdProyeccion());
+
+            ps.executeUpdate();
+            
+            ResultSet rs = ps.getGeneratedKeys();
+            if(rs.next()) {
+                return rs.getInt(1);
+            } else return -1;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Error al guardar el lugar",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            ex.printStackTrace();
+            return -1;
+        }
     }
 
     public int ObtenerLugaresDisponibles(int idProyeccion) {
@@ -85,6 +112,27 @@ public class LugaresData {
             return ocupados;
         }
         return ocupados;
+    }
+
+    public void vincularLugarADetalle(int idLugar, int idDetalle) {
+        String sql = "INSERT INTO detalle_lugares (idDetalle, idLugar) VALUES (?,?)";
+        System.out.println("id lugar " + idLugar);
+        System.out.println("id detalle " + idDetalle);
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, idDetalle);
+            ps.setInt(2, idLugar);
+            ps.executeUpdate();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Error al vincular lugares",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            ex.printStackTrace();
+            return;
+        }
     }
 
 }

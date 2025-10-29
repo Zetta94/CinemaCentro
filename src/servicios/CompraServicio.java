@@ -6,10 +6,23 @@
 package servicios;
 
 import entidades.Comprador;
+import entidades.DetalleTicket;
 import entidades.Lugar;
+import entidades.Proyeccion;
+import entidades.TicketCompra;
 import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import javax.swing.JOptionPane;
 import persistencia.CompradorData;
+import persistencia.Conexion;
 import persistencia.Context;
+import persistencia.DetalleTicketData;
 import persistencia.LugaresData;
 import persistencia.ProyeccionData;
 import persistencia.TicketCompraData;
@@ -23,13 +36,53 @@ public class CompraServicio {
     private CompradorData compradorData = Context.getCompradorData();
     private LugaresData lugaresData = Context.getLugaresData();
     private TicketCompraData ticketCompraData = Context.getTicketCompraData();
-    
-    public boolean guardarCompra(Comprador comprador, List<Lugar> lugaresSeleccionados, Proyeccion proyeccion) {
-        String sqlComprador = "INSERT INTO compradores (dni, nombre, fechaNac, password, medioPago) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE VALUES(nombre), fechaNac = VALUES(fechaNac), password = VALUES(password), medioPago = VALUES(medioPago)";
-        String sqlTicket = "INSERT INTO tickets (fechaCompra, fechaFuncion, monto, idComprador) VALUES (?,?,?,?)";
-        String sqlDetaleTicket = "INSERT INTO detalle_tickets (idTicket, idProyeccion, cantidad, subtotal) VALUES (?,?,?,?)";
-        String sqlLugares = "INSERT INTO lugares (fila, numero, ocupado, idProyeccion) VALUES (?,?,?,?)";
-        String sqlDetalleLugar = "INSERT INTO detalle_lugares (idDetalle, idLugar) VALUES (?,?)";
-    }
+    private DetalleTicketData detalleTicketData = Context.getDetalleTicketData();
+    private Connection connection = Context.getConnetion().establishConnection();
 
+    public boolean guardarCompra(Comprador comprador, List<Lugar> lugaresSeleccionados, Proyeccion proyeccion) {
+
+        try {
+            connection.setAutoCommit(false);
+            int idComprador = compradorData.guardarOActualizar(comprador);
+
+            double monto = proyeccion.getPrecio() * lugaresSeleccionados.size();
+            TicketCompra ticket = new TicketCompra(LocalDate.now(), proyeccion.getFecha(), monto, idComprador);
+            int idTicket = ticketCompraData.guardarTicket(ticket);
+
+            DetalleTicket detalleTicket = new DetalleTicket(proyeccion.getIdProyeccion(), lugaresSeleccionados, lugaresSeleccionados.size(), monto, ticket);
+
+            DetalleTicket detalleCreado = detalleTicketData.guardarDetalleTicket(detalleTicket);
+
+            for (Lugar lugar : detalleCreado.getLugares()) {
+                int idLugar = lugar.getIdLugar();
+                lugaresData.vincularLugarADetalle(idLugar, detalleCreado.getIdDetalle());
+            }
+
+            connection.commit();
+            return true;
+
+        } catch (SQLException ex) {
+            try {
+                connection.rollback();
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Hubo un error en el flujo de compra",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                ex.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return false;
+
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 }

@@ -217,7 +217,7 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
                             nuevo.setFila(String.valueOf(filaActual));
                             nuevo.setNumero(numeroActual);
                             nuevo.setOcupado(false);
-                            nuevo.setIdFuncion(idProyeccion);
+                            nuevo.setIdProyeccion(idProyeccion);
                             elegidos.add(nuevo);
                             btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/butaca.png")));
                         }
