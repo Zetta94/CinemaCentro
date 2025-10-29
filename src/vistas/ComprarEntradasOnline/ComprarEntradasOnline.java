@@ -9,6 +9,7 @@ import entidades.Lugar;
 import entidades.Pelicula;
 import entidades.Proyeccion;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.util.List;
 import javax.swing.JPanel;
@@ -34,28 +35,64 @@ public class ComprarEntradasOnline extends javax.swing.JInternalFrame {
     private EntradasListener listener;
 
     private Comprador comprador;
-    private Pelicula pelicula;
     private Proyeccion proyeccion;
     private List<Lugar> asientosSeleccionados;
+
+    DatosCompradorOnline paso1;
+    SeleccionPeliculaOnline paso2;
+    SeleccionAsientosOnline paso3;
+    DatosTarjeta paso4;
+    ConfirmarOnline paso5;
+
+    
     
     
     public ComprarEntradasOnline() {
         initComponents();
-        JPanel paso1 = new DatosCompradorOnline();
-        JPanel paso2 = new SeleccionPeliculaOnline();
-        JPanel paso3 = new SeleccionAsientosOnline();
-        JPanel paso4 = new ConfirmarOnline();
+        aplicarEstiloOscuro();
+        
+        paso1 = new DatosCompradorOnline();
+        paso2 = new SeleccionPeliculaOnline();
+        paso3 = new SeleccionAsientosOnline();
+        paso4 = new DatosTarjeta();
+        paso5 = new ConfirmarOnline();
 
         pnlPrincipal.add(paso1, "paso1");
         pnlPrincipal.add(paso2, "paso2");
         pnlPrincipal.add(paso3, "paso3");
         pnlPrincipal.add(paso4, "paso4");
+        pnlPrincipal.add(paso5,"paso5");
 
         btnAnterior.setEnabled(false);
 
         layout = (CardLayout) pnlPrincipal.getLayout();
     }
+    
+    private void aplicarEstiloOscuro() {
+        Color fondoGeneral = new Color(33, 33, 33);
+        Color panelOscuro = new Color(45, 45, 45);
+        Color textoClaro = new Color(230, 230, 230);
+        Color rojoCine = new Color(102,0,0);
+        Color grisBoton = new Color(77, 77, 77);
 
+    
+        getContentPane().setBackground(fondoGeneral);
+        setBackground(fondoGeneral);
+
+        pnlPrincipal.setBackground(panelOscuro);
+
+     
+        btnSiguiente.setBackground(rojoCine);
+        btnSiguiente.setForeground(Color.WHITE);
+        btnSiguiente.setFocusPainted(false);
+        btnSiguiente.setBorderPainted(false);
+
+
+        btnAnterior.setBackground(grisBoton);
+        btnAnterior.setForeground(Color.WHITE);
+        btnAnterior.setFocusPainted(false);
+        btnAnterior.setBorderPainted(false);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -140,7 +177,7 @@ private void avanzar() {
                     comprador = (Comprador) datos;
                     break;
                 case 2:
-                    pelicula = (Pelicula) datos;
+                    proyeccion = (Proyeccion) datos;
                     break;
                 case 3:
                     asientosSeleccionados = (List<Lugar>) datos;
