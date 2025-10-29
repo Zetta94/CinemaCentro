@@ -19,7 +19,7 @@ import persistencia.PeliculaData;
  *
  * @author Morbo
  */
-public class Peliculas extends javax.swing.JPanel {
+public class Compradores extends javax.swing.JPanel {
 
     /**
      * Creates new form Compradores
@@ -29,7 +29,7 @@ public class Peliculas extends javax.swing.JPanel {
     private DefaultTableModel modelo;
     private Connection connection;
 
-    public Peliculas() {
+    public Compradores() {
         initComponents();
         System.out.println("peliculas");
         cargarComboGeneros();

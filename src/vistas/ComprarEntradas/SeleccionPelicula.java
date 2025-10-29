@@ -74,22 +74,40 @@ public class SeleccionPelicula extends javax.swing.JPanel implements EntradasLis
         lblLugaresDisponibles = new javax.swing.JLabel();
         lblLugaresModificable = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(33, 33, 33));
+        setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        setForeground(new java.awt.Color(7, 10, 20));
         setMinimumSize(new java.awt.Dimension(882, 396));
         setName(""); // NOI18N
         setPreferredSize(new java.awt.Dimension(882, 396));
 
-        lblTitulo.setText("seleccionar pelicula");
+        lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/peli.png"))); // NOI18N
 
+        lblPelicula.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblPelicula.setForeground(new java.awt.Color(204, 153, 0));
         lblPelicula.setText("Pelicula:");
 
+        lblProyeccion.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblProyeccion.setForeground(new java.awt.Color(204, 153, 0));
         lblProyeccion.setText("Proyeccion:");
 
-        lblLugares.setText("Lugares disponibles");
+        lblLugares.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblLugares.setForeground(new java.awt.Color(204, 153, 0));
+        lblLugares.setText("Lugares disponibles:");
 
         txtaDetalles.setEditable(false);
+        txtaDetalles.setBackground(new java.awt.Color(70, 70, 70));
         txtaDetalles.setColumns(20);
+        txtaDetalles.setForeground(new java.awt.Color(230, 230, 230));
         txtaDetalles.setRows(5);
+        txtaDetalles.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         scrDetalles.setViewportView(txtaDetalles);
+
+        lblLugaresDisponibles.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblLugaresDisponibles.setForeground(new java.awt.Color(153, 0, 0));
+
+        lblLugaresModificable.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblLugaresModificable.setForeground(new java.awt.Color(204, 0, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -98,50 +116,50 @@ public class SeleccionPelicula extends javax.swing.JPanel implements EntradasLis
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(289, 289, 289)
                         .addComponent(lblTitulo))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(164, 164, 164)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(scrDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblLugares)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblLugaresDisponibles)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblLugaresModificable))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(210, 210, 210)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblPelicula)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(lblProyeccion)
-                            .addGap(167, 167, 167)
-                            .addComponent(cbxProyecciones, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(287, Short.MAX_VALUE))
+                            .addComponent(lblLugares)
+                            .addComponent(lblProyeccion))
+                        .addGap(83, 83, 83)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblLugaresModificable, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(lblLugaresDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cbxProyecciones, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbxPelicula, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(198, 198, 198)
+                        .addComponent(scrDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(242, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblTitulo)
-                .addGap(57, 57, 57)
+                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPelicula)
                     .addComponent(cbxPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblProyeccion)
                     .addComponent(cbxProyecciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(lblLugaresModificable, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblLugares))
+                    .addComponent(lblLugaresDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblLugares)
-                    .addComponent(lblLugaresDisponibles)
-                    .addComponent(lblLugaresModificable))
-                .addGap(32, 32, 32)
-                .addComponent(scrDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addComponent(scrDetalles, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 

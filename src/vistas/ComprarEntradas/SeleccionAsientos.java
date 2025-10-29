@@ -30,25 +30,25 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
     initComponents();
     lstInfo.setModel(modeloLista);
 
-    // 🎨 Colores personalizados
+  
     Color fondoGeneral = new Color(33, 33, 33);
     Color fondoPanel = new Color(45, 45, 45);
     Color fondoInfo = new Color(50, 50, 50);
     Color textoClaro = new Color(230, 230, 230);
 
-    // Fondo principal
+  
     setBackground(fondoGeneral);
     setForeground(textoClaro);
 
-    // Panel de asientos
+    
     pnlAsientos.setBackground(fondoPanel);
     pnlAsientos.setBorder(BorderFactory.createLineBorder(new Color(70, 70, 70), 1));
 
-    // Panel de información
+  
     pnlInfo.setBackground(fondoInfo);
     pnlInfo.setBorder(BorderFactory.createLineBorder(new Color(70, 70, 70), 1));
 
-    // Etiquetas y lista
+  
     lblTitulo.setBackground(fondoGeneral);
     lblSeleccionados.setForeground(textoClaro);
     lblPrecio.setForeground(textoClaro);
@@ -135,7 +135,7 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
                 .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblPrecioModificable)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -149,7 +149,7 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
                 .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(238, 238, 238)
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -161,9 +161,9 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(pnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 14, Short.MAX_VALUE))
+                    .addComponent(pnlAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
