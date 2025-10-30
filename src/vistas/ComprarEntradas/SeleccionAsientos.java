@@ -97,13 +97,20 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
 
         pnlInfo.setBackground(new java.awt.Color(51, 51, 51));
 
+        lblSeleccionados.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblSeleccionados.setForeground(new java.awt.Color(153, 0, 0));
         lblSeleccionados.setText("Seleccionados:");
 
+        lblPrecio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblPrecio.setForeground(new java.awt.Color(153, 0, 0));
         lblPrecio.setText("Precio:");
         lblPrecio.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         lstInfo.setEnabled(false);
         scrInfo.setViewportView(lstInfo);
+
+        lblPrecioModificable.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblPrecioModificable.setForeground(new java.awt.Color(204, 153, 0));
 
         javax.swing.GroupLayout pnlInfoLayout = new javax.swing.GroupLayout(pnlInfo);
         pnlInfo.setLayout(pnlInfoLayout);
@@ -119,7 +126,7 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
                         .addComponent(lblSeleccionados)
                         .addGap(18, 18, 18)
                         .addComponent(lblSeleccionadosModificable)
-                        .addGap(0, 47, Short.MAX_VALUE)))
+                        .addGap(0, 44, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlInfoLayout.setVerticalGroup(
@@ -163,7 +170,7 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(pnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 14, Short.MAX_VALUE))
-                    .addComponent(pnlAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(pnlAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, 325, Short.MAX_VALUE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
