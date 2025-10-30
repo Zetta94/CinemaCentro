@@ -4,7 +4,12 @@
  */
 package vistas.ComprarEntradasOnline;
 
+import entidades.Comprador;
+import entidades.Lugar;
+import entidades.Proyeccion;
+import java.util.List;
 import java.util.Random;
+import servicios.CompraServicio;
 
 /**
  *
@@ -15,13 +20,51 @@ public class ConfirmarOnline extends javax.swing.JPanel {
     /**
      * Creates new form ConfirmarOnline
      */
+    private CompraServicio compraServicio = new CompraServicio();
+    private Comprador comprador;
+    private Proyeccion proyeccion;
+    private List<Lugar> lugares;
+
     public ConfirmarOnline() {
         initComponents();
         
-      Random random = new Random();
-    int codigo = 100000 + random.nextInt(900000); // rango 100000–999999
-    String codigoString = String.valueOf(codigo);
-    lblCodigo.setText(codigoString);  
+      codigoTicket();
+      
+      
+    }
+    
+   
+    public void setData(Comprador comprador, Proyeccion proyeccion, List<Lugar> lugares) {
+        this.comprador = comprador;
+        this.proyeccion = proyeccion;
+        this.lugares = lugares;
+        mostrarResumen();
+    }
+    private void mostrarResumen() {
+        if (comprador == null || proyeccion == null || lugares == null || lugares.isEmpty()) {
+            txtInfo.setText("Faltan datos para mostrar el resumen de la compra.");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("🎬  RESUMEN DE COMPRA\n");
+        sb.append("───────────────────────────────\n");
+      
+
+        sb.append("🎞 Película: ").append(proyeccion.getPelicula().getTitulo()).append("\n");
+        sb.append("🏛 Sala: ").append(proyeccion.getSala().getNroSala()).append("\n");
+        sb.append("🕒 Horario: ").append(proyeccion.getHoraInicio()).append(" - ").append(proyeccion.getHoraFin()).append("\n\n");
+
+        sb.append("🎟 Lugares seleccionados:\n");
+        for (Lugar lugar : lugares) {
+            sb.append(" - Fila ").append(lugar.getFila())
+              .append(", Asiento ").append(lugar.getNumero()).append("\n");
+        }
+
+        double total = proyeccion.getPrecio() * lugares.size();
+        sb.append("\n💰 Total a pagar: $").append(String.format("%.2f", total)).append("\n");
+
+        txtInfo.setText(sb.toString());
     }
     
     
@@ -35,64 +78,116 @@ public class ConfirmarOnline extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtInfo = new javax.swing.JTextPane();
+        jPanel1 = new javax.swing.JPanel();
         lblCodigo = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
-        jTextField1.setText("jTextField1");
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Confirmarcompra.png"))); // NOI18N
 
-        jLabel1.setText("Ya podes retirar tus entradas!");
+        txtInfo.setBackground(new java.awt.Color(77, 77, 77));
+        txtInfo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jScrollPane2.setViewportView(txtInfo);
+
+        lblCodigo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
+        jLabel4.setText("Codigo:");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("Operacion finalizada");
 
-        jLabel4.setText("Codigo:");
+        jLabel1.setText("Ya podes retirar tus entradas!");
 
-        lblCodigo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(96, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel1))
+                            .addComponent(jLabel2))
+                        .addGap(91, 91, 91))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(27, 27, 27)
+                        .addComponent(lblCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(81, 81, 81))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addGap(66, 66, 66)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(220, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(109, 109, 109)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel1))
-                            .addComponent(jLabel2)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(jLabel4)
-                        .addGap(42, 42, 42)
-                        .addComponent(lblCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(114, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addGap(81, 81, 81)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(lblCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(135, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2))
+                .addGap(19, 19, 19))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
+     private void cargarDatos() {
+        boolean guardado = compraServicio.guardarCompra(comprador, lugares, proyeccion);
+        if(guardado) {
+            System.out.println("Guardado en bd correctamente");
+        }
+    }
+    
+    private void codigoTicket(){
+         Random random = new Random();
+    int codigo = 100000 + random.nextInt(900000); 
+    String codigoString = String.valueOf(codigo);
+    lblCodigo.setText(codigoString);
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCodigo;
+    private javax.swing.JTextPane txtInfo;
     // End of variables declaration//GEN-END:variables
 }
