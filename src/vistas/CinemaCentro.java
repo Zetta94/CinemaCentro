@@ -4,6 +4,7 @@
  */
 package vistas;
 
+import VistaCartelera.Cartelera;
 import java.awt.Color;
 import persistencia.Conexion;
 import javax.swing.BorderFactory;
@@ -66,7 +67,7 @@ public class CinemaCentro extends javax.swing.JFrame {
         lblTitulo = new javax.swing.JLabel();
         pnlMenu = new javax.swing.JPanel();
         btnOnline = new javax.swing.JButton();
-        btnEntradas = new javax.swing.JButton();
+        btnCartelera = new javax.swing.JButton();
         btnAdministracion = new javax.swing.JButton();
         btnEntradas1 = new javax.swing.JButton();
         escritorio = new javax.swing.JDesktopPane();
@@ -80,7 +81,7 @@ public class CinemaCentro extends javax.swing.JFrame {
         pnlHeader.setLayout(new java.awt.BorderLayout());
 
         pnlTitulo.setForeground(new java.awt.Color(30, 41, 59));
-        pnlTitulo.setLayout(new java.awt.GridLayout());
+        pnlTitulo.setLayout(new java.awt.GridLayout(1, 0));
 
         lblTitulo.setBackground(new java.awt.Color(8, 64, 107));
         lblTitulo.setForeground(new java.awt.Color(8, 64, 107));
@@ -97,7 +98,6 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         btnOnline.setBackground(new java.awt.Color(0, 0, 0));
         btnOnline.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        btnOnline.setForeground(new java.awt.Color(204, 204, 204));
         btnOnline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Online (2).png"))); // NOI18N
         btnOnline.setText("Entradas Online");
         btnOnline.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -110,24 +110,22 @@ public class CinemaCentro extends javax.swing.JFrame {
             }
         });
 
-        btnEntradas.setBackground(new java.awt.Color(0, 0, 0));
-        btnEntradas.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        btnEntradas.setForeground(new java.awt.Color(204, 204, 204));
-        btnEntradas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cartelera.png"))); // NOI18N
-        btnEntradas.setText("Cartelera");
-        btnEntradas.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnEntradas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnEntradas.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cartelera.png"))); // NOI18N
-        btnEntradas.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cartelera75.png"))); // NOI18N
-        btnEntradas.addActionListener(new java.awt.event.ActionListener() {
+        btnCartelera.setBackground(new java.awt.Color(0, 0, 0));
+        btnCartelera.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        btnCartelera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cartelera.png"))); // NOI18N
+        btnCartelera.setText("Cartelera");
+        btnCartelera.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnCartelera.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnCartelera.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cartelera.png"))); // NOI18N
+        btnCartelera.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cartelera75.png"))); // NOI18N
+        btnCartelera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEntradasActionPerformed(evt);
+                btnCarteleraActionPerformed(evt);
             }
         });
 
         btnAdministracion.setBackground(new java.awt.Color(0, 0, 0));
         btnAdministracion.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        btnAdministracion.setForeground(new java.awt.Color(204, 204, 204));
         btnAdministracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Admin.png"))); // NOI18N
         btnAdministracion.setText("Administracion");
         btnAdministracion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -142,7 +140,6 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         btnEntradas1.setBackground(new java.awt.Color(0, 0, 0));
         btnEntradas1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        btnEntradas1.setForeground(new java.awt.Color(204, 204, 204));
         btnEntradas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Tickets (2).png"))); // NOI18N
         btnEntradas1.setText("Entradas");
         btnEntradas1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -165,7 +162,7 @@ public class CinemaCentro extends javax.swing.JFrame {
                 .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnEntradas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnOnline, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                    .addComponent(btnEntradas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCartelera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAdministracion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(48, Short.MAX_VALUE))
         );
@@ -175,7 +172,7 @@ public class CinemaCentro extends javax.swing.JFrame {
                 .addGap(50, 50, 50)
                 .addComponent(btnEntradas1)
                 .addGap(70, 70, 70)
-                .addComponent(btnEntradas)
+                .addComponent(btnCartelera)
                 .addGap(83, 83, 83)
                 .addComponent(btnOnline)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
@@ -233,9 +230,10 @@ public class CinemaCentro extends javax.swing.JFrame {
         abrirYCentrar(comprarEntrada);
     }//GEN-LAST:event_btnOnlineActionPerformed
 
-    private void btnEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEntradasActionPerformed
+    private void btnCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarteleraActionPerformed
+        Cartelera cartelera= new Cartelera();
+        abrirYCentrar(cartelera);
+    }//GEN-LAST:event_btnCarteleraActionPerformed
 
     private void btnAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracionActionPerformed
         // TODO add your handling code here:
@@ -291,7 +289,7 @@ public class CinemaCentro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdministracion;
-    private javax.swing.JButton btnEntradas;
+    private javax.swing.JButton btnCartelera;
     private javax.swing.JButton btnEntradas1;
     private javax.swing.JButton btnOnline;
     private javax.swing.JDesktopPane escritorio;

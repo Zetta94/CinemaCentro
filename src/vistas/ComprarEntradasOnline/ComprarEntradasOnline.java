@@ -14,6 +14,7 @@ import java.awt.Component;
 import java.util.List;
 import javax.swing.JPanel;
 import listeners.EntradasListener;
+import servicios.CompraServicio;
 import vistas.ComprarEntradas.Confirmar;
 import vistas.ComprarEntradas.DatosComprador;
 import vistas.ComprarEntradas.SeleccionAsientos;
@@ -30,12 +31,15 @@ public class ComprarEntradasOnline extends javax.swing.JInternalFrame {
     /**
      * Creates new form ComprarEntradasOnline
      */
+    private CompraServicio compraServicio = new CompraServicio();
+    private Comprador comprador;
+    private Proyeccion proyeccion;
+    
     private int pasoActual = 1;
     private CardLayout layout;
     private EntradasListener listener;
 
-    private Comprador comprador;
-    private Proyeccion proyeccion;
+    
     private List<Lugar> asientosSeleccionados;
 
     DatosCompradorOnline paso1;
@@ -163,7 +167,10 @@ public class ComprarEntradasOnline extends javax.swing.JInternalFrame {
        volver();
     }//GEN-LAST:event_btnAnteriorActionPerformed
 private void avanzar() {
-
+     if(btnSiguiente.getText().equals("Guardar y Salir")){
+         cargarDatos();
+         this.dispose();
+     }
         Component actual = pnlPrincipal.getComponent(pasoActual - 1);
 
         if (actual instanceof EntradasListener) {
@@ -187,15 +194,26 @@ private void avanzar() {
             }
         }
 
-        if (pasoActual < 3) {
+        if (pasoActual < 5) {
             pasoActual++;
+            if (pasoActual == 3) {
+                paso3.setProyeccionData(proyeccion.getIdProyeccion(), proyeccion.getPrecio());
+            }
+            if(pasoActual == 5) {
+                paso5.setData(comprador, proyeccion, asientosSeleccionados);
+            }
+            
             layout.show(pnlPrincipal, "paso" + pasoActual);
             btnAnterior.setEnabled(true);
         }
 
-        if (pasoActual == 3) {
+        if (pasoActual == 4) {
             btnSiguiente.setText("Confirmar");
         }
+        if(pasoActual ==5){
+            btnSiguiente.setText("Guardar y Salir");
+        }
+        
     }
 
     private void volver() {
@@ -204,11 +222,18 @@ private void avanzar() {
             layout.show(pnlPrincipal, "paso" + pasoActual);
             btnSiguiente.setText("Siguiente");
         }
-
+        
         if (pasoActual == 1) {
             btnAnterior.setEnabled(false);
         }
     }
+    private void cargarDatos() {
+        boolean guardado = compraServicio.guardarCompra(comprador, asientosSeleccionados, proyeccion);
+        if(guardado) {
+            System.out.println("Guardado en bd correctamente");
+        }
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterior;

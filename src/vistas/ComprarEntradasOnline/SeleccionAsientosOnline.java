@@ -96,7 +96,7 @@ public class SeleccionAsientosOnline extends javax.swing.JPanel implements Entra
         pnlAsientos.setLayout(pnlAsientosLayout);
         pnlAsientosLayout.setHorizontalGroup(
             pnlAsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 689, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         pnlAsientosLayout.setVerticalGroup(
             pnlAsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,7 +127,7 @@ public class SeleccionAsientosOnline extends javax.swing.JPanel implements Entra
                         .addComponent(lblSeleccionados)
                         .addGap(18, 18, 18)
                         .addComponent(lblSeleccionadosModificable)
-                        .addGap(0, 77, Short.MAX_VALUE)))
+                        .addGap(0, 59, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlInfoLayout.setVerticalGroup(
@@ -151,15 +151,15 @@ public class SeleccionAsientosOnline extends javax.swing.JPanel implements Entra
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(pnlAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(524, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(pnlAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,7 +272,6 @@ public void cargarMapaAsientos() {
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JList<String> lstInfo;
     private javax.swing.JPanel pnlAsientos;
-    private javax.swing.JPanel pnlAsientos1;
     private javax.swing.JPanel pnlInfo;
     private javax.swing.JScrollPane scrInfo;
     // End of variables declaration//GEN-END:variables
