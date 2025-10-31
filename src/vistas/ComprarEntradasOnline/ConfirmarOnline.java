@@ -87,19 +87,29 @@ public class ConfirmarOnline extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(33, 33, 33));
+
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Confirmarcompra.png"))); // NOI18N
 
         txtInfo.setBackground(new java.awt.Color(77, 77, 77));
         txtInfo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtInfo.setForeground(new java.awt.Color(230, 230, 230));
         jScrollPane2.setViewportView(txtInfo);
 
-        lblCodigo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jPanel1.setBackground(new java.awt.Color(77, 77, 77));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        lblCodigo.setBackground(new java.awt.Color(153, 0, 0));
+        lblCodigo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(204, 153, 0));
         jLabel4.setText("Codigo:");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("Operacion finalizada");
 
+        jLabel1.setForeground(new java.awt.Color(204, 153, 0));
         jLabel1.setText("Ya podes retirar tus entradas!");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -141,13 +151,15 @@ public class ConfirmarOnline extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(292, 292, 292)
+                        .addComponent(jLabel3)))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
