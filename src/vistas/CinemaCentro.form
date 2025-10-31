@@ -133,7 +133,7 @@
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="btnEntradas1" max="32767" attributes="0"/>
                       <Component id="btnOnline" alignment="0" pref="181" max="32767" attributes="0"/>
-                      <Component id="btnEntradas" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnCartelera" alignment="0" max="32767" attributes="0"/>
                       <Component id="btnAdministracion" alignment="1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="48" max="32767" attributes="0"/>
@@ -146,7 +146,7 @@
                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                   <Component id="btnEntradas1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
-                  <Component id="btnEntradas" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnCartelera" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
                   <Component id="btnOnline" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="17" max="32767" attributes="0"/>
@@ -186,7 +186,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOnlineActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnEntradas">
+        <Component class="javax.swing.JButton" name="btnCartelera">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>
@@ -212,7 +212,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEntradasActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCarteleraActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnAdministracion">
