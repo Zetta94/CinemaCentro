@@ -1,6 +1,5 @@
 package vistas;
 
-import entidades.Pelicula;
 import java.awt.Window;
 import java.util.List;
 import javax.swing.JDesktopPane;
@@ -8,50 +7,86 @@ import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import listeners.PeliculaListener;
-import org.mariadb.jdbc.Connection;
-import persistencia.Conexion;
 import persistencia.Context;
-import static persistencia.Context.getPeliculaData;
-import persistencia.PeliculaData;
+import persistencia.SalaData;
+import entidades.Sala;
 
-/**
- *
- * @author Morbo
- */
-public class Sala extends javax.swing.JPanel {
+public class SalasView extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Compradores
-     */
-    private PeliculaData peliculaData = Context.getPeliculaData();
-    private PeliculaListener listener;
+    private SalaData salaData = Context.getSalaData();
     private DefaultTableModel modelo;
-    private Connection connection;
 
-    public Sala() {
+    public SalasView() {
         initComponents();
-        System.out.println("peliculas");
-        cargarComboGeneros();
-        modelo = (DefaultTableModel) jtblePeliculas.getModel();
+        modelo = (DefaultTableModel) jtbleSalas.getModel();
+        inicializarCombos();
         cargarTabla();
     }
 
-    private void cargarTabla() {
-        
-        //DefaultTableModel modelo = (DefaultTableModel) jtblePeliculas.getModel();
+     private void cargarTabla() {
         modelo.setRowCount(0);
-        for (Pelicula p : peliculaData.obtenerTodas()) {
+        for (Sala s : salaData.listarSalas()) {
             modelo.addRow(new Object[]{
-                p.getIdPelicula(),
-                p.getTitulo(),
-                p.getDirector(),
-                p.getActores(),
-                p.getOrigen(),
-                p.getGenero(),
-                p.getEstreno(),
-                p.isEnCartelera()
+                s.getIdSala(),
+                s.getNroSala(),
+                s.isApta3D() ? "Sí" : "No",
+                s.getCapacidad(),
+                s.isEstado() ? "Activa" : "Inactiva"
             });
+        }
+    }
+
+    private void inicializarCombos() {
+        cbxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Todos", "Activa", "Inactiva"}));
+        cbxApta3d.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Todas", "Sí", "No"}));
+    }
+
+    private void cargarTablaFiltrada(String numero, String apta3d, String estado) {
+        modelo.setRowCount(0);
+        List<Sala> todas = salaData.listarSalas();
+
+        for (Sala s : todas) {
+            boolean coincide = true;
+
+            if (!numero.isEmpty()) {
+                try {
+                    int nro = Integer.parseInt(numero);
+                    if (s.getNroSala() != nro) {
+                        coincide = false;
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Ingrese un número de sala válido.");
+                    return;
+                }
+            }
+
+            if (apta3d.equals("Sí") && !s.isApta3D()) {
+                coincide = false;
+            }
+            if (apta3d.equals("No") && s.isApta3D()) {
+                coincide = false;
+            }
+
+            if (estado.equals("Activa") && !s.isEstado()) {
+                coincide = false;
+            }
+            if (estado.equals("Inactiva") && s.isEstado()) {
+                coincide = false;
+            }
+
+            if (coincide) {
+                modelo.addRow(new Object[]{
+                    s.getIdSala(),
+                    s.getNroSala(),
+                    s.isApta3D() ? "Sí" : "No",
+                    s.getCapacidad(),
+                    s.isEstado() ? "Activa" : "Inactiva"
+                });
+            }
+        }
+
+        if (modelo.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "No se encontraron salas con esos filtros.");
         }
     }
 
@@ -62,14 +97,14 @@ public class Sala extends javax.swing.JPanel {
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jtblePeliculas = new javax.swing.JTable();
+        jtbleSalas = new javax.swing.JTable();
         btnModificar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
-        cbxGenero = new javax.swing.JComboBox<>();
-        cbxCartelera = new javax.swing.JComboBox<>();
+        cbxApta3d = new javax.swing.JComboBox<>();
+        cbxEstado = new javax.swing.JComboBox<>();
         lblGenero = new javax.swing.JLabel();
         lblCartelera = new javax.swing.JLabel();
-        txtfTitulo = new javax.swing.JTextField();
+        txtfNumero = new javax.swing.JTextField();
         lbltitulo = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(51, 51, 51));
@@ -99,26 +134,26 @@ public class Sala extends javax.swing.JPanel {
             }
         });
 
-        jtblePeliculas.setModel(new javax.swing.table.DefaultTableModel(
+        jtbleSalas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Título", "Director", "Actores", "Origen", "Género", "Estreno", "En cartelera"
+                "ID", "Número", "Apta 3D", "Capacidad", "Estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jtblePeliculas);
+        jScrollPane2.setViewportView(jtbleSalas);
 
         btnModificar.setBackground(new java.awt.Color(7, 10, 20));
         btnModificar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -148,26 +183,26 @@ public class Sala extends javax.swing.JPanel {
             }
         });
 
-        cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbxGenero.addActionListener(new java.awt.event.ActionListener() {
+        cbxApta3d.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxApta3d.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxGeneroActionPerformed(evt);
+                cbxApta3dActionPerformed(evt);
             }
         });
 
-        cbxCartelera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todas", "Si", "No" }));
+        cbxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todas", "Si", "No" }));
 
         lblGenero.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblGenero.setForeground(new java.awt.Color(255, 255, 255));
-        lblGenero.setText("Genero:");
+        lblGenero.setText("Apta 3D");
 
         lblCartelera.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCartelera.setForeground(new java.awt.Color(255, 255, 255));
-        lblCartelera.setText("Cartelera");
+        lblCartelera.setText("Estado");
 
         lbltitulo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbltitulo.setForeground(new java.awt.Color(255, 255, 255));
-        lbltitulo.setText("Titulo:");
+        lbltitulo.setText("Numero");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -180,19 +215,19 @@ public class Sala extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbltitulo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtfNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblGenero)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxGenero, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cbxApta3d, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(lblCartelera)
                         .addGap(18, 18, 18)
-                        .addComponent(cbxCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 139, Short.MAX_VALUE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(49, Short.MAX_VALUE))
@@ -208,11 +243,11 @@ public class Sala extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbltitulo)
-                            .addComponent(txtfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtfNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblGenero)
-                            .addComponent(cbxGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxApta3d, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblCartelera)
-                            .addComponent(cbxCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(11, 11, 11)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -227,19 +262,12 @@ public class Sala extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        AgregarPelicula agregarPeli = new AgregarPelicula();
-        agregarPeli.setPeliculasListener(new PeliculaListener() {
-            @Override
-            public void actualizarLista() {
-                cargarTabla();
-            }
-        });
-        abrirYCentrar(agregarPeli);
-
+        AgregarSalas agregar = new AgregarSalas();
+        abrirYCentrar(agregar);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void abrirYCentrar(JInternalFrame frame) {
-        java.awt.Window window = SwingUtilities.getWindowAncestor(this);
+        Window window = SwingUtilities.getWindowAncestor(this);
         if (window instanceof CinemaCentro) {
             CinemaCentro main = (CinemaCentro) window;
             JDesktopPane escritorio = main.getEscritorio();
@@ -253,114 +281,51 @@ public class Sala extends javax.swing.JPanel {
     }
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        int filaSeleccionada = jtblePeliculas.getSelectedRow();
-
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione una película para modificar.");
+        int fila = jtbleSalas.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una sala para modificar.");
             return;
         }
 
-        int idPelicula = (int) jtblePeliculas.getValueAt(filaSeleccionada, 0);
-
-        Pelicula peliculaSeleccionada = peliculaData.obtenerPorId(idPelicula);
-
-        if (peliculaSeleccionada == null) {
-            JOptionPane.showMessageDialog(this, "No se pudo obtener la información de la película.");
+        int idSala = (int) jtbleSalas.getValueAt(fila, 0);
+        Sala s = salaData.buscarSala(idSala);
+        if (s == null) {
+            JOptionPane.showMessageDialog(this, "No se pudo obtener la sala.");
             return;
         }
 
-        ModificarPelicula modificarPelicula = new ModificarPelicula(peliculaSeleccionada);
-        modificarPelicula.setPeliculasListener(new PeliculaListener() {
-            @Override
-            public void actualizarLista() {
-                cargarTabla();
-            }
-        });
-
-        abrirYCentrar(modificarPelicula);
+        ModificarSalas modificar = new ModificarSalas(s);
+        abrirYCentrar(modificar);
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String numero = txtfNumero.getText().trim();
+        String apta3d = cbxApta3d.getSelectedItem().toString();
+        String estado = cbxEstado.getSelectedItem().toString();
 
-        try {
-            String titulo = txtfTitulo.getText().trim();
-            String genero = (String) cbxGenero.getSelectedItem();
-            String carteleraSeleccion = (String) cbxCartelera.getSelectedItem();
-            Integer enCartelera = null;
-            
-            if (genero.equals("Todas"))
-                genero="";
+        cargarTablaFiltrada(numero, apta3d, estado);
 
-            if (carteleraSeleccion.equalsIgnoreCase("si")) {
-                enCartelera = 1;
-            } else if (carteleraSeleccion.equalsIgnoreCase("no")) {
-                enCartelera = 0;
-            }
-
-            List<Pelicula> peliculasBuscadas = peliculaData.buscarPeliculas(titulo, genero, enCartelera);
- 
-         cargarResultados(peliculasBuscadas);
-
-            if (peliculasBuscadas.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No se encontraron películas con esos filtros.");
-            }
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error al buscar películas: " + ex.getMessage());
-        }
     }//GEN-LAST:event_btnBuscarActionPerformed
-        private void cargarComboGeneros() {
-        String[] generos = {"Todas", "Acción", "Animación", "Aventura", "Ciencia Ficción",
-            "Comedia", "Documental", "Drama", "Fantasía",
-            "Terror", "Romance", "Suspenso"
-        };
-        cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(generos));
-    }
-        private void cargarResultados(List<Pelicula>resultados) {
-        modelo.setRowCount(0);
-        for (Pelicula p : resultados) {
-            modelo.addRow(new Object[]{
-                p.getIdPelicula(),
-                p.getTitulo(),
-                p.getDirector(),
-                p.getActores(),
-                p.getOrigen(),
-                p.getGenero(),
-                p.getEstreno(),
-                p.isEnCartelera()
-            });
-        }
-        }
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 
-        int filaSeleccionada = jtblePeliculas.getSelectedRow();
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione una película para eliminar.");
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int fila = jtbleSalas.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una sala para eliminar.");
             return;
         }
 
-        int confirmacion = JOptionPane.showConfirmDialog(
-                this,
-                "¿Está seguro de eliminar esta película?",
-                "Confirmar eliminación",
-                JOptionPane.YES_NO_OPTION
-        );
-
-        if (confirmacion == JOptionPane.YES_OPTION) {
-
-            int idPelicula = (int) modelo.getValueAt(filaSeleccionada, 0);
-
-            peliculaData.eliminarPelicula(idPelicula);
-
-            modelo.removeRow(filaSeleccionada);
+        int id = (int) modelo.getValueAt(fila, 0);
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Eliminar la sala seleccionada?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            salaData.eliminarSala(id);
+            cargarTabla();
         }
-
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void cbxGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxGeneroActionPerformed
+    private void cbxApta3dActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxApta3dActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbxGeneroActionPerformed
+    }//GEN-LAST:event_cbxApta3dActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -368,13 +333,13 @@ public class Sala extends javax.swing.JPanel {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JComboBox<String> cbxCartelera;
-    private javax.swing.JComboBox<String> cbxGenero;
+    private javax.swing.JComboBox<String> cbxApta3d;
+    private javax.swing.JComboBox<String> cbxEstado;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jtblePeliculas;
+    private javax.swing.JTable jtbleSalas;
     private javax.swing.JLabel lblCartelera;
     private javax.swing.JLabel lblGenero;
     private javax.swing.JLabel lbltitulo;
-    private javax.swing.JTextField txtfTitulo;
+    private javax.swing.JTextField txtfNumero;
     // End of variables declaration//GEN-END:variables
 }

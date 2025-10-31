@@ -18,8 +18,8 @@ public class Administracion extends javax.swing.JInternalFrame {
         initComponents();
 
         tabAdmin.addTab("Peliculas", new Compradores());
-        tabAdmin.addTab("Salas", new Sala());
-        tabAdmin.add("Compradores", new Compradores());
+        tabAdmin.addTab("Salas", new SalasView());
+        tabAdmin.add("Compradores", new CompradorView());
    
     }
      
