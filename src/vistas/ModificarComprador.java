@@ -61,6 +61,7 @@ public class ModificarComprador extends javax.swing.JInternalFrame {
         cbxMedioPago = new javax.swing.JComboBox<>();
         lblPassword = new javax.swing.JLabel();
         jDateFecNac = new com.toedter.calendar.JDateChooser();
+        jLabel1 = new javax.swing.JLabel();
 
         panel1.setBackground(new java.awt.Color(51, 51, 51));
         panel1.setForeground(new java.awt.Color(38, 64, 107));
@@ -68,23 +69,24 @@ public class ModificarComprador extends javax.swing.JInternalFrame {
 
         lblCapacidad.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCapacidad.setForeground(new java.awt.Color(255, 204, 0));
-        lblCapacidad.setText("Nombre");
-        panel1.add(lblCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, -1, 20));
+        lblCapacidad.setText("Nombre:");
+        panel1.add(lblCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 230, -1, 20));
 
         lblNroDeSala.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblNroDeSala.setForeground(new java.awt.Color(255, 204, 0));
-        lblNroDeSala.setText("DNI");
-        panel1.add(lblNroDeSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, 20));
+        lblNroDeSala.setText("DNI:");
+        panel1.add(lblNroDeSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, -1, 20));
 
         txtDni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDniActionPerformed(evt);
             }
         });
-        panel1.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 170, 30));
+        panel1.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, 170, 20));
 
         btnSalir.setBackground(new java.awt.Color(102, 102, 102));
         btnSalir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSalir.setForeground(new java.awt.Color(204, 204, 204));
         btnSalir.setText("Salir");
         btnSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -92,10 +94,11 @@ public class ModificarComprador extends javax.swing.JInternalFrame {
                 btnSalirActionPerformed(evt);
             }
         });
-        panel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 330, 100, 30));
+        panel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 460, 100, 30));
 
         btnGurardar.setBackground(new java.awt.Color(102, 0, 0));
         btnGurardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnGurardar.setForeground(new java.awt.Color(204, 204, 204));
         btnGurardar.setText("Guardar");
         btnGurardar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnGurardar.addActionListener(new java.awt.event.ActionListener() {
@@ -103,46 +106,49 @@ public class ModificarComprador extends javax.swing.JInternalFrame {
                 btnGurardarActionPerformed(evt);
             }
         });
-        panel1.add(btnGurardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 330, 100, 30));
+        panel1.add(btnGurardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 460, 100, 30));
 
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreActionPerformed(evt);
             }
         });
-        panel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 110, 170, 30));
+        panel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 170, -1));
 
         lblMedioDePago.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblMedioDePago.setForeground(new java.awt.Color(255, 204, 0));
-        lblMedioDePago.setText("Medio de Pago");
-        panel1.add(lblMedioDePago, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, -1, 20));
+        lblMedioDePago.setText("Medio de Pago:");
+        panel1.add(lblMedioDePago, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 380, 90, 20));
 
         txtPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPasswordActionPerformed(evt);
             }
         });
-        panel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 210, 170, 30));
+        panel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 340, 170, 20));
 
         lblFecNac.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblFecNac.setForeground(new java.awt.Color(255, 204, 0));
-        lblFecNac.setText("Fecha de Nacimiento");
-        panel1.add(lblFecNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, -1, 20));
+        lblFecNac.setText("Fecha de Nacimiento:");
+        panel1.add(lblFecNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, -1, 20));
 
         cbxMedioPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        panel1.add(cbxMedioPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 170, -1));
+        panel1.add(cbxMedioPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 380, 170, -1));
 
         lblPassword.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblPassword.setForeground(new java.awt.Color(255, 204, 0));
-        lblPassword.setText("Password");
-        panel1.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, -1, 20));
-        panel1.add(jDateFecNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, 170, -1));
+        lblPassword.setText("Password:");
+        panel1.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, -1, 20));
+        panel1.add(jDateFecNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, 170, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MOdiCOmpra.png"))); // NOI18N
+        panel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, -200, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
+            .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, 588, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,6 +210,7 @@ public class ModificarComprador extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cbxMedioPago;
     private com.toedter.calendar.JDateChooser jDateFecNac;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblCapacidad;
     private javax.swing.JLabel lblFecNac;
     private javax.swing.JLabel lblMedioDePago;

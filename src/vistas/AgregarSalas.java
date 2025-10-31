@@ -64,6 +64,7 @@ public class AgregarSalas extends javax.swing.JInternalFrame {
         bSi1 = new javax.swing.JRadioButton();
         bNo1 = new javax.swing.JRadioButton();
         lblEstado = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(153, 0, 51));
 
@@ -76,7 +77,7 @@ public class AgregarSalas extends javax.swing.JInternalFrame {
                 txtNroSalaActionPerformed(evt);
             }
         });
-        panel1.add(txtNroSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 170, -1));
+        panel1.add(txtNroSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 210, 170, -1));
 
         btnSalir.setBackground(new java.awt.Color(7, 10, 20));
         btnSalir.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
@@ -89,7 +90,7 @@ public class AgregarSalas extends javax.swing.JInternalFrame {
                 btnSalirActionPerformed(evt);
             }
         });
-        panel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 300, 150, 40));
+        panel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 400, 150, 40));
 
         btnGurardar.setBackground(new java.awt.Color(156, 163, 175));
         btnGurardar.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
@@ -101,14 +102,14 @@ public class AgregarSalas extends javax.swing.JInternalFrame {
                 btnGurardarActionPerformed(evt);
             }
         });
-        panel1.add(btnGurardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 160, 40));
+        panel1.add(btnGurardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 400, 160, 40));
 
         txtCapacidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCapacidadActionPerformed(evt);
             }
         });
-        panel1.add(txtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, 170, 30));
+        panel1.add(txtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 170, 20));
 
         bSi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         bSi.setText("Si");
@@ -117,7 +118,7 @@ public class AgregarSalas extends javax.swing.JInternalFrame {
                 bSiActionPerformed(evt);
             }
         });
-        panel1.add(bSi, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, -1, -1));
+        panel1.add(bSi, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 300, -1, -1));
 
         bNo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         bNo.setText("No");
@@ -126,16 +127,22 @@ public class AgregarSalas extends javax.swing.JInternalFrame {
                 bNoActionPerformed(evt);
             }
         });
-        panel1.add(bNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 220, -1, -1));
+        panel1.add(bNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 300, -1, -1));
 
-        jLabel4.setText("Numero de sala");
-        panel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, 90, 20));
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(204, 153, 0));
+        jLabel4.setText("Numero de sala:");
+        panel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 90, 20));
 
-        jLabel5.setText("Capacidad");
-        panel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 90, 20));
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(204, 153, 0));
+        jLabel5.setText("Capacidad:");
+        panel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 250, 90, 20));
 
-        lbl3D.setText("3D");
-        panel1.add(lbl3D, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, -1, -1));
+        lbl3D.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lbl3D.setForeground(new java.awt.Color(204, 153, 0));
+        lbl3D.setText("3D:");
+        panel1.add(lbl3D, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, -1, -1));
 
         bSi1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         bSi1.setText("Activa");
@@ -144,7 +151,7 @@ public class AgregarSalas extends javax.swing.JInternalFrame {
                 bSi1ActionPerformed(evt);
             }
         });
-        panel1.add(bSi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, -1, -1));
+        panel1.add(bSi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, -1, -1));
 
         bNo1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         bNo1.setText("Inactiva");
@@ -153,16 +160,21 @@ public class AgregarSalas extends javax.swing.JInternalFrame {
                 bNo1ActionPerformed(evt);
             }
         });
-        panel1.add(bNo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, -1, -1));
+        panel1.add(bNo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 330, -1, -1));
 
-        lblEstado.setText("Estado");
-        panel1.add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 260, -1, -1));
+        lblEstado.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblEstado.setForeground(new java.awt.Color(204, 153, 0));
+        lblEstado.setText("Estado:");
+        panel1.add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 330, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Agregar Sala.png"))); // NOI18N
+        panel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, -180, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
+            .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, 643, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,6 +236,7 @@ public class AgregarSalas extends javax.swing.JInternalFrame {
     private javax.swing.ButtonGroup botones;
     private javax.swing.JButton btnGurardar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel lbl3D;

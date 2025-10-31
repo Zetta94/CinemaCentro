@@ -63,6 +63,7 @@ public class AgregarComprador extends javax.swing.JInternalFrame {
         jDateFecNac = new com.toedter.calendar.JDateChooser();
         cbxMedioPago = new javax.swing.JComboBox<>();
         jlblFecNac1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(153, 0, 51));
 
@@ -75,7 +76,7 @@ public class AgregarComprador extends javax.swing.JInternalFrame {
                 txtDniActionPerformed(evt);
             }
         });
-        panel1.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 170, -1));
+        panel1.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 170, -1));
 
         btnSalir.setBackground(new java.awt.Color(7, 10, 20));
         btnSalir.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
@@ -88,7 +89,7 @@ public class AgregarComprador extends javax.swing.JInternalFrame {
                 btnSalirActionPerformed(evt);
             }
         });
-        panel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 360, 150, 40));
+        panel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 440, 150, 40));
 
         btnGurardar.setBackground(new java.awt.Color(156, 163, 175));
         btnGurardar.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
@@ -100,46 +101,60 @@ public class AgregarComprador extends javax.swing.JInternalFrame {
                 btnGurardarActionPerformed(evt);
             }
         });
-        panel1.add(btnGurardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 360, 160, 40));
+        panel1.add(btnGurardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 440, 160, 40));
 
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreActionPerformed(evt);
             }
         });
-        panel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 170, 30));
+        panel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, 170, 20));
 
-        jLabel4.setText("DNI");
-        panel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 90, 20));
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(204, 153, 0));
+        jLabel4.setText("DNI:");
+        panel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 90, 20));
 
-        jLabel5.setText("Nombre");
-        panel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 90, 20));
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(204, 153, 0));
+        jLabel5.setText("Nombre:");
+        panel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, 90, 20));
 
         txtPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPasswordActionPerformed(evt);
             }
         });
-        panel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, 170, -1));
+        panel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 270, 170, -1));
 
-        jlblPass.setText("Password");
-        panel1.add(jlblPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 90, 20));
+        jlblPass.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jlblPass.setForeground(new java.awt.Color(204, 153, 0));
+        jlblPass.setText("Password:");
+        panel1.add(jlblPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 270, 90, 20));
 
-        jlblMedioPago.setText("Medio De Pago");
-        panel1.add(jlblMedioPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, 90, 20));
-        panel1.add(jDateFecNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 220, 170, -1));
+        jlblMedioPago.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jlblMedioPago.setForeground(new java.awt.Color(204, 153, 0));
+        jlblMedioPago.setText("Medio De Pago:");
+        jlblMedioPago.setToolTipText("");
+        panel1.add(jlblMedioPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 370, 90, 20));
+        panel1.add(jDateFecNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 320, 170, -1));
 
         cbxMedioPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        panel1.add(cbxMedioPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 270, 170, -1));
+        panel1.add(cbxMedioPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 370, 170, -1));
 
-        jlblFecNac1.setText("Fecha de nacimiento");
-        panel1.add(jlblFecNac1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 120, 20));
+        jlblFecNac1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jlblFecNac1.setForeground(new java.awt.Color(204, 153, 0));
+        jlblFecNac1.setText("Fecha de nacimiento:");
+        panel1.add(jlblFecNac1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, 120, 20));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/AgreCom.png"))); // NOI18N
+        panel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -30, 630, 200));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
+            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,6 +218,7 @@ public class AgregarComprador extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cbxMedioPago;
     private com.toedter.calendar.JDateChooser jDateFecNac;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jlblFecNac1;
