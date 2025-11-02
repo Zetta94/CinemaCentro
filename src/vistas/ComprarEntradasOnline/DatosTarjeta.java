@@ -26,24 +26,35 @@ public class DatosTarjeta extends javax.swing.JPanel implements EntradasListener
         initComponents();
     }
     @Override
-    public boolean validarDatos(){
-        String nombre=txtNombre.getText();
-        String numeroTarjeta=txtNumeroTarjeta.getText();
-        String codigoSeguridad=txtCVV.getText();
-        Date fechaVencimiento= dateVencimiento.getDate();
-        
-        
-        if(nombre.isEmpty()|| numeroTarjeta.isEmpty()|| codigoSeguridad.isEmpty()|| fechaVencimiento==null){
-            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        LocalDate fechaLocal= fechaVencimiento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate hoy = LocalDate.now();
+    public boolean validarDatos() {
+    String nombre = txtNombre.getText().trim();
+    String numeroTarjeta = txtNumeroTarjeta.getText().trim();
+    String codigoSeguridad = txtCVV.getText().trim();
+    Date fechaVencimiento = dateVencimiento.getDate();
+
+
+    if (nombre.isEmpty() || numeroTarjeta.isEmpty() || codigoSeguridad.isEmpty() || fechaVencimiento == null) {
+        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    if (codigoSeguridad.length() == 3 ) {
+        JOptionPane.showMessageDialog(this, "El código de seguridad debe tener 3 dígitos.", "Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    LocalDate fechaLocal = fechaVencimiento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    LocalDate hoy = LocalDate.now();
 
     if (fechaLocal.isBefore(hoy)) {
-        JOptionPane.showMessageDialog(null, "La Tarjeta está vencida.");
-    } 
-        return true;
+        JOptionPane.showMessageDialog(this, "La tarjeta está vencida.", "Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    return true;
 }
+    
+    
         @Override
     public Comprador guardarDatos() {
         return null;
