@@ -5,6 +5,7 @@
 package VistaCartelera;
 
 import entidades.Pelicula;
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -28,15 +29,20 @@ public class ProximosEstrenos extends javax.swing.JPanel {
         initComponents();
         cargarComboGeneros();
         modelo = (DefaultTableModel) jtblePeliculas.getModel();
-        cargarTabla();
+        proximosEstrenos();
         
     }
 
-    private void cargarTabla() {
-        
-        //DefaultTableModel modelo = (DefaultTableModel) jtblePeliculas.getModel();
-        modelo.setRowCount(0);
-        for (Pelicula p : peliculaData.obtenerTodas()) {
+
+    private void proximosEstrenos() {
+    List<Pelicula> todas = peliculaData.obtenerTodas();
+    DefaultTableModel modelo = (DefaultTableModel) jtblePeliculas.getModel();
+    modelo.setRowCount(0);
+
+    LocalDate hoy = LocalDate.now();
+
+    for (Pelicula p : todas) {
+        if (p.getEstreno().isAfter(hoy)) {
             modelo.addRow(new Object[]{
                 p.getIdPelicula(),
                 p.getTitulo(),
@@ -49,6 +55,8 @@ public class ProximosEstrenos extends javax.swing.JPanel {
             });
         }
     }
+}
+
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
