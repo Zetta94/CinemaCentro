@@ -72,6 +72,9 @@ public class ProximosEstrenos extends javax.swing.JPanel {
         jtblePeliculas = new javax.swing.JTable();
         btnBuscar = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(33, 33, 33));
+        setForeground(new java.awt.Color(33, 33, 33));
+
         cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxGenero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,6 +96,7 @@ public class ProximosEstrenos extends javax.swing.JPanel {
         lbltitulo.setForeground(new java.awt.Color(255, 255, 255));
         lbltitulo.setText("Titulo:");
 
+        jtblePeliculas.setForeground(new java.awt.Color(33, 33, 33));
         jtblePeliculas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},

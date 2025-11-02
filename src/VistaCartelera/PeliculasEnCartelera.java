@@ -68,10 +68,14 @@ public class PeliculasEnCartelera extends javax.swing.JPanel {
         lblGenero = new javax.swing.JLabel();
         lblCartelera = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(33, 33, 33));
+        setForeground(new java.awt.Color(33, 33, 33));
+
         lbltitulo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lbltitulo.setForeground(new java.awt.Color(255, 255, 255));
         lbltitulo.setText("Titulo:");
 
+        jtblePeliculas.setForeground(new java.awt.Color(33, 33, 33));
         jtblePeliculas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
