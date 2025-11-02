@@ -260,6 +260,14 @@ public void cargarMapaAsientos() {
     public List<Lugar> guardarDatos() {
         return elegidos;
     }
+    
+    public void limpiarSeleccion() {
+    elegidos.clear();
+    modeloLista.clear();
+    lblSeleccionadosModificable.setText("0");
+    lblPrecioModificable.setText("$0.0");
+    cargarMapaAsientos(); 
+}
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

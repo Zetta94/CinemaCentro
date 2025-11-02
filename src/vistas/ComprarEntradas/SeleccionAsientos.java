@@ -263,6 +263,14 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
     public List<Lugar> guardarDatos() {
         return elegidos;
     }
+    public void limpiarSeleccion() {
+    elegidos.clear();
+    modeloLista.clear();
+    lblSeleccionadosModificable.setText("0");
+    lblPrecioModificable.setText("$0.0");
+    cargarMapaAsientos(); 
+}
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblPrecio;

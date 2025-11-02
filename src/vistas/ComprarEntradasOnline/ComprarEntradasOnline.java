@@ -135,7 +135,7 @@ public class ComprarEntradasOnline extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
+                .addComponent(pnlPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -149,7 +149,7 @@ public class ComprarEntradasOnline extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSiguiente)
                     .addComponent(btnAnterior))
@@ -220,12 +220,17 @@ private void avanzar() {
         if (pasoActual > 1) {
             pasoActual--;
             layout.show(pnlPrincipal, "paso" + pasoActual);
-            btnSiguiente.setText("Siguiente");
+
+        if (pasoActual == 3) {
+            paso3.limpiarSeleccion();
         }
+        btnSiguiente.setText("Siguiente");
+    }
         
         if (pasoActual == 1) {
             btnAnterior.setEnabled(false);
         }
+        
     }
     private void cargarDatos() {
         boolean guardado = compraServicio.guardarCompra(comprador, asientosSeleccionados, proyeccion);

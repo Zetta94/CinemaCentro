@@ -192,8 +192,12 @@ public class ComprarEntradaF extends javax.swing.JInternalFrame {
         if (pasoActual > 1) {
             pasoActual--;
             layout.show(pnlPrincipal, "paso" + pasoActual);
-            btnSiguiente.setText("Siguiente");
+
+        if (pasoActual == 3) {
+            paso3.limpiarSeleccion();
         }
+        btnSiguiente.setText("Siguiente");
+    }
 
         if (pasoActual == 1) {
             btnAnterior.setEnabled(false);
