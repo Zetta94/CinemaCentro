@@ -36,11 +36,13 @@ public class LugaresData {
             ps.setInt(4, lugar.getIdProyeccion());
 
             ps.executeUpdate();
-            
+
             ResultSet rs = ps.getGeneratedKeys();
-            if(rs.next()) {
+            if (rs.next()) {
                 return rs.getInt(1);
-            } else return -1;
+            } else {
+                return -1;
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
                     null,
@@ -55,11 +57,9 @@ public class LugaresData {
 
     public int ObtenerLugaresDisponibles(int idProyeccion) {
         String sql
-                = "SELECT s.capacidad - COALESCE(("
-                + "  SELECT COUNT(*) FROM detalle_lugares dl "
-                + "  JOIN detalle_tickets dt ON dt.idDetalle = dl.idDetalle "
-                + "  WHERE dt.idProyeccion = ?"
-                + "), 0) AS disponibles "
+                = "SELECT s.capacidad - ("
+                + "   SELECT COUNT(*) FROM lugares WHERE idProyeccion = ?"
+                + ") AS disponibles "
                 + "FROM proyeccion p "
                 + "JOIN salas s ON s.idSala = p.idSala "
                 + "WHERE p.idProyeccion = ?";

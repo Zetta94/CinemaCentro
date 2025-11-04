@@ -1,56 +1,48 @@
-package vistas;
+package vistas.Comprador;
 
-import entidades.Pelicula;
+import entidades.Comprador;
 import java.awt.Window;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import listeners.PeliculaListener;
-import org.mariadb.jdbc.Connection;
-import persistencia.Conexion;
+import persistencia.CompradorData;
 import persistencia.Context;
-import static persistencia.Context.getPeliculaData;
-import persistencia.PeliculaData;
+import vistas.CinemaCentro;
 
-/**
- *
- * @author Morbo
- */
-public class Compradores extends javax.swing.JPanel {
+public class CompradorView extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Compradores
-     */
-    private PeliculaData peliculaData = Context.getPeliculaData();
-    private PeliculaListener listener;
+    private CompradorData compradorData = Context.getCompradorData();
     private DefaultTableModel modelo;
-    private Connection connection;
 
-    public Compradores() {
+    public CompradorView() {
         initComponents();
-        System.out.println("peliculas");
-        cargarComboGeneros();
-        modelo = (DefaultTableModel) jtblePeliculas.getModel();
+        modelo = (DefaultTableModel) jtbleCompradores.getModel();
+        inicializarComboPago();
         cargarTabla();
     }
 
+    private void inicializarComboPago() {
+        cbxFormaDepago.removeAllItems();
+        cbxFormaDepago.addItem("Todos");
+        cbxFormaDepago.addItem("Efectivo");
+        cbxFormaDepago.addItem("Tarjeta");
+        cbxFormaDepago.addItem("Transferencia");
+    }
+
     private void cargarTabla() {
-        
-        //DefaultTableModel modelo = (DefaultTableModel) jtblePeliculas.getModel();
         modelo.setRowCount(0);
-        for (Pelicula p : peliculaData.obtenerTodas()) {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        for (Comprador c : compradorData.obtenerTodosLosCompradores()) {
             modelo.addRow(new Object[]{
-                p.getIdPelicula(),
-                p.getTitulo(),
-                p.getDirector(),
-                p.getActores(),
-                p.getOrigen(),
-                p.getGenero(),
-                p.getEstreno(),
-                p.isEnCartelera()
+                c.getIdComprador(),
+                c.getDni(),
+                c.getNombre(),
+                c.getFechaNac().format(fmt),
+                c.getMedioPago()
             });
         }
     }
@@ -62,15 +54,15 @@ public class Compradores extends javax.swing.JPanel {
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jtblePeliculas = new javax.swing.JTable();
+        jtbleCompradores = new javax.swing.JTable();
         btnModificar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
-        cbxGenero = new javax.swing.JComboBox<>();
-        cbxCartelera = new javax.swing.JComboBox<>();
-        lblGenero = new javax.swing.JLabel();
-        lblCartelera = new javax.swing.JLabel();
-        txtfTitulo = new javax.swing.JTextField();
-        lbltitulo = new javax.swing.JLabel();
+        cbxFormaDepago = new javax.swing.JComboBox<>();
+        lblFormaDePago = new javax.swing.JLabel();
+        txtfBuscarDni = new javax.swing.JTextField();
+        lblDni = new javax.swing.JLabel();
+        txtfBuscarNombre = new javax.swing.JTextField();
+        lblNombre = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(51, 51, 51));
         setForeground(new java.awt.Color(38, 64, 107));
@@ -99,26 +91,26 @@ public class Compradores extends javax.swing.JPanel {
             }
         });
 
-        jtblePeliculas.setModel(new javax.swing.table.DefaultTableModel(
+        jtbleCompradores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Título", "Director", "Actores", "Origen", "Género", "Estreno", "En cartelera"
+                "ID", "DNI", "Nombre", "Fecha Nacimiento", "Medio de pago"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jtblePeliculas);
+        jScrollPane2.setViewportView(jtbleCompradores);
 
         btnModificar.setBackground(new java.awt.Color(7, 10, 20));
         btnModificar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -148,26 +140,24 @@ public class Compradores extends javax.swing.JPanel {
             }
         });
 
-        cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbxGenero.addActionListener(new java.awt.event.ActionListener() {
+        cbxFormaDepago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxFormaDepago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxGeneroActionPerformed(evt);
+                cbxFormaDepagoActionPerformed(evt);
             }
         });
 
-        cbxCartelera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todas", "Si", "No" }));
+        lblFormaDePago.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblFormaDePago.setForeground(new java.awt.Color(255, 255, 255));
+        lblFormaDePago.setText("Forma de pago");
 
-        lblGenero.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblGenero.setForeground(new java.awt.Color(255, 255, 255));
-        lblGenero.setText("Genero:");
+        lblDni.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblDni.setForeground(new java.awt.Color(255, 255, 255));
+        lblDni.setText("DNI");
 
-        lblCartelera.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblCartelera.setForeground(new java.awt.Color(255, 255, 255));
-        lblCartelera.setText("Cartelera");
-
-        lbltitulo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lbltitulo.setForeground(new java.awt.Color(255, 255, 255));
-        lbltitulo.setText("Titulo:");
+        lblNombre.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblNombre.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombre.setText("Nombre");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -175,20 +165,20 @@ public class Compradores extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbltitulo)
+                        .addComponent(lblDni)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblGenero)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxGenero, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtfBuscarDni, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(lblCartelera)
+                        .addComponent(lblNombre)
                         .addGap(18, 18, 18)
-                        .addComponent(cbxCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtfBuscarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblFormaDePago)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbxFormaDepago, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
@@ -206,13 +196,15 @@ public class Compradores extends javax.swing.JPanel {
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbltitulo)
-                            .addComponent(txtfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblGenero)
-                            .addComponent(cbxGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblCartelera)
-                            .addComponent(cbxCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblNombre)
+                                .addComponent(txtfBuscarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblFormaDePago)
+                                .addComponent(cbxFormaDepago, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblDni)
+                                .addComponent(txtfBuscarDni, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(11, 11, 11)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -227,19 +219,11 @@ public class Compradores extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        AgregarPelicula agregarPeli = new AgregarPelicula();
-        agregarPeli.setPeliculasListener(new PeliculaListener() {
-            @Override
-            public void actualizarLista() {
-                cargarTabla();
-            }
-        });
-        abrirYCentrar(agregarPeli);
-
+        abrirYCentrar(new AgregarComprador());
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void abrirYCentrar(JInternalFrame frame) {
-        java.awt.Window window = SwingUtilities.getWindowAncestor(this);
+        Window window = SwingUtilities.getWindowAncestor(this);
         if (window instanceof CinemaCentro) {
             CinemaCentro main = (CinemaCentro) window;
             JDesktopPane escritorio = main.getEscritorio();
@@ -253,114 +237,92 @@ public class Compradores extends javax.swing.JPanel {
     }
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        int filaSeleccionada = jtblePeliculas.getSelectedRow();
-
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione una película para modificar.");
+        int fila = jtbleCompradores.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un comprador para modificar.");
             return;
         }
 
-        int idPelicula = (int) jtblePeliculas.getValueAt(filaSeleccionada, 0);
+        int idComprador = (int) modelo.getValueAt(fila, 0);
+        Comprador comprador = compradorData.obtenerCompradorPorId(idComprador);
 
-        Pelicula peliculaSeleccionada = peliculaData.obtenerPorId(idPelicula);
-
-        if (peliculaSeleccionada == null) {
-            JOptionPane.showMessageDialog(this, "No se pudo obtener la información de la película.");
+        if (comprador == null) {
+            JOptionPane.showMessageDialog(this, "No se pudo obtener el comprador.");
             return;
         }
 
-        ModificarPelicula modificarPelicula = new ModificarPelicula(peliculaSeleccionada);
-        modificarPelicula.setPeliculasListener(new PeliculaListener() {
-            @Override
-            public void actualizarLista() {
-                cargarTabla();
-            }
-        });
-
-        abrirYCentrar(modificarPelicula);
+        abrirYCentrar(new ModificarComprador(comprador));
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String dniFiltro = txtfBuscarDni.getText().trim();
+        String nombreFiltro = txtfBuscarNombre.getText().trim().toLowerCase();
+        String formaPagoFiltro = cbxFormaDepago.getSelectedItem().toString();
 
-        try {
-            String titulo = txtfTitulo.getText().trim();
-            String genero = (String) cbxGenero.getSelectedItem();
-            String carteleraSeleccion = (String) cbxCartelera.getSelectedItem();
-            Integer enCartelera = null;
-            
-            if (genero.equals("Todas"))
-                genero="";
-
-            if (carteleraSeleccion.equalsIgnoreCase("si")) {
-                enCartelera = 1;
-            } else if (carteleraSeleccion.equalsIgnoreCase("no")) {
-                enCartelera = 0;
-            }
-
-            List<Pelicula> peliculasBuscadas = peliculaData.buscarPeliculas(titulo, genero, enCartelera);
- 
-         cargarResultados(peliculasBuscadas);
-
-            if (peliculasBuscadas.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No se encontraron películas con esos filtros.");
-            }
-
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error al buscar películas: " + ex.getMessage());
-        }
-    }//GEN-LAST:event_btnBuscarActionPerformed
-        private void cargarComboGeneros() {
-        String[] generos = {"Todas", "Acción", "Animación", "Aventura", "Ciencia Ficción",
-            "Comedia", "Documental", "Drama", "Fantasía",
-            "Terror", "Romance", "Suspenso"
-        };
-        cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(generos));
-    }
-        private void cargarResultados(List<Pelicula>resultados) {
         modelo.setRowCount(0);
-        for (Pelicula p : resultados) {
-            modelo.addRow(new Object[]{
-                p.getIdPelicula(),
-                p.getTitulo(),
-                p.getDirector(),
-                p.getActores(),
-                p.getOrigen(),
-                p.getGenero(),
-                p.getEstreno(),
-                p.isEnCartelera()
-            });
-        }
-        }
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        int filaSeleccionada = jtblePeliculas.getSelectedRow();
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione una película para eliminar.");
+        List<Comprador> todos = compradorData.obtenerTodosLosCompradores();
+        List<Comprador> filtrados = new java.util.ArrayList<>();
+
+        for (Comprador c : todos) {
+            boolean coincide = true;
+
+            if (!dniFiltro.isEmpty() && !c.getDni().equalsIgnoreCase(dniFiltro)) {
+                coincide = false;
+            }
+
+            if (!nombreFiltro.isEmpty()
+                    && (c.getNombre() == null || !c.getNombre().toLowerCase().contains(nombreFiltro))) {
+                coincide = false;
+            }
+
+            if (!formaPagoFiltro.equalsIgnoreCase("Todos")
+                    && (c.getMedioPago() == null || !c.getMedioPago().equalsIgnoreCase(formaPagoFiltro))) {
+                coincide = false;
+            }
+
+            if (coincide) {
+                filtrados.add(c);
+            }
+        }
+
+        if (filtrados.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encontraron compradores con esos filtros.");
             return;
         }
 
-        int confirmacion = JOptionPane.showConfirmDialog(
-                this,
-                "¿Está seguro de eliminar esta película?",
-                "Confirmar eliminación",
-                JOptionPane.YES_NO_OPTION
-        );
-
-        if (confirmacion == JOptionPane.YES_OPTION) {
-
-            int idPelicula = (int) modelo.getValueAt(filaSeleccionada, 0);
-
-            peliculaData.eliminarPelicula(idPelicula);
-
-            modelo.removeRow(filaSeleccionada);
+        for (Comprador c : filtrados) {
+            modelo.addRow(new Object[]{
+                c.getIdComprador(),
+                c.getDni(),
+                c.getNombre(),
+                c.getFechaNac().format(fmt),
+                c.getMedioPago()
+            });
         }
 
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int fila = jtbleCompradores.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un comprador para eliminar.");
+            return;
+        }
+
+        int id = (int) modelo.getValueAt(fila, 0);
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Eliminar el comprador seleccionado?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            compradorData.bajaComprador(id);
+            cargarTabla();
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void cbxGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxGeneroActionPerformed
+    private void cbxFormaDepagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxFormaDepagoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbxGeneroActionPerformed
+    }//GEN-LAST:event_cbxFormaDepagoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -368,13 +330,13 @@ public class Compradores extends javax.swing.JPanel {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JComboBox<String> cbxCartelera;
-    private javax.swing.JComboBox<String> cbxGenero;
+    private javax.swing.JComboBox<String> cbxFormaDepago;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jtblePeliculas;
-    private javax.swing.JLabel lblCartelera;
-    private javax.swing.JLabel lblGenero;
-    private javax.swing.JLabel lbltitulo;
-    private javax.swing.JTextField txtfTitulo;
+    private javax.swing.JTable jtbleCompradores;
+    private javax.swing.JLabel lblDni;
+    private javax.swing.JLabel lblFormaDePago;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JTextField txtfBuscarDni;
+    private javax.swing.JTextField txtfBuscarNombre;
     // End of variables declaration//GEN-END:variables
 }

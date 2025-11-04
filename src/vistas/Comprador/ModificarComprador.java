@@ -1,4 +1,4 @@
-package vistas;
+package vistas.Comprador;
 
 import entidades.Comprador;
 import java.time.LocalDate;
@@ -86,7 +86,6 @@ public class ModificarComprador extends javax.swing.JInternalFrame {
 
         btnSalir.setBackground(new java.awt.Color(102, 102, 102));
         btnSalir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnSalir.setForeground(new java.awt.Color(204, 204, 204));
         btnSalir.setText("Salir");
         btnSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -98,7 +97,6 @@ public class ModificarComprador extends javax.swing.JInternalFrame {
 
         btnGurardar.setBackground(new java.awt.Color(102, 0, 0));
         btnGurardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnGurardar.setForeground(new java.awt.Color(204, 204, 204));
         btnGurardar.setText("Guardar");
         btnGurardar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnGurardar.addActionListener(new java.awt.event.ActionListener() {

@@ -166,7 +166,7 @@ public class SeleccionPelicula extends javax.swing.JPanel implements EntradasLis
     private int lugares;
 
     private void llenarComboPeliculas() {
-        List<Pelicula> peliculas = peliculaData.obtenerTodas();
+        List<Pelicula> peliculas = peliculaData.obtenerPeliculasEnCartelera();
         cbxPelicula.removeAllItems();
         Pelicula peliculaNull = new Pelicula();
         peliculaNull.setTitulo("Seleccione...");

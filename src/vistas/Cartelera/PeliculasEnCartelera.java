@@ -2,16 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package VistaCartelera;
+package vistas.Cartelera;
 
 import entidades.Pelicula;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import listeners.PeliculaListener;
 import org.mariadb.jdbc.Connection;
 import persistencia.Context;
 import persistencia.PeliculaData;
+import listeners.RefreshListener;
 
 /**
  *
@@ -20,11 +20,9 @@ import persistencia.PeliculaData;
 public class PeliculasEnCartelera extends javax.swing.JPanel {
 
     private PeliculaData peliculaData = Context.getPeliculaData();
-    private PeliculaListener listener;
+    private RefreshListener listener;
     private DefaultTableModel modelo;
     private Connection connection;
-    
-
 
     public PeliculasEnCartelera() {
         initComponents();
@@ -32,12 +30,12 @@ public class PeliculasEnCartelera extends javax.swing.JPanel {
         modelo = (DefaultTableModel) jtblePeliculas.getModel();
         cargarTabla();
     }
-    
-     private void cargarTabla() {
-        
+
+    private void cargarTabla() {
+
         //DefaultTableModel modelo = (DefaultTableModel) jtblePeliculas.getModel();
         modelo.setRowCount(0);
-        for (Pelicula p : peliculaData.obtenerTodas()) {
+        for (Pelicula p : peliculaData.obtenerPeliculasEnCartelera()) {
             modelo.addRow(new Object[]{
                 p.getIdPelicula(),
                 p.getTitulo(),
@@ -46,13 +44,10 @@ public class PeliculasEnCartelera extends javax.swing.JPanel {
                 p.getOrigen(),
                 p.getGenero(),
                 p.getEstreno(),
-                p.isEnCartelera()
+                p.isEnCartelera() ? "Si" : "No"
             });
         }
     }
-    
-
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -181,8 +176,9 @@ public class PeliculasEnCartelera extends javax.swing.JPanel {
             String carteleraSeleccion = (String) cbxCartelera.getSelectedItem();
             Integer enCartelera = null;
 
-            if (genero.equals("Todas"))
-            genero="";
+            if (genero.equals("Todas")) {
+                genero = "";
+            }
 
             if (carteleraSeleccion.equalsIgnoreCase("si")) {
                 enCartelera = 1;
@@ -203,30 +199,42 @@ public class PeliculasEnCartelera extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_btnBuscarActionPerformed
-    
-    
+
     private void cargarComboGeneros() {
-            String[] generos = {"Todas", "Acción", "Animación", "Aventura", "Ciencia Ficción",
-                "Comedia", "Documental", "Drama", "Fantasía",
-                "Terror", "Romance", "Suspenso"
-            };
-            cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(generos));
+        String[] generos = {
+            "Todas",
+            "Acción",
+            "Animación",
+            "Aventura",
+            "Ciencia Ficción",
+            "Comedia",
+            "Comedia Romántica",
+            "Documental",
+            "Drama",
+            "Fantasía",
+            "Histórico",
+            "Terror",
+            "Romance",
+            "Suspenso"
+        };
+        cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(generos));
+    }
+
+    private void cargarResultados(List<Pelicula> resultados) {
+        modelo.setRowCount(0);
+        for (Pelicula p : resultados) {
+            modelo.addRow(new Object[]{
+                p.getIdPelicula(),
+                p.getTitulo(),
+                p.getDirector(),
+                p.getActores(),
+                p.getOrigen(),
+                p.getGenero(),
+                p.getEstreno(),
+                p.isEnCartelera()
+            });
         }
-        private void cargarResultados(List<Pelicula>resultados) {
-            modelo.setRowCount(0);
-            for (Pelicula p : resultados) {
-                modelo.addRow(new Object[]{
-                    p.getIdPelicula(),
-                    p.getTitulo(),
-                    p.getDirector(),
-                    p.getActores(),
-                    p.getOrigen(),
-                    p.getGenero(),
-                    p.getEstreno(),
-                    p.isEnCartelera()
-                });
-            }
-        }
+    }
     private void cbxGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxGeneroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxGeneroActionPerformed

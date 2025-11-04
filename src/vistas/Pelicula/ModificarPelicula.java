@@ -1,19 +1,19 @@
-package vistas;
+package vistas.Pelicula;
 
 import entidades.Pelicula;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import javax.swing.JOptionPane;
-import listeners.PeliculaListener;
 import persistencia.Context;
 import persistencia.PeliculaData;
+import listeners.RefreshListener;
 
 public class ModificarPelicula extends javax.swing.JInternalFrame {
 
     private Pelicula pelicula;
     private PeliculaData peliculaData = Context.getPeliculaData();
-    private PeliculaListener listener;
+    private RefreshListener listener;
 
     public ModificarPelicula(Pelicula pelicula) {
         initComponents();
@@ -22,14 +22,26 @@ public class ModificarPelicula extends javax.swing.JInternalFrame {
         cargarDatos();
     }
 
-    public void setPeliculasListener(PeliculaListener listener) {
+    public void setPeliculasListener(RefreshListener listener) {
         this.listener = listener;
     }
 
     private void cargarComboGeneros() {
         String[] generos = {
-            "Seleccione", "Acción", "Animación", "Aventura", "Ciencia Ficción",
-            "Comedia", "Documental", "Drama", "Fantasía", "Terror", "Romance", "Suspenso"
+            "Todas",
+            "Acción",
+            "Animación",
+            "Aventura",
+            "Ciencia Ficción",
+            "Comedia",
+            "Comedia Romántica",
+            "Documental",
+            "Drama",
+            "Fantasía",
+            "Histórico",
+            "Terror",
+            "Romance",
+            "Suspenso"
         };
         cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(generos));
     }
@@ -114,7 +126,6 @@ public class ModificarPelicula extends javax.swing.JInternalFrame {
 
         btnSalir.setBackground(new java.awt.Color(102, 102, 102));
         btnSalir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnSalir.setForeground(new java.awt.Color(204, 204, 204));
         btnSalir.setText("Salir");
         btnSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -137,7 +148,6 @@ public class ModificarPelicula extends javax.swing.JInternalFrame {
 
         btnGurardar.setBackground(new java.awt.Color(102, 0, 0));
         btnGurardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnGurardar.setForeground(new java.awt.Color(204, 204, 204));
         btnGurardar.setText("Guardar");
         btnGurardar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnGurardar.addActionListener(new java.awt.event.ActionListener() {

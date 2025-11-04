@@ -209,7 +209,7 @@ public class PeliculaData {
     }
 
     public List<Pelicula> obtenerPeliculasEnCartelera() {
-        String sql = "SELECT * FROM peliculas WHERE enCartelera = 1";
+        String sql = "SELECT * FROM peliculas WHERE enCartelera = 1 AND estreno <= CURDATE();";
         List<Pelicula> peliculas = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             try (ResultSet rs = ps.executeQuery()) {

@@ -35,6 +35,7 @@ public class Comprador {
         this.dni = dni;
         this.nombre = nombre;
         this.fechaNac = fechaNac;
+        this.medioPago = medioPago;
     }
 
     public int getIdComprador() {

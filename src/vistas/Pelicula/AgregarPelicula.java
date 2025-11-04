@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package vistas;
+package vistas.Pelicula;
 
 import entidades.Pelicula;
 import java.sql.Connection;
@@ -11,9 +11,9 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import javax.swing.JOptionPane;
-import listeners.PeliculaListener;
 import persistencia.Context;
 import persistencia.PeliculaData;
+import listeners.RefreshListener;
 
 /**
  *
@@ -25,9 +25,9 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
      * Creates new form AgregarPelicula
      */
     private PeliculaData peliculaData = Context.getPeliculaData();
-    private PeliculaListener listener;
+    private RefreshListener listener;
 
-    public void setPeliculasListener(PeliculaListener listener) {
+    public void setRefreshListener(RefreshListener listener) {
         this.listener = listener;
     }
 
@@ -39,9 +39,21 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
     }
 
     private void cargarComboGeneros() {
-        String[] generos = {"seleccione", "Acción", "Animación", "Aventura", "Ciencia Ficción",
-            "Comedia", "Documental", "Drama", "Fantasía",
-            "Terror", "Romance", "Suspenso"
+        String[] generos = {
+            "Todas",
+            "Acción",
+            "Animación",
+            "Aventura",
+            "Ciencia Ficción",
+            "Comedia",
+            "Comedia Romántica",
+            "Documental",
+            "Drama",
+            "Fantasía",
+            "Histórico",
+            "Terror",
+            "Romance",
+            "Suspenso"
         };
         cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(generos));
     }

@@ -37,7 +37,7 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
     String nombre;
     java.util.Date fechaNac;
     LocalDate fechaNacLocal;
-    String fechaPago;
+    String modoPago;
 
     private void obtenerComprador(String dni) {
         Comprador comprador = compradorData.obtenerCompradorPorDni(dni);
@@ -63,7 +63,7 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
         dni = txtDni.getText();
         nombre = txtNombre.getText();
         fechaNac = dateFecha.getDate();
-        fechaPago = (String) cbxPago.getSelectedItem();
+        modoPago = (String) cbxPago.getSelectedItem();
 
         if (dni.isEmpty() || nombre.isEmpty() || fechaNac == null) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
@@ -89,13 +89,14 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
             JOptionPane.showMessageDialog(this, "La fecha de nacimiento no puede ser futura", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-
+        
         return true;
     }
 
     @Override
     public Comprador guardarDatos() {
-        return new Comprador(dni, nombre, fechaNacLocal, fechaPago);
+        System.out.println("Metodo Datos comprador: " + modoPago);
+        return new Comprador(dni, nombre, fechaNacLocal, modoPago);
     }
 
     /**

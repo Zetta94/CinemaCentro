@@ -40,6 +40,7 @@ public class SeleccionAsientosOnline extends javax.swing.JPanel implements Entra
     public SeleccionAsientosOnline() {
         initComponents();
         lstInfo.setModel(modeloLista);
+        modeloLista.clear();
 
     // 🎨 Colores personalizados
     Color fondoGeneral = new Color(33, 33, 33);

@@ -1,4 +1,4 @@
-package vistas;
+package vistas.Pelicula;
 
 import entidades.Pelicula;
 import java.awt.Window;
@@ -8,12 +8,13 @@ import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import listeners.PeliculaListener;
 import org.mariadb.jdbc.Connection;
 import persistencia.Conexion;
 import persistencia.Context;
 import static persistencia.Context.getPeliculaData;
 import persistencia.PeliculaData;
+import vistas.CinemaCentro;
+import listeners.RefreshListener;
 
 /**
  *
@@ -25,7 +26,7 @@ public class Peliculas extends javax.swing.JPanel {
      * Creates new form Compradores
      */
     private PeliculaData peliculaData = Context.getPeliculaData();
-    private PeliculaListener listener;
+    private RefreshListener listener;
     private DefaultTableModel modelo;
     private Connection connection;
 
@@ -50,7 +51,7 @@ public class Peliculas extends javax.swing.JPanel {
                 p.getOrigen(),
                 p.getGenero(),
                 p.getEstreno(),
-                p.isEnCartelera()
+                p.isEnCartelera() ? "Si" : "No"
             });
         }
     }
@@ -228,7 +229,7 @@ public class Peliculas extends javax.swing.JPanel {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         AgregarPelicula agregarPeli = new AgregarPelicula();
-        agregarPeli.setPeliculasListener(new PeliculaListener() {
+        agregarPeli.setRefreshListener(new RefreshListener() {
             @Override
             public void actualizarLista() {
                 cargarTabla();
@@ -270,7 +271,7 @@ public class Peliculas extends javax.swing.JPanel {
         }
 
         ModificarPelicula modificarPelicula = new ModificarPelicula(peliculaSeleccionada);
-        modificarPelicula.setPeliculasListener(new PeliculaListener() {
+        modificarPelicula.setPeliculasListener(new RefreshListener() {
             @Override
             public void actualizarLista() {
                 cargarTabla();

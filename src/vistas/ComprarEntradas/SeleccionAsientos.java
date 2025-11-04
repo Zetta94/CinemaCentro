@@ -23,6 +23,7 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
     public void setProyeccionData(int id, double precio) {
         this.idProyeccion = id;
         this.precio = precio;
+        modeloLista.clear();
         cargarMapaAsientos();
     }
 

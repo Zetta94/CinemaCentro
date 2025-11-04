@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import listeners.EntradasListener;
+import servicios.CompraServicio;
 
 public class ComprarEntradaF extends javax.swing.JInternalFrame {
 
@@ -28,7 +29,7 @@ public class ComprarEntradaF extends javax.swing.JInternalFrame {
 
     public ComprarEntradaF() {
         initComponents();
-        aplicarEstiloOscuro(); 
+        aplicarEstiloOscuro();
 
         paso1 = new DatosComprador();
         paso2 = new SeleccionPelicula();
@@ -45,32 +46,29 @@ public class ComprarEntradaF extends javax.swing.JInternalFrame {
         layout = (CardLayout) pnlPrincipal.getLayout();
     }
 
-   
     private void aplicarEstiloOscuro() {
         Color fondoGeneral = new Color(33, 33, 33);
         Color panelOscuro = new Color(45, 45, 45);
         Color textoClaro = new Color(230, 230, 230);
-        Color rojoCine = new Color(102,0,0);
+        Color rojoCine = new Color(102, 0, 0);
         Color grisBoton = new Color(77, 77, 77);
 
-    
         getContentPane().setBackground(fondoGeneral);
         setBackground(fondoGeneral);
 
         pnlPrincipal.setBackground(panelOscuro);
 
-     
         btnSiguiente.setBackground(rojoCine);
         btnSiguiente.setForeground(Color.WHITE);
         btnSiguiente.setFocusPainted(false);
         btnSiguiente.setBorderPainted(false);
-
 
         btnAnterior.setBackground(grisBoton);
         btnAnterior.setForeground(Color.WHITE);
         btnAnterior.setFocusPainted(false);
         btnAnterior.setBorderPainted(false);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -136,6 +134,8 @@ public class ComprarEntradaF extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private CompraServicio compraServicio = new CompraServicio();
+
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         // TODO add your handling code here:
         avanzar();
@@ -147,7 +147,11 @@ public class ComprarEntradaF extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAnteriorActionPerformed
 
     private void avanzar() {
-
+        if (btnSiguiente.getText().equals("Confirmar")) {
+            System.out.println("pantalla principal: " + comprador.getMedioPago());
+            guardarDatos();
+            this.dispose();
+        }
         Component actual = pnlPrincipal.getComponent(pasoActual - 1);
 
         if (actual instanceof EntradasListener) {
@@ -171,21 +175,19 @@ public class ComprarEntradaF extends javax.swing.JInternalFrame {
             }
         }
 
-        if (pasoActual < 4) {
+        if (pasoActual < 5) {
             pasoActual++;
             if (pasoActual == 3) {
                 paso3.setProyeccionData(proyeccion.getIdProyeccion(), proyeccion.getPrecio());
             }
-            if(pasoActual == 4) {
+            if (pasoActual == 4) {
                 paso4.setData(comprador, proyeccion, asientosSeleccionados);
+                btnSiguiente.setText("Confirmar");
             }
             layout.show(pnlPrincipal, "paso" + pasoActual);
             btnAnterior.setEnabled(true);
         }
 
-        if (pasoActual == 3) {
-            btnSiguiente.setText("Confirmar");
-        }
     }
 
     private void volver() {
@@ -193,14 +195,21 @@ public class ComprarEntradaF extends javax.swing.JInternalFrame {
             pasoActual--;
             layout.show(pnlPrincipal, "paso" + pasoActual);
 
-        if (pasoActual == 3) {
-            paso3.limpiarSeleccion();
+            if (pasoActual == 3) {
+                paso3.limpiarSeleccion();
+            }
+            btnSiguiente.setText("Siguiente");
         }
-        btnSiguiente.setText("Siguiente");
-    }
 
         if (pasoActual == 1) {
             btnAnterior.setEnabled(false);
+        }
+    }
+
+    private void guardarDatos() {
+        boolean guardado = compraServicio.guardarCompra(comprador, asientosSeleccionados, proyeccion);
+        if (guardado) {
+            System.out.println("Guardado en bd correctamente");
         }
     }
 

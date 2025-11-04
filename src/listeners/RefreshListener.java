@@ -10,6 +10,6 @@ package listeners;
  *
  * @author Mauricio
  */
-public interface PeliculaListener {
+public interface RefreshListener {
     void actualizarLista();
 }

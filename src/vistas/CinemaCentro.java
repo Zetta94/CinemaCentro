@@ -4,7 +4,7 @@
  */
 package vistas;
 
-import VistaCartelera.Cartelera;
+import vistas.Cartelera.Cartelera;
 import java.awt.Color;
 import persistencia.Conexion;
 import javax.swing.BorderFactory;

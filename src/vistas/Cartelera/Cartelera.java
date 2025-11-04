@@ -1,12 +1,12 @@
-package VistaCartelera;
+package vistas.Cartelera;
 
 import entidades.Pelicula;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import listeners.PeliculaListener;
 import org.mariadb.jdbc.Connection;
 import persistencia.Context;
 import persistencia.PeliculaData;
+import listeners.RefreshListener;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -21,7 +21,7 @@ public class Cartelera extends javax.swing.JInternalFrame {
 
     
     private PeliculaData peliculaData = Context.getPeliculaData();
-    private PeliculaListener listener;
+    private RefreshListener listener;
     private DefaultTableModel modelo;
     private Connection connection;
 

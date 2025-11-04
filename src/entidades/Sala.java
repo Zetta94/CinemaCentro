@@ -64,6 +64,7 @@ public class Sala {
     // toString //
     @Override
     public String toString() {
+        if (idSala == 0) return "Todas";
         return String.valueOf(nroSala);
     }
 }

@@ -99,4 +99,24 @@ public class SalaData {
         }
         return lista;
     }
+    
+     public List<Sala> listarSalasActivas() {
+        List<Sala> lista = new ArrayList<>();
+        try (PreparedStatement ps = con.prepareStatement("SELECT * FROM salas WHERE estado = 1")) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Sala s = new Sala(
+                    rs.getInt("idSala"),
+                    rs.getInt("nroSala"),
+                    rs.getBoolean("apta3D"),
+                    rs.getInt("capacidad"),
+                    rs.getBoolean("estado")
+                );
+                lista.add(s);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar Salas: " + ex.getMessage());
+        }
+        return lista;
+    }
 }
