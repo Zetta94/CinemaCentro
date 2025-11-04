@@ -137,6 +137,37 @@ public class TicketCompraData {
         return t;
     }
 
+    // Buscar ticket por codigo //
+    public TicketCompra obtenerTicketPorCodigo(String codigo) {
+        TicketCompra t = null;
+        String sql = "SELECT * FROM ticketcompra WHERE codigo = ?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, codigo);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                t = new TicketCompra();
+                t.setIdTicket(rs.getInt("idTicket"));
+                t.setFechaCompra(rs.getDate("fechaCompra").toLocalDate());
+                t.setFechaFuncion(rs.getDate("fechaFuncion").toLocalDate());
+                t.setMonto(rs.getDouble("monto"));
+                t.setIdComprador(rs.getInt("idComprador"));
+                t.setCodigo(rs.getString("codigo"));
+            } else {
+                JOptionPane.showMessageDialog( 
+                        null, "No se encontró ningun ticket con el codigo: " + codigo, 
+                        "Aviso", 
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, 
+                    "Error al buscar ticket por codigo:\n" + ex.getMessage(),
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        return t;
+    }
+  
     //  Listar todos //
     public List<TicketCompra> listarTodos() {
         List<TicketCompra> lista = new ArrayList<>();

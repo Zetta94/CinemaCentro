@@ -17,6 +17,7 @@ public class TicketCompra {
     private LocalDate fechaFuncion;
     private double monto;
     private int idComprador;
+    private String codigo;
 
     public TicketCompra() {
     }
@@ -76,4 +77,24 @@ public class TicketCompra {
         this.idComprador = idComprador;
 
     }
+    
+   public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+    
+     @Override
+    public String toString() {
+        return "TicketCompra{" + 
+                "idTicket=" + idTicket + 
+                ", fechaCompra=" + fechaCompra + 
+                ", fechaFuncion=" + fechaFuncion + 
+                ", monto=" + monto + 
+                ", idComprador=" + idComprador + 
+                ", codigo='" + codigo + '\'' + 
+                '}';
+    }  
 }
