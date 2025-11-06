@@ -70,6 +70,7 @@ public class CinemaCentro extends javax.swing.JFrame {
         btnCartelera = new javax.swing.JButton();
         btnAdministracion = new javax.swing.JButton();
         btnEntradas1 = new javax.swing.JButton();
+        btnCartelera1 = new javax.swing.JButton();
         escritorio = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -157,6 +158,22 @@ public class CinemaCentro extends javax.swing.JFrame {
             }
         });
 
+        btnCartelera1.setBackground(new java.awt.Color(0, 0, 0));
+        btnCartelera1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        btnCartelera1.setForeground(new java.awt.Color(204, 204, 204));
+        btnCartelera1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Ticketsss.png"))); // NOI18N
+        btnCartelera1.setText("Tickets");
+        btnCartelera1.setActionCommand("Tickets");
+        btnCartelera1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnCartelera1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnCartelera1.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Ticketsss.png"))); // NOI18N
+        btnCartelera1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/777TICK.png"))); // NOI18N
+        btnCartelera1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCartelera1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlMenuLayout = new javax.swing.GroupLayout(pnlMenu);
         pnlMenu.setLayout(pnlMenuLayout);
         pnlMenuLayout.setHorizontalGroup(
@@ -167,7 +184,8 @@ public class CinemaCentro extends javax.swing.JFrame {
                     .addComponent(btnEntradas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnOnline, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
                     .addComponent(btnCartelera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAdministracion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnAdministracion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCartelera1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(48, Short.MAX_VALUE))
         );
         pnlMenuLayout.setVerticalGroup(
@@ -175,13 +193,15 @@ public class CinemaCentro extends javax.swing.JFrame {
             .addGroup(pnlMenuLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(btnEntradas1)
-                .addGap(70, 70, 70)
+                .addGap(26, 26, 26)
                 .addComponent(btnCartelera)
-                .addGap(83, 83, 83)
+                .addGap(18, 18, 18)
+                .addComponent(btnCartelera1)
+                .addGap(18, 18, 18)
                 .addComponent(btnOnline)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btnAdministracion)
-                .addGap(46, 46, 46))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         escritorio.setBackground(new java.awt.Color(8, 64, 107));
@@ -252,6 +272,10 @@ public class CinemaCentro extends javax.swing.JFrame {
         abrirYCentrar(comprarEntrada);
     }//GEN-LAST:event_btnEntradas1ActionPerformed
 
+    private void btnCartelera1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCartelera1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCartelera1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -294,6 +318,7 @@ public class CinemaCentro extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdministracion;
     private javax.swing.JButton btnCartelera;
+    private javax.swing.JButton btnCartelera1;
     private javax.swing.JButton btnEntradas1;
     private javax.swing.JButton btnOnline;
     private javax.swing.JDesktopPane escritorio;

@@ -10,6 +10,7 @@ import vistas.Comprador.CompradorView;
 import vistas.Comprador.Compradores;
 import vistas.Sala.SalasView;
 import persistencia.PeliculaData;
+import vistas.ticket.TicketsView;
 
 /**
  *
@@ -25,6 +26,7 @@ public class Administracion extends javax.swing.JInternalFrame {
         tabAdmin.addTab("Salas", new SalasView());
         tabAdmin.addTab("Proyecciones", new ProyeccionesView());
         tabAdmin.add("Compradores", new CompradorView());
+        tabAdmin.add("Tickets" , new  TicketsView());
    
     }
      
