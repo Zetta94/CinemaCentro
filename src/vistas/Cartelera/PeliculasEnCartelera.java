@@ -6,12 +6,17 @@ package vistas.Cartelera;
 
 import entidades.Pelicula;
 import java.util.List;
+import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import org.mariadb.jdbc.Connection;
 import persistencia.Context;
 import persistencia.PeliculaData;
 import listeners.RefreshListener;
+import vistas.CinemaCentro;
+import vistas.DetallePelicula;
 
 /**
  *
@@ -29,6 +34,21 @@ public class PeliculasEnCartelera extends javax.swing.JPanel {
         cargarComboGeneros();
         modelo = (DefaultTableModel) jtblePeliculas.getModel();
         cargarTabla();
+
+        jtblePeliculas.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                if (e.getClickCount() == 2 && javax.swing.SwingUtilities.isLeftMouseButton(e)) {
+                    int fila = jtblePeliculas.rowAtPoint(e.getPoint());
+                    if (fila >= 0) {
+                        int idPelicula = (int) modelo.getValueAt(fila, 0);
+                        Pelicula peliculaSeleccionada = peliculaData.obtenerPorId(idPelicula);
+                        DetallePelicula detalle = new DetallePelicula(peliculaSeleccionada);
+                        abrirYCentrar(detalle);
+                    }
+                }
+            }
+        });
     }
 
     private void cargarTabla() {
@@ -62,6 +82,7 @@ public class PeliculasEnCartelera extends javax.swing.JPanel {
         cbxCartelera = new javax.swing.JComboBox<>();
         lblGenero = new javax.swing.JLabel();
         lblCartelera = new javax.swing.JLabel();
+        btnDetalles = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(33, 33, 33));
         setForeground(new java.awt.Color(33, 33, 33));
@@ -125,14 +146,24 @@ public class PeliculasEnCartelera extends javax.swing.JPanel {
         lblCartelera.setForeground(new java.awt.Color(255, 255, 255));
         lblCartelera.setText("Cartelera");
 
+        btnDetalles.setBackground(new java.awt.Color(7, 10, 20));
+        btnDetalles.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnDetalles.setForeground(new java.awt.Color(255, 255, 255));
+        btnDetalles.setText("Detalles");
+        btnDetalles.setToolTipText("");
+        btnDetalles.setMaximumSize(new java.awt.Dimension(130, 76));
+        btnDetalles.setMinimumSize(new java.awt.Dimension(130, 76));
+        btnDetalles.setPreferredSize(new java.awt.Dimension(130, 76));
+        btnDetalles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDetallesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(lbltitulo)
@@ -149,11 +180,19 @@ public class PeliculasEnCartelera extends javax.swing.JPanel {
                 .addGap(98, 98, 98)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
+                .addContainerGap(45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbltitulo)
                     .addComponent(txtfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -163,8 +202,10 @@ public class PeliculasEnCartelera extends javax.swing.JPanel {
                     .addComponent(cbxCartelera, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -239,9 +280,34 @@ public class PeliculasEnCartelera extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxGeneroActionPerformed
 
+    private void btnDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesActionPerformed
+        // TODO add your handling code here:
+        int fila = jtblePeliculas.getSelectedRow();
+        if (fila >= 0) {
+            int idPelicula = (int) modelo.getValueAt(fila, 0);
+            Pelicula peliculaSeleccionada = peliculaData.obtenerPorId(idPelicula);
+            DetallePelicula detalle = new DetallePelicula(peliculaSeleccionada);
+            abrirYCentrar(detalle);
+        }
+    }//GEN-LAST:event_btnDetallesActionPerformed
+
+    private void abrirYCentrar(JInternalFrame frame) {
+        java.awt.Window window = SwingUtilities.getWindowAncestor(this);
+        if (window instanceof CinemaCentro) {
+            CinemaCentro main = (CinemaCentro) window;
+            JDesktopPane escritorio = main.getEscritorio();
+            escritorio.add(frame);
+            frame.pack();
+            frame.setVisible(true);
+            int x = (escritorio.getWidth() - frame.getWidth()) / 2;
+            int y = (escritorio.getHeight() - frame.getHeight()) / 2;
+            frame.setLocation(x, y);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnDetalles;
     private javax.swing.JComboBox<String> cbxCartelera;
     private javax.swing.JComboBox<String> cbxGenero;
     private javax.swing.JScrollPane jScrollPane2;

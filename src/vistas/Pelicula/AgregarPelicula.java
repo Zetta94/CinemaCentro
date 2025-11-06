@@ -99,6 +99,7 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
         bNo = new javax.swing.JRadioButton();
 
         setBackground(new java.awt.Color(153, 0, 51));
+        setMinimumSize(new java.awt.Dimension(655, 554));
 
         panel1.setBackground(new java.awt.Color(51, 51, 51));
         panel1.setForeground(new java.awt.Color(38, 64, 107));
