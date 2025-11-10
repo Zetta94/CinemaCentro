@@ -14,7 +14,8 @@ import java.util.List;
 public class DetalleTicket {
 
     private int idDetalle;         
-    private int idProyeccion;          
+    private int idProyeccion;   
+    private int idTicket;
     private List<Lugar> lugares;    
     private int cantidad;          
     private double subtotal;        
@@ -44,6 +45,14 @@ public class DetalleTicket {
         return idDetalle;
     }
 
+     public int getIdTicket() {
+        return idTicket;
+    }
+     
+     public void setIdTicket(int idTicket) {
+        this.idTicket = idTicket;
+    }
+     
     public void setIdDetalle(int idDetalle) {
         this.idDetalle = idDetalle;
     }
@@ -87,5 +96,7 @@ public class DetalleTicket {
     public void setTicket(TicketCompra ticket) {
         this.ticket = ticket;
     }
+    
+    
 
 }

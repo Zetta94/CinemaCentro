@@ -144,10 +144,14 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
         lblPago.setText("Medio de pago:");
 
         cbxPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Transferencia", "Tarjeta" }));
+        cbxPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxPagoActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setBackground(new java.awt.Color(7, 10, 20));
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnBuscar.setForeground(new java.awt.Color(204, 204, 204));
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,9 +172,7 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
                     .addComponent(lblPago)
                     .addComponent(lblFecha)
                     .addComponent(lblNombre)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addComponent(lblDni)))
+                    .addComponent(lblDni))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTitulo)
@@ -188,7 +190,7 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblTitulo)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -217,6 +219,10 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
         // TODO add your handling code here:
         obtenerComprador(txtDni.getText());
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void cbxPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPagoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxPagoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

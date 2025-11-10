@@ -17,7 +17,8 @@ public class TicketCompra {
     private LocalDate fechaFuncion;
     private double monto;
     private int idComprador;
-    private String codigo;
+    private String codigoTicket;
+
 
     public TicketCompra() {
     }
@@ -78,12 +79,12 @@ public class TicketCompra {
 
     }
     
-   public String getCodigo() {
-        return codigo;
+   public String getCodigoTicket() {
+        return codigoTicket;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public void setCodigoTicket(String codigoTicket) {
+        this.codigoTicket = codigoTicket;
     }
     
      @Override
@@ -94,7 +95,7 @@ public class TicketCompra {
                 ", fechaFuncion=" + fechaFuncion + 
                 ", monto=" + monto + 
                 ", idComprador=" + idComprador + 
-                ", codigo='" + codigo + '\'' + 
+                ", codigoTicket='" + codigoTicket + '\'' + 
                 '}';
     }  
 }
