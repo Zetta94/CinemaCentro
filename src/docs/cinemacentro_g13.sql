@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-11-2025 a las 14:26:53
+-- Tiempo de generación: 10-11-2025 a las 23:17:28
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `cinemacentro_g13`
 --
-CREATE DATABASE IF NOT EXISTS `cinemacentro_g13` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `cinemacentro_g13`;
 
 -- --------------------------------------------------------
 
@@ -52,7 +50,8 @@ INSERT INTO `compradores` (`idComprador`, `dni`, `nombre`, `fechaNac`, `password
 (7, '39555111', 'Javier Torres', '1998-01-22', 'jt22', 'Mercado Pago'),
 (8, '40222888', 'Sofía Ramírez', '2000-10-07', 'sofi07', 'Crédito'),
 (9, '35566777', 'Tomás Medina', '1995-03-30', 'tomas95', 'Débito'),
-(10, '36544321', 'Paula Gómez', '1996-12-01', 'pau96', 'Efectivo');
+(10, '36544321', 'Paula Gómez', '1996-12-01', 'pau96', 'Efectivo'),
+(11, '38550276', 'Lisandro Zuñiga', '1994-07-02', NULL, 'Efectivo');
 
 -- --------------------------------------------------------
 
@@ -85,7 +84,6 @@ INSERT INTO `detalle_lugares` (`idDetalleLugar`, `idDetalle`, `idLugar`) VALUES
 (12, 7, 21),
 (13, 7, 22),
 (14, 7, 23),
-(15, 8, 24),
 (16, 9, 24),
 (17, 9, 25),
 (18, 10, 26),
@@ -106,7 +104,16 @@ INSERT INTO `detalle_lugares` (`idDetalleLugar`, `idDetalle`, `idLugar`) VALUES
 (33, 18, 31),
 (34, 19, 26),
 (35, 20, 12),
-(36, 20, 15);
+(36, 20, 15),
+(37, 21, 36),
+(38, 21, 37),
+(39, 22, 38),
+(40, 22, 39),
+(41, 23, 40),
+(42, 23, 41),
+(49, 25, 48),
+(50, 26, 49),
+(51, 27, 50);
 
 -- --------------------------------------------------------
 
@@ -134,7 +141,6 @@ INSERT INTO `detalle_tickets` (`idDetalle`, `idTicket`, `idProyeccion`, `cantida
 (5, 5, 4, 1, 2800.00),
 (6, 6, 5, 2, 5600.00),
 (7, 7, 5, 3, 8400.00),
-(8, 8, 5, 1, 2800.00),
 (9, 9, 6, 2, 5600.00),
 (10, 10, 6, 1, 2800.00),
 (11, 11, 1, 1, 2800.00),
@@ -146,7 +152,13 @@ INSERT INTO `detalle_tickets` (`idDetalle`, `idTicket`, `idProyeccion`, `cantida
 (17, 17, 7, 1, 2800.00),
 (18, 18, 7, 3, 8400.00),
 (19, 19, 6, 1, 2800.00),
-(20, 20, 3, 2, 5600.00);
+(20, 20, 3, 2, 5600.00),
+(21, 21, 8, 2, 4800.00),
+(22, 22, 7, 2, 4600.00),
+(23, 23, 4, 2, 5200.00),
+(25, 25, 2, 1, 2900.00),
+(26, 26, 11, 1, 2500.00),
+(27, 27, 3, 1, 2500.00);
 
 -- --------------------------------------------------------
 
@@ -201,7 +213,22 @@ INSERT INTO `lugares` (`idLugar`, `fila`, `numero`, `ocupado`, `idProyeccion`) V
 (32, 'A', 1, 1, 8),
 (33, 'B', 2, 1, 8),
 (34, 'C', 3, 1, 8),
-(35, 'D', 4, 1, 8);
+(35, 'D', 4, 1, 8),
+(36, 'C', 4, 1, 8),
+(37, 'C', 5, 1, 8),
+(38, 'D', 3, 1, 7),
+(39, 'D', 4, 1, 7),
+(40, 'B', 5, 1, 4),
+(41, 'B', 4, 1, 4),
+(42, 'B', 4, 1, 8),
+(43, 'B', 5, 1, 8),
+(44, 'B', 6, 1, 8),
+(45, 'C', 6, 1, 8),
+(46, 'D', 6, 1, 8),
+(47, 'D', 5, 1, 8),
+(48, 'C', 5, 1, 2),
+(49, 'D', 1, 1, 11),
+(50, 'B', 5, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -308,6 +335,7 @@ INSERT INTO `salas` (`idSala`, `nroSala`, `apta3D`, `capacidad`, `estado`) VALUE
 
 CREATE TABLE `tickets` (
   `idTicket` int(11) NOT NULL,
+  `codigoTicket` varchar(16) DEFAULT NULL,
   `fechaCompra` date NOT NULL,
   `fechaFuncion` date DEFAULT NULL,
   `monto` decimal(10,2) DEFAULT NULL,
@@ -318,27 +346,32 @@ CREATE TABLE `tickets` (
 -- Volcado de datos para la tabla `tickets`
 --
 
-INSERT INTO `tickets` (`idTicket`, `fechaCompra`, `fechaFuncion`, `monto`, `idComprador`) VALUES
-(1, '2025-11-20', '2025-11-20', 5600.00, 1),
-(2, '2025-11-20', '2025-11-20', 8400.00, 2),
-(3, '2025-11-21', '2025-11-21', 2800.00, 3),
-(4, '2025-11-22', '2025-11-22', 5600.00, 4),
-(5, '2025-11-23', '2025-11-23', 2800.00, 5),
-(6, '2025-11-24', '2025-11-22', 5600.00, 6),
-(7, '2025-11-24', '2025-11-22', 8400.00, 7),
-(8, '2025-11-24', '2025-11-22', 2800.00, 8),
-(9, '2025-11-24', '2025-11-23', 5600.00, 9),
-(10, '2025-11-24', '2025-11-23', 2800.00, 10),
-(11, '2025-11-25', '2025-11-20', 2800.00, 1),
-(12, '2025-11-25', '2025-11-21', 5600.00, 2),
-(13, '2025-11-25', '2025-11-21', 8400.00, 3),
-(14, '2025-11-25', '2025-11-21', 2800.00, 4),
-(15, '2025-11-25', '2025-11-22', 5600.00, 5),
-(16, '2025-11-26', '2025-11-22', 5600.00, 6),
-(17, '2025-11-26', '2025-11-23', 2800.00, 7),
-(18, '2025-11-26', '2025-11-23', 8400.00, 8),
-(19, '2025-11-26', '2025-11-22', 2800.00, 9),
-(20, '2025-11-26', '2025-11-21', 5600.00, 10);
+INSERT INTO `tickets` (`idTicket`, `codigoTicket`, `fechaCompra`, `fechaFuncion`, `monto`, `idComprador`) VALUES
+(1, '916FAC890E763E4B', '2025-11-20', '2025-11-20', 5600.00, 1),
+(2, '401D938F92A44DF9', '2025-11-20', '2025-11-20', 8400.00, 2),
+(3, '028049BD4B75F1F6', '2025-11-21', '2025-11-21', 2800.00, 3),
+(4, '3296B83368C3BFAE', '2025-11-22', '2025-11-22', 5600.00, 4),
+(5, 'DAD5A9B23D954AB0', '2025-11-23', '2025-11-23', 2800.00, 5),
+(6, '99F71A5B2260693E', '2025-11-24', '2025-11-22', 5600.00, 6),
+(7, '861EC4DB511F6FD1', '2025-11-24', '2025-11-22', 8400.00, 7),
+(9, '7CF83E582862CD3B', '2025-11-24', '2025-11-23', 5600.00, 9),
+(10, 'D2D6A109BD8EFFA1', '2025-11-24', '2025-11-23', 2800.00, 10),
+(11, 'C0C9D2B3475D4740', '2025-11-25', '2025-11-20', 2800.00, 1),
+(12, '0D9544CBE3FEE72F', '2025-11-25', '2025-11-21', 5600.00, 2),
+(13, '775A4914E2827AA1', '2025-11-25', '2025-11-21', 8400.00, 3),
+(14, 'CF12277587F494FC', '2025-11-25', '2025-11-21', 2800.00, 4),
+(15, 'E10D02B0CD667734', '2025-11-25', '2025-11-22', 5600.00, 5),
+(16, '98C649125BCC2AD2', '2025-11-26', '2025-11-22', 5600.00, 6),
+(17, 'EF4DDCBA305B132D', '2025-11-26', '2025-11-23', 2800.00, 7),
+(18, 'D8C14A9CD2AE468C', '2025-11-26', '2025-11-23', 8400.00, 8),
+(19, '9B4D614479DB00D9', '2025-11-26', '2025-11-22', 2800.00, 9),
+(20, 'BA90C0C896D90521', '2025-11-26', '2025-11-21', 5600.00, 10),
+(21, 'C9296E7945155179', '2025-11-06', '2025-11-23', 4800.00, 11),
+(22, '605D901F6E49963C', '2025-11-06', '2025-11-23', 4600.00, 11),
+(23, 'F48558CC6DB6B727', '2025-11-07', '2025-11-21', 5200.00, 11),
+(25, 'B8DF28EF38128621', '2025-11-10', '2025-11-20', 2900.00, 11),
+(26, 'E27B25E32EF1B290', '2025-11-10', '2025-11-22', 2500.00, 11),
+(27, 'A8906AC43E6B2779', '2025-11-10', '2025-11-21', 2500.00, 11);
 
 --
 -- Índices para tablas volcadas
@@ -399,6 +432,8 @@ ALTER TABLE `salas`
 --
 ALTER TABLE `tickets`
   ADD PRIMARY KEY (`idTicket`),
+  ADD UNIQUE KEY `codigo_ticket` (`codigoTicket`),
+  ADD UNIQUE KEY `codigoTicket` (`codigoTicket`),
   ADD KEY `idComprador` (`idComprador`);
 
 --
@@ -409,25 +444,25 @@ ALTER TABLE `tickets`
 -- AUTO_INCREMENT de la tabla `compradores`
 --
 ALTER TABLE `compradores`
-  MODIFY `idComprador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idComprador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_lugares`
 --
 ALTER TABLE `detalle_lugares`
-  MODIFY `idDetalleLugar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `idDetalleLugar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_tickets`
 --
 ALTER TABLE `detalle_tickets`
-  MODIFY `idDetalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idDetalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `lugares`
 --
 ALTER TABLE `lugares`
-  MODIFY `idLugar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `idLugar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT de la tabla `peliculas`
@@ -451,7 +486,7 @@ ALTER TABLE `salas`
 -- AUTO_INCREMENT de la tabla `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- Restricciones para tablas volcadas
