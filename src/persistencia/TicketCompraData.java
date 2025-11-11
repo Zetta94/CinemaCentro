@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 public class TicketCompraData {
 
     private Connection con = null;
-
+    
     public TicketCompraData(Conexion conexion) {
         con = conexion.establishConnection();
     }
@@ -383,6 +383,43 @@ public class TicketCompraData {
         }
         return 0;
     }
+
+    public TicketCompra obtenerTicketPorDniYCodigo(String dni, String codigo) {
+    TicketCompra t = null;
+    String sql = """
+        SELECT t.idTicket, t.fechaCompra, t.fechaFuncion, t.monto, 
+               t.codigoTicket, c.dni, c.nombre, c.medioPago, p.titulo
+        FROM tickets t
+        JOIN compradores c ON t.idComprador = c.idComprador
+        JOIN detalle_tickets dt ON t.idTicket = dt.idTicket
+        JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion
+        JOIN peliculas p ON pr.idPelicula = p.idPelicula
+        WHERE c.dni = ? AND t.codigoTicket = ?
+    """;
+
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setString(1, dni);
+        ps.setString(2, codigo);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            t = new TicketCompra();
+            t.setIdTicket(rs.getInt("idTicket"));
+            t.setFechaCompra(rs.getDate("fechaCompra").toLocalDate());
+            t.setFechaFuncion(rs.getDate("fechaFuncion").toLocalDate());
+            t.setMonto(rs.getDouble("monto"));
+            t.setCodigoTicket(rs.getString("codigoTicket"));
+            t.setDniComprador(rs.getString("dni"));
+            t.setNombreComprador(rs.getString("nombre"));
+            t.setMedioPago(rs.getString("medioPago"));
+            t.setTituloPelicula(rs.getString("titulo"));
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al buscar ticket:\n" + ex.getMessage());
+    }
+
+    return t;
+}
 
     public List<TicketCompra> obtenerTicketsPorPelicula(int idPelicula) {
         return listarTicketsPorPelicula(idPelicula);

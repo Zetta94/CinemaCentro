@@ -4,6 +4,13 @@
  */
 package vistas.ticket;
 
+import entidades.TicketCompra;
+import javax.swing.JOptionPane;
+import org.mariadb.jdbc.Connection;
+import persistencia.Conexion;
+import persistencia.Context;
+import persistencia.TicketCompraData;
+
 /**
  *
  * @author Sistemas
@@ -13,8 +20,25 @@ public class Tickets extends javax.swing.JPanel {
     /**
      * Creates new form Tickets
      */
+    private TicketCompraData ticketData= Context.getTicketCompraData();
+    private Connection connection;
+    
     public Tickets() {
         initComponents();
+        
+        
+    }
+    
+    private boolean validacion(){
+       String dni= txtDni.getText().trim();
+       String codigo=txtCodigo.getText().trim();
+        
+       if(dni.isEmpty()|| codigo.isEmpty()){
+          JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+          return false;
+       } 
+
+       return true;
     }
 
     /**
@@ -33,14 +57,20 @@ public class Tickets extends javax.swing.JPanel {
         txtCodigo = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        txtDni = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(33, 33, 33));
 
         Imprimir.setBackground(new java.awt.Color(7, 10, 20));
         Imprimir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        Imprimir.setForeground(new java.awt.Color(204, 204, 204));
         Imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Imprimir.png"))); // NOI18N
         Imprimir.setText("Imprimir");
+        Imprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ImprimirActionPerformed(evt);
+            }
+        });
 
         txtInfo.setBackground(new java.awt.Color(77, 77, 77));
         txtInfo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -48,66 +78,132 @@ public class Tickets extends javax.swing.JPanel {
         jScrollPane2.setViewportView(txtInfo);
 
         lblCodigo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblCodigo.setForeground(new java.awt.Color(204, 204, 204));
         lblCodigo.setText("Codigo:");
 
         jButton1.setBackground(new java.awt.Color(7, 10, 20));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(204, 204, 204));
         jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tick.png"))); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel1.setText("Dni:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(170, 170, 170)
+                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(166, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
+                        .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblCodigo)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(lblCodigo))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(Imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtCodigo)
+                                    .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(53, 53, 53)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(170, 170, 170)
-                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(70, 70, 70)))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCodigo)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addGap(18, 18, 18)
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(39, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCodigo)
+                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addGap(94, 94, 94)
+                        .addComponent(Imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (!validacion()) return;
+    
+    String dni = txtDni.getText().trim();
+    String codigo = txtCodigo.getText().trim();
+
+    
+    TicketCompra ticket = ticketData.obtenerTicketPorDniYCodigo(dni, codigo);
+
+    if (ticket != null) {
+        txtInfo.setText(ticket.toString());
+    } else {
+        JOptionPane.showMessageDialog(this,
+            "No se encontró ningún ticket con ese DNI y código. Verifique los datos ingresados.",
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+        txtInfo.setText("");
+    }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void ImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImprimirActionPerformed
+     validacion();String contenido = txtInfo.getText().trim();
+
+    if (contenido.isEmpty()) {
+        JOptionPane.showMessageDialog(
+            this,
+            "No hay ningún ticket cargado para imprimir.",
+            "Aviso",
+            JOptionPane.WARNING_MESSAGE
+        );
+        return;
+    }
+
+    // Simula la impresión (podés agregar lógica real si querés)
+    JOptionPane.showMessageDialog(
+        this,
+        "🎟️ El ticket se imprimió con éxito.",
+        "Impresión completada",
+        JOptionPane.INFORMATION_MESSAGE
+    );
+     txtInfo.setText("");
+        
+    }//GEN-LAST:event_ImprimirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Imprimir;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtDni;
     private javax.swing.JTextPane txtInfo;
     // End of variables declaration//GEN-END:variables
 }

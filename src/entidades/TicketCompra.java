@@ -14,6 +14,10 @@ public class TicketCompra {
     private Comprador comprador;
     private Pelicula pelicula;
     private LocalTime hora;
+    private String dniComprador;
+    private String nombreComprador;
+    private String medioPago;
+    private String tituloPelicula;
 
     public TicketCompra() {
     }
@@ -104,19 +108,74 @@ public class TicketCompra {
     public void setHora(LocalTime hora) {
         this.hora = hora;
     }
+    
+    public String getDniComprador() {
+    return dniComprador;
+    }
 
+    public void setDniComprador(String dniComprador) {
+    this.dniComprador = dniComprador;
+    }
+
+    public String getNombreComprador() {
+    return nombreComprador;
+    }
+
+    public void setNombreComprador(String nombreComprador) {
+    this.nombreComprador = nombreComprador;
+    }
+
+    public String getMedioPago() {
+    return medioPago;
+    }
+
+    public void setMedioPago(String medioPago) {
+    this.medioPago = medioPago;
+    }
+
+    public String getTituloPelicula() {
+    return tituloPelicula;
+    }
+
+    public void setTituloPelicula(String tituloPelicula) {
+    this.tituloPelicula = tituloPelicula;
+    }
+
+//    @Override
+//    public String toString() {
+//        return "TicketCompra{" +
+//                "idTicket=" + idTicket +
+//                ", fechaCompra=" + fechaCompra +
+//                ", fechaFuncion=" + fechaFuncion +
+//                ", monto=" + monto +
+//                ", idComprador=" + idComprador +
+//                ", codigoTicket='" + codigoTicket + '\'' +
+//                ", pelicula=" + (pelicula != null ? pelicula.getTitulo() : "null") +
+//                ", comprador=" + (comprador != null ? comprador.getNombre() : "null") +
+//                ", hora=" + hora +
+//                '}';
+//    }
     @Override
     public String toString() {
-        return "TicketCompra{" +
-                "idTicket=" + idTicket +
-                ", fechaCompra=" + fechaCompra +
-                ", fechaFuncion=" + fechaFuncion +
-                ", monto=" + monto +
-                ", idComprador=" + idComprador +
-                ", codigoTicket='" + codigoTicket + '\'' +
-                ", pelicula=" + (pelicula != null ? pelicula.getTitulo() : "null") +
-                ", comprador=" + (comprador != null ? comprador.getNombre() : "null") +
-                ", hora=" + hora +
-                '}';
-    }
+    return """
+        🎟 Ticket Nº %d
+        Película: %s
+        Fecha de función: %s
+        Fecha de compra: %s
+        Monto: $%.2f
+        Comprador: %s (DNI: %s)
+        Medio de pago: %s
+        Código de retiro: %s
+        """.formatted(
+            idTicket,
+            tituloPelicula,
+            fechaFuncion,
+            fechaCompra,
+            monto,
+            nombreComprador,
+            dniComprador,
+            medioPago,
+            codigoTicket
+        );
+}
 }
