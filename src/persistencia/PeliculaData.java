@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author PC
+ * @author Manuel Zuñiga
  */
 public class PeliculaData {
 
@@ -54,33 +54,33 @@ public class PeliculaData {
         }
     }
 
- public boolean editarPelicula(Pelicula pelicula, int id) {
-    String sql = "UPDATE peliculas SET titulo = ?, director = ?, actores = ?, origen = ?, genero = ?, estreno = ?, enCartelera = ? WHERE idPelicula = ?";
+    public boolean editarPelicula(Pelicula pelicula, int id) {
+        String sql = "UPDATE peliculas SET titulo = ?, director = ?, actores = ?, origen = ?, genero = ?, estreno = ?, enCartelera = ? WHERE idPelicula = ?";
 
-    try (PreparedStatement ps = connection.prepareStatement(sql)) {
-        ps.setString(1, pelicula.getTitulo());
-        ps.setString(2, pelicula.getDirector());
-        ps.setString(3, pelicula.getActores());
-        ps.setString(4, pelicula.getOrigen());
-        ps.setString(5, pelicula.getGenero());
-        ps.setDate(6, java.sql.Date.valueOf(pelicula.getEstreno()));
-        ps.setBoolean(7, pelicula.isEnCartelera());
-        ps.setInt(8, id);
-        
-        int updated = ps.executeUpdate();
-        return updated > 0;
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, pelicula.getTitulo());
+            ps.setString(2, pelicula.getDirector());
+            ps.setString(3, pelicula.getActores());
+            ps.setString(4, pelicula.getOrigen());
+            ps.setString(5, pelicula.getGenero());
+            ps.setDate(6, java.sql.Date.valueOf(pelicula.getEstreno()));
+            ps.setBoolean(7, pelicula.isEnCartelera());
+            ps.setInt(8, id);
 
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(
-                null,
-                "No se pudo actualizar la película",
-                "Error",
-                JOptionPane.ERROR_MESSAGE
-        );
-        ex.printStackTrace();
-        return false;
+            int updated = ps.executeUpdate();
+            return updated > 0;
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "No se pudo actualizar la película",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            ex.printStackTrace();
+            return false;
+        }
     }
-}
 
     public List<Pelicula> buscarPeliculas(String titulo, String genero, Integer enCartelera) {
         StringBuilder sql = new StringBuilder(
@@ -120,7 +120,7 @@ public class PeliculaData {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Pelicula p = new Pelicula();
-                     p.setIdPelicula(rs.getInt("idPelicula"));
+                    p.setIdPelicula(rs.getInt("idPelicula"));
                     p.setTitulo(rs.getString("titulo"));
                     p.setDirector(rs.getString("director"));
                     p.setActores(rs.getString("actores"));
@@ -184,7 +184,7 @@ public class PeliculaData {
             Pelicula pelicula = new Pelicula();
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                     pelicula.setIdPelicula(rs.getInt("idPelicula"));
+                    pelicula.setIdPelicula(rs.getInt("idPelicula"));
                     pelicula.setTitulo(rs.getString("titulo"));
                     pelicula.setDirector(rs.getString("director"));
                     pelicula.setActores(rs.getString("actores"));
@@ -215,7 +215,7 @@ public class PeliculaData {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Pelicula pelicula = new Pelicula();
-                     pelicula.setIdPelicula(rs.getInt("idPelicula"));
+                    pelicula.setIdPelicula(rs.getInt("idPelicula"));
                     pelicula.setTitulo(rs.getString("titulo"));
                     pelicula.setDirector(rs.getString("director"));
                     pelicula.setActores(rs.getString("actores"));
@@ -239,17 +239,77 @@ public class PeliculaData {
             return null;
         }
     }
-    
+
     public void eliminarPelicula(int id) {
-    String sql = "DELETE FROM peliculas WHERE idPelicula = ?";
-    try {
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ps.executeUpdate();
-        ps.close();
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error al eliminar película: " + ex.getMessage());
+        String sql = "DELETE FROM peliculas WHERE idPelicula = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar película: " + ex.getMessage());
+        }
     }
-}
-    
+
+    public List<Pelicula> obtenerPeliculasMasVistas(int limite) {
+        String sql = """
+        SELECT p.*, COUNT(t.idTicket) AS vistas
+        FROM peliculas p
+        JOIN proyeccion pr ON p.idPelicula = pr.idPelicula
+        JOIN detalle_tickets dt ON pr.idProyeccion = dt.idProyeccion
+        JOIN tickets t ON dt.idTicket = t.idTicket
+        GROUP BY p.idPelicula
+        ORDER BY vistas DESC
+        LIMIT ?
+    """;
+
+        List<Pelicula> peliculas = new ArrayList<>();
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, limite);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Pelicula pelicula = new Pelicula();
+                pelicula.setIdPelicula(rs.getInt("idPelicula"));
+                pelicula.setTitulo(rs.getString("titulo"));
+                pelicula.setDirector(rs.getString("director"));
+                pelicula.setActores(rs.getString("actores"));
+                pelicula.setOrigen(rs.getString("origen"));
+                pelicula.setGenero(rs.getString("genero"));
+                pelicula.setEstreno(rs.getDate("estreno").toLocalDate());
+                pelicula.setEnCartelera(rs.getBoolean("enCartelera"));
+                peliculas.add(pelicula);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al obtener películas más vistas: " + ex.getMessage());
+        }
+
+        return peliculas;
+    }
+
+    public Pelicula buscarPorTitulo(String titulo) {
+        String sql = "SELECT * FROM peliculas WHERE LOWER(titulo) = LOWER(?) LIMIT 1";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, titulo.trim());
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Pelicula pelicula = new Pelicula();
+                    pelicula.setIdPelicula(rs.getInt("idPelicula"));
+                    pelicula.setTitulo(rs.getString("titulo"));
+                    pelicula.setDirector(rs.getString("director"));
+                    pelicula.setActores(rs.getString("actores"));
+                    pelicula.setOrigen(rs.getString("origen"));
+                    pelicula.setGenero(rs.getString("genero"));
+                    pelicula.setEstreno(rs.getDate("estreno").toLocalDate());
+                    pelicula.setEnCartelera(rs.getBoolean("enCartelera"));
+                    return pelicula;
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar película por título: " + ex.getMessage());
+        }
+        return null;
+    }
+
 }

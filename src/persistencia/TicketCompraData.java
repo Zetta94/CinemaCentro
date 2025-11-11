@@ -16,7 +16,6 @@ public class TicketCompraData {
         con = conexion.establishConnection();
     }
 
-    // ALTA 
     public int guardarTicket(TicketCompra ticket) {
         String codigo = generarCodigoTicket();
         ticket.setCodigoTicket(codigo);
@@ -55,7 +54,6 @@ public class TicketCompraData {
         }
     }
 
-    // GENERAR CÓDIGO 
     private String generarCodigoTicket() {
         String chars = "ABCDEF0123456789";
         StringBuilder codigo = new StringBuilder();
@@ -66,7 +64,6 @@ public class TicketCompraData {
         return codigo.toString();
     }
 
-    // BAJA 
     public void eliminarTicket(int idTicket) {
         String sql = "DELETE FROM tickets WHERE idTicket = ?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -91,7 +88,6 @@ public class TicketCompraData {
         }
     }
 
-    // MODIFICACIÓN 
     public void modificarTicket(TicketCompra t) {
         String sql = "UPDATE tickets SET fechaCompra=?, fechaFuncion=?, monto=?, idComprador=?, codigoTicket=? WHERE idTicket=?";
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -122,7 +118,6 @@ public class TicketCompraData {
         }
     }
 
-    // BUSCAR POR ID 
     public TicketCompra buscarTicketPorId(int idTicket) {
         TicketCompra t = null;
         String sql = "SELECT * FROM tickets WHERE idTicket = ?";
@@ -153,7 +148,6 @@ public class TicketCompraData {
         return t;
     }
 
-    // BUSCAR POR CÓDIGO 
     public TicketCompra obtenerTicketPorCodigo(String codigo) {
         TicketCompra t = null;
         String sql = "SELECT * FROM tickets WHERE codigoTicket = ?";
@@ -184,7 +178,6 @@ public class TicketCompraData {
         return t;
     }
 
-    // LISTAR TODOS
     public List<TicketCompra> listarTodos() {
         List<TicketCompra> lista = new ArrayList<>();
         String sql = "SELECT * FROM tickets";
@@ -209,64 +202,138 @@ public class TicketCompraData {
         return lista;
     }
 
-    // LISTAR POR FECHA
     public List<TicketCompra> listarTicketsPorFecha(LocalDate fecha) {
         List<TicketCompra> lista = new ArrayList<>();
-        String sql = "SELECT * FROM tickets WHERE fechaCompra = ?";
+
+        String sql = """
+        SELECT t.idTicket, t.fechaCompra, t.fechaFuncion, t.monto, t.codigoTicket,
+               c.idComprador, c.nombre AS nombreComprador, c.dni, c.medioPago,
+               p.idPelicula, p.titulo, p.genero, p.origen,
+               pr.idProyeccion, pr.fecha AS fechaProyeccion, pr.horaInicio, pr.horaFin, pr.idioma,
+               s.nroSala, s.apta3D
+        FROM tickets t
+        JOIN compradores c ON t.idComprador = c.idComprador
+        JOIN detalle_tickets dt ON t.idTicket = dt.idTicket
+        JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion
+        JOIN peliculas p ON pr.idPelicula = p.idPelicula
+        JOIN salas s ON pr.idSala = s.idSala
+        WHERE t.fechaCompra = ?
+        ORDER BY p.titulo
+    """;
+
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setDate(1, Date.valueOf(fecha));
             ResultSet rs = ps.executeQuery();
+
             while (rs.next()) {
                 TicketCompra t = new TicketCompra();
                 t.setIdTicket(rs.getInt("idTicket"));
-                t.setFechaCompra(rs.getDate("fechaCompra").toLocalDate());
-                t.setFechaFuncion(rs.getDate("fechaFuncion").toLocalDate());
+                Date dCompra = rs.getDate("fechaCompra");
+                if (dCompra != null) {
+                    t.setFechaCompra(dCompra.toLocalDate());
+                }
                 t.setMonto(rs.getDouble("monto"));
-                t.setIdComprador(rs.getInt("idComprador"));
                 t.setCodigoTicket(rs.getString("codigoTicket"));
+
+                entidades.Comprador c = new entidades.Comprador();
+                c.setIdComprador(rs.getInt("idComprador"));
+                c.setNombre(rs.getString("nombreComprador"));
+                c.setDni(rs.getString("dni"));
+                c.setMedioPago(rs.getString("medioPago"));
+                t.setComprador(c);
+
+                entidades.Pelicula p = new entidades.Pelicula();
+                p.setIdPelicula(rs.getInt("idPelicula"));
+                p.setTitulo(rs.getString("titulo"));
+                p.setGenero(rs.getString("genero"));
+                p.setOrigen(rs.getString("origen"));
+                t.setPelicula(p);
+
+                java.sql.Time horaInicio = rs.getTime("horaInicio");
+                if (horaInicio != null) {
+                    t.setHora(horaInicio.toLocalTime());
+                }
+
+                t.setMonto(rs.getDouble("monto"));
+
                 lista.add(t);
             }
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,
                     "Error al listar tickets por fecha:\n" + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
+
         return lista;
     }
 
-    // LISTAR POR PELÍCULA
     public List<TicketCompra> listarTicketsPorPelicula(int idPelicula) {
-        List<TicketCompra> lista = new ArrayList<>();
-        String sql = "SELECT DISTINCT t.* FROM tickets t "
-                + "JOIN detalle_tickets dt ON t.idTicket = dt.idTicket "
-                + "JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion "
-                + "WHERE pr.idPelicula = ?";
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, idPelicula);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                TicketCompra t = new TicketCompra();
-                t.setIdTicket(rs.getInt("idTicket"));
-                Date dCompra = rs.getDate("fechaCompra");
-                Date dFuncion = rs.getDate("fechaFuncion");
-                if (dCompra != null) t.setFechaCompra(dCompra.toLocalDate());
-                if (dFuncion != null) t.setFechaFuncion(dFuncion.toLocalDate());
-                t.setMonto(rs.getDouble("monto"));
-                t.setIdComprador(rs.getInt("idComprador"));
-                t.setCodigoTicket(rs.getString("codigoTicket"));
-                lista.add(t);
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,
-                    "Error al listar tickets por película:\n" + ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+    List<TicketCompra> lista = new ArrayList<>();
+
+    String sql = """
+        SELECT t.idTicket, t.fechaCompra, t.fechaFuncion, t.monto, t.codigoTicket,
+               c.idComprador, c.nombre AS nombreComprador, c.dni, c.medioPago,
+               p.idPelicula, p.titulo, p.genero, p.origen,
+               pr.idProyeccion, pr.fecha AS fechaProyeccion, pr.horaInicio, pr.horaFin,
+               pr.idioma, pr.es3D, pr.subtitulada,
+               s.nroSala, s.apta3D
+        FROM tickets t
+        JOIN compradores c ON t.idComprador = c.idComprador
+        JOIN detalle_tickets dt ON t.idTicket = dt.idTicket
+        JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion
+        JOIN peliculas p ON pr.idPelicula = p.idPelicula
+        JOIN salas s ON pr.idSala = s.idSala
+        WHERE p.idPelicula = ?
+        ORDER BY t.fechaCompra
+    """;
+
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, idPelicula);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            TicketCompra t = new TicketCompra();
+            t.setIdTicket(rs.getInt("idTicket"));
+            Date dCompra = rs.getDate("fechaCompra");
+            Date dFuncion = rs.getDate("fechaFuncion");
+            if (dCompra != null) t.setFechaCompra(dCompra.toLocalDate());
+            if (dFuncion != null) t.setFechaFuncion(dFuncion.toLocalDate());
+            t.setMonto(rs.getDouble("monto"));
+            t.setCodigoTicket(rs.getString("codigoTicket"));
+
+            entidades.Comprador c = new entidades.Comprador();
+            c.setIdComprador(rs.getInt("idComprador"));
+            c.setNombre(rs.getString("nombreComprador"));
+            c.setDni(rs.getString("dni"));
+            c.setMedioPago(rs.getString("medioPago"));
+            t.setComprador(c);
+
+            entidades.Pelicula p = new entidades.Pelicula();
+            p.setIdPelicula(rs.getInt("idPelicula"));
+            p.setTitulo(rs.getString("titulo"));
+            p.setGenero(rs.getString("genero"));
+            p.setOrigen(rs.getString("origen"));
+            t.setPelicula(p);
+
+            java.sql.Time horaInicio = rs.getTime("horaInicio");
+            if (horaInicio != null) t.setHora(horaInicio.toLocalTime());
+
+            lista.add(t);
         }
-        return lista;
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null,
+                "Error al listar tickets por película:\n" + ex.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
     }
 
-    // PELÍCULAS MÁS VISTAS
+    return lista;
+}
+
+
     public void peliculasMasVistas() {
         String sql = "SELECT p.titulo, COUNT(dt.idDetalle) AS entradasVendidas "
                 + "FROM peliculas p "
@@ -292,5 +359,37 @@ public class TicketCompraData {
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public int contarTicketsPorPelicula(int idPelicula) {
+        String sql = """
+        SELECT COUNT(t.idTicket) AS cantidad
+        FROM tickets t
+        JOIN detalle_tickets dt ON t.idTicket = dt.idTicket
+        JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion
+        WHERE pr.idPelicula = ?
+    """;
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idPelicula);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("cantidad");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al contar tickets por película:\n" + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        return 0;
+    }
+
+    public List<TicketCompra> obtenerTicketsPorPelicula(int idPelicula) {
+        return listarTicketsPorPelicula(idPelicula);
+    }
+
+    public List<TicketCompra> obtenerTicketsPorFecha(String fecha) {
+        LocalDate localDate = LocalDate.parse(fecha);
+        return listarTicketsPorFecha(localDate);
     }
 }

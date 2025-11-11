@@ -1,14 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package entidades;
 
-/**
- *
- * @author Manuel Zuñiga
- */
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class TicketCompra {
 
@@ -18,7 +11,9 @@ public class TicketCompra {
     private double monto;
     private int idComprador;
     private String codigoTicket;
-
+    private Comprador comprador;
+    private Pelicula pelicula;
+    private LocalTime hora;
 
     public TicketCompra() {
     }
@@ -76,26 +71,52 @@ public class TicketCompra {
 
     public void setIdComprador(int idComprador) {
         this.idComprador = idComprador;
-
     }
-    
-   public String getCodigoTicket() {
+
+    public String getCodigoTicket() {
         return codigoTicket;
     }
 
     public void setCodigoTicket(String codigoTicket) {
         this.codigoTicket = codigoTicket;
     }
-    
-     @Override
+
+    public Comprador getComprador() {
+        return comprador;
+    }
+
+    public void setComprador(Comprador comprador) {
+        this.comprador = comprador;
+    }
+
+    public Pelicula getPelicula() {
+        return pelicula;
+    }
+
+    public void setPelicula(Pelicula pelicula) {
+        this.pelicula = pelicula;
+    }
+
+    public LocalTime getHora() {
+        return hora;
+    }
+
+    public void setHora(LocalTime hora) {
+        this.hora = hora;
+    }
+
+    @Override
     public String toString() {
-        return "TicketCompra{" + 
-                "idTicket=" + idTicket + 
-                ", fechaCompra=" + fechaCompra + 
-                ", fechaFuncion=" + fechaFuncion + 
-                ", monto=" + monto + 
-                ", idComprador=" + idComprador + 
-                ", codigoTicket='" + codigoTicket + '\'' + 
+        return "TicketCompra{" +
+                "idTicket=" + idTicket +
+                ", fechaCompra=" + fechaCompra +
+                ", fechaFuncion=" + fechaFuncion +
+                ", monto=" + monto +
+                ", idComprador=" + idComprador +
+                ", codigoTicket='" + codigoTicket + '\'' +
+                ", pelicula=" + (pelicula != null ? pelicula.getTitulo() : "null") +
+                ", comprador=" + (comprador != null ? comprador.getNombre() : "null") +
+                ", hora=" + hora +
                 '}';
-    }  
+    }
 }
