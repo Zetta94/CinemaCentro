@@ -429,4 +429,45 @@ public class TicketCompraData {
         LocalDate localDate = LocalDate.parse(fecha);
         return listarTicketsPorFecha(localDate);
     }
+    
+    public List<entidades.Comprador> listarCompradoresPorFecha(LocalDate fechaFuncion) {
+        List<entidades.Comprador> lista = new ArrayList<>();
+
+        String sql = """
+            SELECT DISTINCT c.idComprador, c.nombre, c.dni, c.medioPago
+            FROM compradores c
+            JOIN tickets t ON c.idComprador = t.idComprador
+            WHERE t.fechaFuncion = ?
+            ORDER BY c.nombre
+        """;
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setDate(1, Date.valueOf(fechaFuncion));
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                entidades.Comprador c = new entidades.Comprador();
+                c.setIdComprador(rs.getInt("idComprador"));
+                c.setNombre(rs.getString("nombre"));
+                c.setDni(rs.getString("dni"));
+                c.setMedioPago(rs.getString("medioPago"));
+                lista.add(c);
+            }
+
+            if (lista.isEmpty()) {
+                JOptionPane.showMessageDialog(null,
+                        "No se registraron compradores en la fecha seleccionada.",
+                        "Sin resultados",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al listar compradores por fecha:\n" + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+        return lista;
+    } 
 }
