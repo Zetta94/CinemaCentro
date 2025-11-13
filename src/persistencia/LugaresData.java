@@ -134,5 +134,77 @@ public class LugaresData {
             return;
         }
     }
+     public List<Lugar> listarLugares() {
+        List<Lugar> lista = new ArrayList<>();
+        String sql = "SELECT * FROM lugares";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Lugar l = new Lugar();
+                l.setIdLugar(rs.getInt("idLugar"));
+                l.setIdProyeccion(rs.getInt("idProyeccion"));
+                l.setFila(rs.getString("fila"));
+                l.setNumero(rs.getInt("numero"));
+                l.setOcupado(rs.getBoolean("ocupado"));
+                lista.add(l);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al listar lugares: " + ex.getMessage());
+        }
+        return lista;
+    }
+     public Lugar buscarLugar(int idLugar) {
+        Lugar l = null;
+        String sql = "SELECT * FROM lugares WHERE idLugar = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, idLugar);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                l = new Lugar();
+                l.setIdLugar(rs.getInt("idLugar"));
+                l.setIdProyeccion(rs.getInt("idProyeccion"));
+                l.setFila(rs.getString("fila"));
+                l.setNumero(rs.getInt("numero"));
+                l.setOcupado(rs.getBoolean("ocupado"));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar el lugar: " + ex.getMessage());
+        }
+        return l;
+    }
+     public void modificarLugar(Lugar l) {
+        String sql = "UPDATE lugares SET idProyeccion=?, fila=?, numero=?, ocupado=? WHERE idLugar=?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, l.getIdProyeccion());
+            ps.setString(2, l.getFila());
+            ps.setInt(3, l.getNumero());
+            ps.setBoolean(4, l.isOcupado());
+            ps.setInt(5, l.getIdLugar());
+            int exito = ps.executeUpdate();
+
+            if (exito > 0) {
+                JOptionPane.showMessageDialog(null, "Lugar actualizado correctamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el lugar a modificar");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al modificar el lugar: " + ex.getMessage());
+        }
+    }
+      public void bajaLugar(int idLugar) {
+        String sql = "DELETE FROM lugares WHERE idLugar = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, idLugar);
+            int exito = ps.executeUpdate();
+            if (exito > 0) {
+                JOptionPane.showMessageDialog(null, "Lugar eliminado correctamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el lugar");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar el lugar: " + ex.getMessage());
+        }
+    }
 
 }
