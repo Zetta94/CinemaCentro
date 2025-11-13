@@ -213,11 +213,21 @@ public class SeleccionPelicula extends javax.swing.JPanel implements EntradasLis
     @Override
     public boolean validarDatos() {
         if (cbxPelicula.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Seleccione una película", "Error", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Seleccione una película",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
             return false;
         }
         if (lugares == 0) {
-            JOptionPane.showMessageDialog(this, "No hay lugares disponibles en la proyección seleccionada", "Error", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No hay lugares disponibles en la proyección seleccionada",
+                    "Sala llena",
+                    JOptionPane.WARNING_MESSAGE
+            );
             return false;
         }
         return true;
@@ -226,7 +236,7 @@ public class SeleccionPelicula extends javax.swing.JPanel implements EntradasLis
     @Override
     public Proyeccion guardarDatos() {
         Proyeccion proyeccionSelecionada = (Proyeccion) cbxProyecciones.getSelectedItem();
-        return proyeccionSelecionada ;
+        return proyeccionSelecionada;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

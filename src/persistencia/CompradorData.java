@@ -186,7 +186,6 @@ public class CompradorData {
     }
 
     public int guardarOActualizar(Comprador comprador) throws SQLException {
-        System.out.println("Metodo en compra servicio: " + comprador.getMedioPago());
         String sql = "INSERT INTO compradores (dni, nombre, fechaNac, password, medioPago) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE nombre = VALUES(nombre), fechaNac = VALUES(fechaNac), password = VALUES(password), medioPago = VALUES(medioPago)";
         try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, comprador.getDni());

@@ -15,52 +15,52 @@ import listeners.EntradasListener;
  *
  * @author tomas
  */
-public class DatosTarjeta extends javax.swing.JPanel implements EntradasListener  {
+public class DatosTarjeta extends javax.swing.JPanel implements EntradasListener {
 
     /**
      * Creates new form DatosTarjeta
      */
-    
-    
     public DatosTarjeta() {
         initComponents();
     }
+
     @Override
     public boolean validarDatos() {
-    String nombre = txtNombre.getText().trim();
-    String numeroTarjeta = txtNumeroTarjeta.getText().trim();
-    String codigoSeguridad = txtCVV.getText().trim();
-    Date fechaVencimiento = dateVencimiento.getDate();
+        String nombre = txtNombre.getText().trim();
+        String numeroTarjeta = txtNumeroTarjeta.getText().trim();
+        String codigoSeguridad = txtCVV.getText().trim();
+        Date fechaVencimiento = dateVencimiento.getDate();
 
+        if (nombre.isEmpty() || numeroTarjeta.isEmpty() || codigoSeguridad.isEmpty() || fechaVencimiento == null) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
 
-    if (nombre.isEmpty() || numeroTarjeta.isEmpty() || codigoSeguridad.isEmpty() || fechaVencimiento == null) {
-        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-        return false;
+        if (codigoSeguridad.length() != 3) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "El código de seguridad debe tener exactamente 3 dígitos.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return false;
+        }
+
+        LocalDate fechaLocal = fechaVencimiento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate hoy = LocalDate.now();
+
+        if (fechaLocal.isBefore(hoy)) {
+            JOptionPane.showMessageDialog(this, "La tarjeta está vencida.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
     }
 
-    if (codigoSeguridad.length() == 3 ) {
-        JOptionPane.showMessageDialog(this, "El código de seguridad debe tener 3 dígitos.", "Error", JOptionPane.ERROR_MESSAGE);
-        return false;
-    }
-
-    LocalDate fechaLocal = fechaVencimiento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-    LocalDate hoy = LocalDate.now();
-
-    if (fechaLocal.isBefore(hoy)) {
-        JOptionPane.showMessageDialog(this, "La tarjeta está vencida.", "Error", JOptionPane.ERROR_MESSAGE);
-        return false;
-    }
-
-    return true;
-}
-    
-    
-        @Override
+    @Override
     public Comprador guardarDatos() {
         return null;
     }
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -27,19 +27,20 @@ public class ConfirmarOnline extends javax.swing.JPanel {
 
     public ConfirmarOnline() {
         initComponents();
-        
-      codigoTicket();
-      
-      
+
     }
-    
-   
+
     public void setData(Comprador comprador, Proyeccion proyeccion, List<Lugar> lugares) {
         this.comprador = comprador;
         this.proyeccion = proyeccion;
         this.lugares = lugares;
+
+        String codigo = compraServicio.guardarCompra(comprador, lugares, proyeccion);
+        lblCodigo.setText(codigo);
+
         mostrarResumen();
     }
+
     private void mostrarResumen() {
         if (comprador == null || proyeccion == null || lugares == null || lugares.isEmpty()) {
             txtInfo.setText("Faltan datos para mostrar el resumen de la compra.");
@@ -49,7 +50,6 @@ public class ConfirmarOnline extends javax.swing.JPanel {
         StringBuilder sb = new StringBuilder();
         sb.append("🎬  RESUMEN DE COMPRA\n");
         sb.append("───────────────────────────────\n");
-      
 
         sb.append("🎞 Película: ").append(proyeccion.getPelicula().getTitulo()).append("\n");
         sb.append("🏛 Sala: ").append(proyeccion.getSala().getNroSala()).append("\n");
@@ -58,7 +58,7 @@ public class ConfirmarOnline extends javax.swing.JPanel {
         sb.append("🎟 Lugares seleccionados:\n");
         for (Lugar lugar : lugares) {
             sb.append(" - Fila ").append(lugar.getFila())
-              .append(", Asiento ").append(lugar.getNumero()).append("\n");
+                    .append(", Asiento ").append(lugar.getNumero()).append("\n");
         }
 
         double total = proyeccion.getPrecio() * lugares.size();
@@ -66,8 +66,6 @@ public class ConfirmarOnline extends javax.swing.JPanel {
 
         txtInfo.setText(sb.toString());
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -104,7 +102,7 @@ public class ConfirmarOnline extends javax.swing.JPanel {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(204, 153, 0));
-        jLabel4.setText("Codigo:");
+        jLabel4.setText("Codigo");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("Operacion finalizada");
@@ -117,20 +115,21 @@ public class ConfirmarOnline extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(96, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
+                .addComponent(lblCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 27, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel1))
-                            .addComponent(jLabel2))
-                        .addGap(91, 91, 91))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(27, 27, 27)
-                        .addComponent(lblCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(81, 81, 81))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel1))
+                    .addComponent(jLabel2))
+                .addGap(91, 91, 91))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(151, 151, 151)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,11 +138,11 @@ public class ConfirmarOnline extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
-                .addGap(66, 66, 66)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(220, Short.MAX_VALUE))
+                .addGap(55, 55, 55)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(lblCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(181, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -176,21 +175,9 @@ public class ConfirmarOnline extends javax.swing.JPanel {
                 .addGap(19, 19, 19))
         );
     }// </editor-fold>//GEN-END:initComponents
-    
-     private void cargarDatos() {
-        boolean guardado = compraServicio.guardarCompra(comprador, lugares, proyeccion);
-        if(guardado) {
-            System.out.println("Guardado en bd correctamente");
-        }
-    }
-    
-    private void codigoTicket(){
-         Random random = new Random();
-    int codigo = 100000 + random.nextInt(900000); 
-    String codigoString = String.valueOf(codigo);
-    lblCodigo.setText(codigoString);
-    }
-    
+
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

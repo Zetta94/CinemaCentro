@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 public class TicketCompraData {
 
     private Connection con = null;
-    
+
     public TicketCompraData(Conexion conexion) {
         con = conexion.establishConnection();
     }
@@ -34,15 +34,21 @@ public class TicketCompraData {
             ResultSet rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 ticket.setIdTicket(rs.getInt(1));
-                JOptionPane.showMessageDialog(
-                        null,
-                        "🎟 Ticket listo para retirar.\nCódigo de retiro: " + ticket.getCodigoTicket(),
-                        "Éxito",
-                        JOptionPane.INFORMATION_MESSAGE);
-                return ticket.getIdTicket();
             } else {
-                return -1;
+                // Intento 2: recuperar ID usando el código único
+                String sql2 = "SELECT idTicket FROM tickets WHERE codigoTicket = ?";
+                try (PreparedStatement ps2 = con.prepareStatement(sql2)) {
+                    ps2.setString(1, ticket.getCodigoTicket());
+                    ResultSet rs2 = ps2.executeQuery();
+                    if (rs2.next()) {
+                        ticket.setIdTicket(rs2.getInt("idTicket"));
+                    } else {
+                        return -1;
+                    }
+                }
             }
+
+            return ticket.getIdTicket();
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(
@@ -270,9 +276,9 @@ public class TicketCompraData {
     }
 
     public List<TicketCompra> listarTicketsPorPelicula(int idPelicula) {
-    List<TicketCompra> lista = new ArrayList<>();
+        List<TicketCompra> lista = new ArrayList<>();
 
-    String sql = """
+        String sql = """
         SELECT t.idTicket, t.fechaCompra, t.fechaFuncion, t.monto, t.codigoTicket,
                c.idComprador, c.nombre AS nombreComprador, c.dni, c.medioPago,
                p.idPelicula, p.titulo, p.genero, p.origen,
@@ -289,50 +295,55 @@ public class TicketCompraData {
         ORDER BY t.fechaCompra
     """;
 
-    try (PreparedStatement ps = con.prepareStatement(sql)) {
-        ps.setInt(1, idPelicula);
-        ResultSet rs = ps.executeQuery();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idPelicula);
+            ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            TicketCompra t = new TicketCompra();
-            t.setIdTicket(rs.getInt("idTicket"));
-            Date dCompra = rs.getDate("fechaCompra");
-            Date dFuncion = rs.getDate("fechaFuncion");
-            if (dCompra != null) t.setFechaCompra(dCompra.toLocalDate());
-            if (dFuncion != null) t.setFechaFuncion(dFuncion.toLocalDate());
-            t.setMonto(rs.getDouble("monto"));
-            t.setCodigoTicket(rs.getString("codigoTicket"));
+            while (rs.next()) {
+                TicketCompra t = new TicketCompra();
+                t.setIdTicket(rs.getInt("idTicket"));
+                Date dCompra = rs.getDate("fechaCompra");
+                Date dFuncion = rs.getDate("fechaFuncion");
+                if (dCompra != null) {
+                    t.setFechaCompra(dCompra.toLocalDate());
+                }
+                if (dFuncion != null) {
+                    t.setFechaFuncion(dFuncion.toLocalDate());
+                }
+                t.setMonto(rs.getDouble("monto"));
+                t.setCodigoTicket(rs.getString("codigoTicket"));
 
-            entidades.Comprador c = new entidades.Comprador();
-            c.setIdComprador(rs.getInt("idComprador"));
-            c.setNombre(rs.getString("nombreComprador"));
-            c.setDni(rs.getString("dni"));
-            c.setMedioPago(rs.getString("medioPago"));
-            t.setComprador(c);
+                entidades.Comprador c = new entidades.Comprador();
+                c.setIdComprador(rs.getInt("idComprador"));
+                c.setNombre(rs.getString("nombreComprador"));
+                c.setDni(rs.getString("dni"));
+                c.setMedioPago(rs.getString("medioPago"));
+                t.setComprador(c);
 
-            entidades.Pelicula p = new entidades.Pelicula();
-            p.setIdPelicula(rs.getInt("idPelicula"));
-            p.setTitulo(rs.getString("titulo"));
-            p.setGenero(rs.getString("genero"));
-            p.setOrigen(rs.getString("origen"));
-            t.setPelicula(p);
+                entidades.Pelicula p = new entidades.Pelicula();
+                p.setIdPelicula(rs.getInt("idPelicula"));
+                p.setTitulo(rs.getString("titulo"));
+                p.setGenero(rs.getString("genero"));
+                p.setOrigen(rs.getString("origen"));
+                t.setPelicula(p);
 
-            java.sql.Time horaInicio = rs.getTime("horaInicio");
-            if (horaInicio != null) t.setHora(horaInicio.toLocalTime());
+                java.sql.Time horaInicio = rs.getTime("horaInicio");
+                if (horaInicio != null) {
+                    t.setHora(horaInicio.toLocalTime());
+                }
 
-            lista.add(t);
+                lista.add(t);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,
+                    "Error al listar tickets por película:\n" + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
 
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null,
-                "Error al listar tickets por película:\n" + ex.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+        return lista;
     }
-
-    return lista;
-}
-
 
     public void peliculasMasVistas() {
         String sql = "SELECT p.titulo, COUNT(dt.idDetalle) AS entradasVendidas "
@@ -385,8 +396,8 @@ public class TicketCompraData {
     }
 
     public TicketCompra obtenerTicketPorDniYCodigo(String dni, String codigo) {
-    TicketCompra t = null;
-    String sql = """
+        TicketCompra t = null;
+        String sql = """
         SELECT t.idTicket, t.fechaCompra, t.fechaFuncion, t.monto, 
                t.codigoTicket, c.dni, c.nombre, c.medioPago, p.titulo
         FROM tickets t
@@ -397,29 +408,29 @@ public class TicketCompraData {
         WHERE c.dni = ? AND t.codigoTicket = ?
     """;
 
-    try (PreparedStatement ps = con.prepareStatement(sql)) {
-        ps.setString(1, dni);
-        ps.setString(2, codigo);
-        ResultSet rs = ps.executeQuery();
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, dni);
+            ps.setString(2, codigo);
+            ResultSet rs = ps.executeQuery();
 
-        if (rs.next()) {
-            t = new TicketCompra();
-            t.setIdTicket(rs.getInt("idTicket"));
-            t.setFechaCompra(rs.getDate("fechaCompra").toLocalDate());
-            t.setFechaFuncion(rs.getDate("fechaFuncion").toLocalDate());
-            t.setMonto(rs.getDouble("monto"));
-            t.setCodigoTicket(rs.getString("codigoTicket"));
-            t.setDniComprador(rs.getString("dni"));
-            t.setNombreComprador(rs.getString("nombre"));
-            t.setMedioPago(rs.getString("medioPago"));
-            t.setTituloPelicula(rs.getString("titulo"));
+            if (rs.next()) {
+                t = new TicketCompra();
+                t.setIdTicket(rs.getInt("idTicket"));
+                t.setFechaCompra(rs.getDate("fechaCompra").toLocalDate());
+                t.setFechaFuncion(rs.getDate("fechaFuncion").toLocalDate());
+                t.setMonto(rs.getDouble("monto"));
+                t.setCodigoTicket(rs.getString("codigoTicket"));
+                t.setDniComprador(rs.getString("dni"));
+                t.setNombreComprador(rs.getString("nombre"));
+                t.setMedioPago(rs.getString("medioPago"));
+                t.setTituloPelicula(rs.getString("titulo"));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar ticket:\n" + ex.getMessage());
         }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error al buscar ticket:\n" + ex.getMessage());
-    }
 
-    return t;
-}
+        return t;
+    }
 
     public List<TicketCompra> obtenerTicketsPorPelicula(int idPelicula) {
         return listarTicketsPorPelicula(idPelicula);
@@ -429,7 +440,7 @@ public class TicketCompraData {
         LocalDate localDate = LocalDate.parse(fecha);
         return listarTicketsPorFecha(localDate);
     }
-    
+
     public List<entidades.Comprador> listarCompradoresPorFecha(LocalDate fechaFuncion) {
         List<entidades.Comprador> lista = new ArrayList<>();
 
@@ -469,5 +480,5 @@ public class TicketCompraData {
         }
 
         return lista;
-    } 
+    }
 }

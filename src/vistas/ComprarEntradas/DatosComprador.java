@@ -27,6 +27,9 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
 
     public DatosComprador() {
         initComponents();
+        cbxPago.removeAllItems();
+        cbxPago.addItem("Efectivo");
+        cbxPago.setEnabled(false);
         txtNombre.setEnabled(false);
         dateFecha.setEnabled(false);
         cbxPago.setEnabled(false);
@@ -41,7 +44,6 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
 
     private void obtenerComprador(String dni) {
         Comprador comprador = compradorData.obtenerCompradorPorDni(dni);
-        System.out.println(comprador);
         if (comprador != null) {
             lblError.setVisible(false);
             txtNombre.setText(comprador.getNombre());
@@ -89,13 +91,12 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
             JOptionPane.showMessageDialog(this, "La fecha de nacimiento no puede ser futura", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        
+
         return true;
     }
 
     @Override
     public Comprador guardarDatos() {
-        System.out.println("Metodo Datos comprador: " + modoPago);
         return new Comprador(dni, nombre, fechaNacLocal, modoPago);
     }
 

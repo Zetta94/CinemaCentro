@@ -116,8 +116,6 @@ public class LugaresData {
 
     public void vincularLugarADetalle(int idLugar, int idDetalle) {
         String sql = "INSERT INTO detalle_lugares (idDetalle, idLugar) VALUES (?,?)";
-        System.out.println("id lugar " + idLugar);
-        System.out.println("id detalle " + idDetalle);
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, idDetalle);
             ps.setInt(2, idLugar);

@@ -39,42 +39,49 @@ public class CompraServicio {
     private DetalleTicketData detalleTicketData = Context.getDetalleTicketData();
     private Connection connection = Context.getConnetion().establishConnection();
 
-    public boolean guardarCompra(Comprador comprador, List<Lugar> lugaresSeleccionados, Proyeccion proyeccion) {
+    public String guardarCompra(Comprador comprador, List<Lugar> lugaresSeleccionados, Proyeccion proyeccion) {
 
         try {
             connection.setAutoCommit(false);
+
             int idComprador = compradorData.guardarOActualizar(comprador);
 
             double monto = proyeccion.getPrecio() * lugaresSeleccionados.size();
             TicketCompra ticket = new TicketCompra(LocalDate.now(), proyeccion.getFecha(), monto, idComprador);
+
             int idTicket = ticketCompraData.guardarTicket(ticket);
 
-            DetalleTicket detalleTicket = new DetalleTicket(proyeccion.getIdProyeccion(), lugaresSeleccionados, lugaresSeleccionados.size(), monto, ticket);
+            TicketCompra ticketReal = ticketCompraData.buscarTicketPorId(idTicket);
+
+            String codigoReal = (ticketReal != null ? ticketReal.getCodigoTicket() : null);
+
+            DetalleTicket detalleTicket = new DetalleTicket(
+                    proyeccion.getIdProyeccion(),
+                    lugaresSeleccionados,
+                    lugaresSeleccionados.size(),
+                    monto,
+                    ticketReal
+            );
 
             DetalleTicket detalleCreado = detalleTicketData.guardarDetalleTicket(detalleTicket);
 
             for (Lugar lugar : detalleCreado.getLugares()) {
-                int idLugar = lugar.getIdLugar();
-                lugaresData.vincularLugarADetalle(idLugar, detalleCreado.getIdDetalle());
+                lugaresData.vincularLugarADetalle(lugar.getIdLugar(), detalleCreado.getIdDetalle());
             }
 
             connection.commit();
-            return true;
+            return codigoReal;
 
         } catch (SQLException ex) {
             try {
                 connection.rollback();
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Hubo un error en el flujo de compra",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE
-                );
-                ex.printStackTrace();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            return false;
+
+            JOptionPane.showMessageDialog(null, "Hubo un error en el flujo de compra", "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+            return null;
 
         } finally {
             try {
@@ -83,6 +90,6 @@ public class CompraServicio {
                 e.printStackTrace();
             }
         }
-
     }
+
 }

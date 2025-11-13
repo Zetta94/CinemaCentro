@@ -20,8 +20,6 @@ import vistas.ComprarEntradas.DatosComprador;
 import vistas.ComprarEntradas.SeleccionAsientos;
 import vistas.ComprarEntradas.SeleccionPelicula;
 
-
-
 /**
  *
  * @author tomas
@@ -34,12 +32,11 @@ public class ComprarEntradasOnline extends javax.swing.JInternalFrame {
     private CompraServicio compraServicio = new CompraServicio();
     private Comprador comprador;
     private Proyeccion proyeccion;
-    
+
     private int pasoActual = 1;
     private CardLayout layout;
     private EntradasListener listener;
 
-    
     private List<Lugar> asientosSeleccionados;
 
     DatosCompradorOnline paso1;
@@ -48,13 +45,10 @@ public class ComprarEntradasOnline extends javax.swing.JInternalFrame {
     DatosTarjeta paso4;
     ConfirmarOnline paso5;
 
-    
-    
-    
     public ComprarEntradasOnline() {
         initComponents();
         aplicarEstiloOscuro();
-        
+
         paso1 = new DatosCompradorOnline();
         paso2 = new SeleccionPeliculaOnline();
         paso3 = new SeleccionAsientosOnline();
@@ -65,32 +59,29 @@ public class ComprarEntradasOnline extends javax.swing.JInternalFrame {
         pnlPrincipal.add(paso2, "paso2");
         pnlPrincipal.add(paso3, "paso3");
         pnlPrincipal.add(paso4, "paso4");
-        pnlPrincipal.add(paso5,"paso5");
+        pnlPrincipal.add(paso5, "paso5");
 
         btnAnterior.setEnabled(false);
 
         layout = (CardLayout) pnlPrincipal.getLayout();
     }
-    
+
     private void aplicarEstiloOscuro() {
         Color fondoGeneral = new Color(33, 33, 33);
         Color panelOscuro = new Color(45, 45, 45);
         Color textoClaro = new Color(230, 230, 230);
-        Color rojoCine = new Color(102,0,0);
+        Color rojoCine = new Color(102, 0, 0);
         Color grisBoton = new Color(77, 77, 77);
 
-    
         getContentPane().setBackground(fondoGeneral);
         setBackground(fondoGeneral);
 
         pnlPrincipal.setBackground(panelOscuro);
 
-     
         btnSiguiente.setBackground(rojoCine);
         btnSiguiente.setForeground(Color.WHITE);
         btnSiguiente.setFocusPainted(false);
         btnSiguiente.setBorderPainted(false);
-
 
         btnAnterior.setBackground(grisBoton);
         btnAnterior.setForeground(Color.WHITE);
@@ -160,17 +151,19 @@ public class ComprarEntradasOnline extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-       avanzar();
+        avanzar();
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
-       volver();
+        volver();
     }//GEN-LAST:event_btnAnteriorActionPerformed
-private void avanzar() {
-     if(btnSiguiente.getText().equals("Guardar y Salir")){
-         cargarDatos();
-         this.dispose();
-     }
+    private void avanzar() {
+
+        if (btnSiguiente.getText().equals("Guardar y Salir")) {
+            this.dispose();
+            return;
+        }
+
         Component actual = pnlPrincipal.getComponent(pasoActual - 1);
 
         if (actual instanceof EntradasListener) {
@@ -179,6 +172,7 @@ private void avanzar() {
                 return;
             }
             Object datos = listener.guardarDatos();
+
             switch (pasoActual) {
                 case 1:
                     comprador = (Comprador) datos;
@@ -189,20 +183,22 @@ private void avanzar() {
                 case 3:
                     asientosSeleccionados = (List<Lugar>) datos;
                     break;
-                default:
-                    break;
             }
         }
 
         if (pasoActual < 5) {
             pasoActual++;
+
             if (pasoActual == 3) {
                 paso3.setProyeccionData(proyeccion.getIdProyeccion(), proyeccion.getPrecio());
             }
-            if(pasoActual == 5) {
+            if (pasoActual == 5) {
                 paso5.setData(comprador, proyeccion, asientosSeleccionados);
+
+                btnSiguiente.setText("Guardar y Salir");
+                btnAnterior.setVisible(false); // 👈 Ocultamos botón volver
             }
-            
+
             layout.show(pnlPrincipal, "paso" + pasoActual);
             btnAnterior.setEnabled(true);
         }
@@ -210,10 +206,6 @@ private void avanzar() {
         if (pasoActual == 4) {
             btnSiguiente.setText("Confirmar");
         }
-        if(pasoActual ==5){
-            btnSiguiente.setText("Guardar y Salir");
-        }
-        
     }
 
     private void volver() {
@@ -221,24 +213,22 @@ private void avanzar() {
             pasoActual--;
             layout.show(pnlPrincipal, "paso" + pasoActual);
 
-        if (pasoActual == 3) {
-            paso3.limpiarSeleccion();
+            if (pasoActual == 4) {
+                btnAnterior.setVisible(true);
+            }
+
+            if (pasoActual == 3) {
+                paso3.limpiarSeleccion();
+            }
+
+            btnSiguiente.setText("Siguiente");
         }
-        btnSiguiente.setText("Siguiente");
-    }
-        
+
         if (pasoActual == 1) {
             btnAnterior.setEnabled(false);
         }
-        
     }
-    private void cargarDatos() {
-        boolean guardado = compraServicio.guardarCompra(comprador, asientosSeleccionados, proyeccion);
-        if(guardado) {
-            System.out.println("Guardado en bd correctamente");
-        }
-    }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterior;

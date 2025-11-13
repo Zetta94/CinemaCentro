@@ -4,6 +4,7 @@ import entidades.Comprador;
 import entidades.Lugar;
 import entidades.Proyeccion;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import persistencia.Context;
 import servicios.CompraServicio;
@@ -17,6 +18,8 @@ public class Confirmar extends javax.swing.JPanel {
     private Comprador comprador;
     private Proyeccion proyeccion;
     private List<Lugar> lugares;
+
+    private CompraServicio compraServicio = new CompraServicio();
 
     public Confirmar() {
         initComponents();
@@ -55,6 +58,45 @@ public class Confirmar extends javax.swing.JPanel {
         sb.append("\n💰 Total a pagar: $").append(String.format("%.2f", total)).append("\n");
 
         txtInfo.setText(sb.toString());
+    }
+
+    public void confirmarCompra() {
+        if (comprador == null || proyeccion == null || lugares == null || lugares.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Faltan datos para finalizar la compra.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String codigo = compraServicio.guardarCompra(comprador, lugares, proyeccion);
+
+        if (codigo == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al guardar la compra.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        JOptionPane.showMessageDialog(
+                this,
+                "DNI: " + comprador.getDni()
+                + "\nCódigo de compra: " + codigo
+                + "\n\nRetire las entradas por boletería.",
+                "Compra realizada con éxito",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+
+        java.awt.Container parent = this.getParent();
+
+        while (parent != null && !(parent instanceof javax.swing.JInternalFrame)) {
+            parent = parent.getParent();
+        }
+
+        if (parent != null) {
+            ((javax.swing.JInternalFrame) parent).dispose();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -97,8 +139,6 @@ public class Confirmar extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -197,19 +197,19 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblGenero" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblGeneroInfo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblGeneroInfo" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblDirector" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblDirectorInfo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblDirectorInfo" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblActores" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblActoresInfo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblActoresInfo" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="7" max="32767" attributes="0"/>
                   </Group>

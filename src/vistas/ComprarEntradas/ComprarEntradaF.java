@@ -147,11 +147,12 @@ public class ComprarEntradaF extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAnteriorActionPerformed
 
     private void avanzar() {
-        if (btnSiguiente.getText().equals("Confirmar")) {
-            System.out.println("pantalla principal: " + comprador.getMedioPago());
-            guardarDatos();
-            this.dispose();
+
+        if (pasoActual == 4) {
+            paso4.confirmarCompra();
+            return;
         }
+
         Component actual = pnlPrincipal.getComponent(pasoActual - 1);
 
         if (actual instanceof EntradasListener) {
@@ -159,6 +160,7 @@ public class ComprarEntradaF extends javax.swing.JInternalFrame {
             if (!listener.validarDatos()) {
                 return;
             }
+
             Object datos = listener.guardarDatos();
             switch (pasoActual) {
                 case 1:
@@ -170,24 +172,22 @@ public class ComprarEntradaF extends javax.swing.JInternalFrame {
                 case 3:
                     asientosSeleccionados = (List<Lugar>) datos;
                     break;
-                default:
-                    break;
             }
         }
 
-        if (pasoActual < 5) {
-            pasoActual++;
-            if (pasoActual == 3) {
-                paso3.setProyeccionData(proyeccion.getIdProyeccion(), proyeccion.getPrecio());
-            }
-            if (pasoActual == 4) {
-                paso4.setData(comprador, proyeccion, asientosSeleccionados);
-                btnSiguiente.setText("Confirmar");
-            }
-            layout.show(pnlPrincipal, "paso" + pasoActual);
-            btnAnterior.setEnabled(true);
+        pasoActual++;
+
+        if (pasoActual == 3) {
+            paso3.setProyeccionData(proyeccion.getIdProyeccion(), proyeccion.getPrecio());
         }
 
+        if (pasoActual == 4) {
+            paso4.setData(comprador, proyeccion, asientosSeleccionados);
+            btnSiguiente.setText("Confirmar");
+        }
+
+        layout.show(pnlPrincipal, "paso" + pasoActual);
+        btnAnterior.setEnabled(true);
     }
 
     private void volver() {
@@ -206,12 +206,6 @@ public class ComprarEntradaF extends javax.swing.JInternalFrame {
         }
     }
 
-    private void guardarDatos() {
-        boolean guardado = compraServicio.guardarCompra(comprador, asientosSeleccionados, proyeccion);
-        if (guardado) {
-            System.out.println("Guardado en bd correctamente");
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterior;
