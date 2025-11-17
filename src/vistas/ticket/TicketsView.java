@@ -89,18 +89,16 @@ public class TicketsView extends javax.swing.JPanel {
         });
     }
 
-    private void filtrarSugerencias() {
-        String texto = txtComprador.getText().trim().toLowerCase();
+   private void filtrarSugerencias() {
+    String texto = txtComprador.getText().trim().toLowerCase();
 
-        List<String> filtrados
-                = listaCompradores.stream()
-                        .map(Comprador::getNombre)
-                        .filter(n -> n.toLowerCase().startsWith(texto))
-                        .collect(Collectors.toList());
+    List<String> filtrados = listaCompradores.stream()
+            .map(Comprador::getNombre)
+            .filter(n -> n.toLowerCase().contains(texto))   
+            .collect(Collectors.toList());
 
-        actualizarListaSugerencias(filtrados);
-    }
-
+    actualizarListaSugerencias(filtrados);
+}
     private void mostrarTicketsEnTabla(List<TicketCompra> tickets) {
         DefaultTableModel model = (DefaultTableModel) tblTickets.getModel();
         model.setRowCount(0);
