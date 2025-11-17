@@ -145,7 +145,15 @@ public class EstadisticasView extends javax.swing.JPanel {
             new String [] {
                 "Nombre", "Espectadores"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblMasVistas);
 
         btnTicketPorPelicula.setBackground(new java.awt.Color(153, 0, 0));

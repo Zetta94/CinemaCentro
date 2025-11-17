@@ -46,7 +46,7 @@ public class ProyeccionesView extends javax.swing.JPanel {
                 p.getPrecio()
             });
         }
-        limpiarBusqueda();
+        
     }
 
     private void cargarComboSalas() {
