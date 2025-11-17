@@ -3,6 +3,7 @@ package vistas.ticket;
 import entidades.TicketCompra;
 import entidades.Comprador;
 import entidades.Pelicula;
+import java.util.ArrayList;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -89,16 +90,17 @@ public class TicketsView extends javax.swing.JPanel {
         });
     }
 
-   private void filtrarSugerencias() {
-    String texto = txtComprador.getText().trim().toLowerCase();
+    private void filtrarSugerencias() {
+        String texto = txtComprador.getText().trim().toLowerCase();
 
-    List<String> filtrados = listaCompradores.stream()
-            .map(Comprador::getNombre)
-            .filter(n -> n.toLowerCase().contains(texto))   
-            .collect(Collectors.toList());
+        List<String> filtrados = listaCompradores.stream()
+                .map(Comprador::getNombre)
+                .filter(n -> n.toLowerCase().contains(texto))
+                .collect(Collectors.toList());
 
-    actualizarListaSugerencias(filtrados);
-}
+        actualizarListaSugerencias(filtrados);
+    }
+
     private void mostrarTicketsEnTabla(List<TicketCompra> tickets) {
         DefaultTableModel model = (DefaultTableModel) tblTickets.getModel();
         model.setRowCount(0);
@@ -124,10 +126,9 @@ public class TicketsView extends javax.swing.JPanel {
         String peliculaSel = cbxPelicula.getSelectedItem().toString();
 
         if (!codigo.isEmpty()) {
-
             TicketCompra ticket = ticketData.obtenerTicketPorCodigo(codigo);
             if (ticket != null) {
-                mostrarTicketsEnTabla(List.of(ticket));
+                mostrarTicketsEnTabla(java.util.Collections.singletonList(ticket));
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró ningún ticket con ese código.");
                 ((DefaultTableModel) tblTickets.getModel()).setRowCount(0);
@@ -136,27 +137,26 @@ public class TicketsView extends javax.swing.JPanel {
         }
 
         if (!nombreComprador.isEmpty()) {
-
             List<TicketCompra> todos = ticketData.listarTodos();
-            List<TicketCompra> filtrados = todos.stream()
-                    .filter(t -> {
-                        Comprador c = compradorData.obtenerCompradorPorId(t.getIdComprador());
-                        return c != null && c.getNombre().equalsIgnoreCase(nombreComprador);
-                    })
-                    .collect(Collectors.toList());
+            List<TicketCompra> filtrados = new ArrayList<>();
+
+            for (TicketCompra t : todos) {
+                Comprador c = compradorData.obtenerCompradorPorId(t.getIdComprador());
+                if (c != null && c.getNombre().equalsIgnoreCase(nombreComprador)) {
+                    filtrados.add(t);
+                }
+            }
 
             mostrarTicketsEnTabla(filtrados);
             return;
         }
 
         if (!"Todas".equals(peliculaSel)) {
-
             List<Pelicula> pelis = peliculaData.buscarPeliculas(peliculaSel, null, null);
             if (pelis == null || pelis.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "No se encontró la película.");
                 return;
             }
-
             int id = pelis.get(0).getIdPelicula();
             mostrarTicketsEnTabla(ticketData.listarTicketsPorPelicula(id));
             return;
