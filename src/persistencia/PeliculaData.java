@@ -251,15 +251,14 @@ public class PeliculaData {
     public List<Pelicula> obtenerPeliculasMasVistas(int limite) {
         List<Pelicula> lista = new ArrayList<>();
 
-        String sql = """
-        SELECT p.*, COUNT(dt.idDetalle) AS vistas
-        FROM peliculas p
-        JOIN proyeccion pr ON p.idPelicula = pr.idPelicula
-        JOIN detalle_tickets dt ON pr.idProyeccion = dt.idProyeccion
-        GROUP BY p.idPelicula
-        ORDER BY vistas DESC
-        LIMIT ?
-    """;
+        String sql
+                = "SELECT p.*, COUNT(dt.idDetalle) AS vistas "
+                + "FROM peliculas p "
+                + "JOIN proyeccion pr ON p.idPelicula = pr.idPelicula "
+                + "JOIN detalle_tickets dt ON pr.idProyeccion = dt.idProyeccion "
+                + "GROUP BY p.idPelicula "
+                + "ORDER BY vistas DESC "
+                + "LIMIT ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, limite);
@@ -310,11 +309,10 @@ public class PeliculaData {
     }
 
     public LocalDate obtenerProximaFuncion(int idPelicula) {
-        String sql = """
-        SELECT MIN(fecha) AS proxima
-        FROM proyeccion
-        WHERE idPelicula = ?
-    """;
+        String sql
+                = "SELECT MIN(fecha) AS proxima "
+                + "FROM proyeccion "
+                + "WHERE idPelicula = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, idPelicula);
@@ -326,6 +324,7 @@ public class PeliculaData {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+
         return null;
     }
 

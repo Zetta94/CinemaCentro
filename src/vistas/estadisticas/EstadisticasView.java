@@ -258,7 +258,7 @@ public class EstadisticasView extends javax.swing.JPanel {
             return;
         }
 
-        List<TicketCompra> tickets = ticketData.obtenerTicketsPorPelicula(pelicula.getIdPelicula());
+        List<TicketCompra> tickets = ticketData.listarTicketsPorPelicula(pelicula.getIdPelicula());
         if (tickets.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay tickets registrados para esta película.");
             return;
@@ -295,8 +295,8 @@ public class EstadisticasView extends javax.swing.JPanel {
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String fechaStr = sdf.format(fecha);
-
-        List<TicketCompra> tickets = ticketData.obtenerTicketsPorFecha(fechaStr);
+        LocalDate localDate = LocalDate.parse(fechaStr);
+        List<TicketCompra> tickets = ticketData.listarTicketsPorFecha(localDate);
 
         if (tickets.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay tickets para la fecha seleccionada.");

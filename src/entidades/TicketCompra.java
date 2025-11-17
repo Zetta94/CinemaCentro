@@ -143,16 +143,15 @@ public class TicketCompra {
 
     @Override
     public String toString() {
-        return """
-        🎟 Ticket Nº %d
-        Película: %s
-        Fecha de función: %s
-        Fecha de compra: %s
-        Monto: $%.2f
-        Comprador: %s (DNI: %s)
-        Medio de pago: %s
-        Código de retiro: %s
-        """.formatted(
+        return String.format(
+                "🎟 Ticket Nº %d\n"
+                + "Película: %s\n"
+                + "Fecha de función: %s\n"
+                + "Fecha de compra: %s\n"
+                + "Monto: $%.2f\n"
+                + "Comprador: %s (DNI: %s)\n"
+                + "Medio de pago: %s\n"
+                + "Código de retiro: %s\n",
                 idTicket,
                 tituloPelicula,
                 fechaFuncion,

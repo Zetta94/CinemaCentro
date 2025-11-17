@@ -79,8 +79,10 @@ public class TicketsView extends javax.swing.JPanel {
 
         if (!codigo.isEmpty()) {
             TicketCompra ticket = ticketData.obtenerTicketPorCodigo(codigo);
+
             if (ticket != null) {
-                mostrarTicketsEnTabla(List.of(ticket));
+
+                mostrarTicketsEnTabla(java.util.Collections.singletonList(ticket));
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró ningún ticket con ese código.");
                 ((DefaultTableModel) tblTickets.getModel()).setRowCount(0);
@@ -88,21 +90,26 @@ public class TicketsView extends javax.swing.JPanel {
             return;
         }
 
-        if (!peliculaSeleccionada.equals("Todas")) {
-            Pelicula pelicula = peliculaData.buscarPeliculas(peliculaSeleccionada, null, null)
-                    .stream().findFirst().orElse(null);
+        if (!"Todas".equals(peliculaSeleccionada)) {
+            Pelicula pelicula = null;
+            java.util.List<Pelicula> peliculas = peliculaData.buscarPeliculas(peliculaSeleccionada, null, null);
+            if (peliculas != null && !peliculas.isEmpty()) {
+
+                pelicula = peliculas.stream().findFirst().orElse(null);
+            }
 
             if (pelicula != null) {
-                List<TicketCompra> tickets = ticketData.listarTicketsPorPelicula(pelicula.getIdPelicula());
+                java.util.List<TicketCompra> tickets = ticketData.listarTicketsPorPelicula(pelicula.getIdPelicula());
                 mostrarTicketsEnTabla(tickets);
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró la película seleccionada.");
+                ((DefaultTableModel) tblTickets.getModel()).setRowCount(0);
             }
             return;
         }
 
-        if (!compradorSeleccionado.equals("Todos")) {
-            List<TicketCompra> todos = ticketData.listarTodos();
+        if (!"Todos".equals(compradorSeleccionado)) {
+            java.util.List<TicketCompra> todos = ticketData.listarTodos();
             DefaultTableModel model = (DefaultTableModel) tblTickets.getModel();
             model.setRowCount(0);
 

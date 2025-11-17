@@ -127,12 +127,11 @@ public class TicketCompraData {
     public TicketCompra buscarTicketPorId(int idTicket) {
         TicketCompra t = null;
 
-        String sql = """
-        SELECT t.*, c.nombre AS nombreComprador, c.dni AS dniComprador
-        FROM tickets t
-        JOIN compradores c ON t.idComprador = c.idComprador
-        WHERE t.idTicket = ?
-    """;
+        String sql
+                = "SELECT t.*, c.nombre AS nombreComprador, c.dni AS dniComprador\n"
+                + "FROM tickets t\n"
+                + "JOIN compradores c ON t.idComprador = c.idComprador\n"
+                + "WHERE t.idTicket = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idTicket);
@@ -152,10 +151,12 @@ public class TicketCompraData {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(
+                    null,
                     "Error al buscar el ticket:\n" + ex.getMessage(),
                     "Error",
-                    JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
 
         return t;
@@ -218,33 +219,35 @@ public class TicketCompraData {
     public List<TicketCompra> listarTicketsPorFecha(LocalDate fecha) {
         List<TicketCompra> lista = new ArrayList<>();
 
-        String sql = """
-        SELECT t.idTicket, t.fechaCompra, t.fechaFuncion, t.monto, t.codigoTicket,
-               c.idComprador, c.nombre AS nombreComprador, c.dni, c.medioPago,
-               p.idPelicula, p.titulo, p.genero, p.origen,
-               pr.idProyeccion, pr.fecha AS fechaProyeccion, pr.horaInicio, pr.horaFin, pr.idioma,
-               s.nroSala, s.apta3D
-        FROM tickets t
-        JOIN compradores c ON t.idComprador = c.idComprador
-        JOIN detalle_tickets dt ON t.idTicket = dt.idTicket
-        JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion
-        JOIN peliculas p ON pr.idPelicula = p.idPelicula
-        JOIN salas s ON pr.idSala = s.idSala
-        WHERE t.fechaCompra = ?
-        ORDER BY p.titulo
-    """;
+        String sql
+                = "SELECT t.idTicket, t.fechaCompra, t.fechaFuncion, t.monto, t.codigoTicket, "
+                + "       c.idComprador, c.nombre AS nombreComprador, c.dni, c.medioPago, "
+                + "       p.idPelicula, p.titulo, p.genero, p.origen, "
+                + "       pr.idProyeccion, pr.fecha AS fechaProyeccion, pr.horaInicio, pr.horaFin, pr.idioma, "
+                + "       s.nroSala, s.apta3D "
+                + "FROM tickets t "
+                + "JOIN compradores c ON t.idComprador = c.idComprador "
+                + "JOIN detalle_tickets dt ON t.idTicket = dt.idTicket "
+                + "JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion "
+                + "JOIN peliculas p ON pr.idPelicula = p.idPelicula "
+                + "JOIN salas s ON pr.idSala = s.idSala "
+                + "WHERE t.fechaCompra = ? "
+                + "ORDER BY p.titulo";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setDate(1, Date.valueOf(fecha));
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
+
                 TicketCompra t = new TicketCompra();
                 t.setIdTicket(rs.getInt("idTicket"));
+
                 Date dCompra = rs.getDate("fechaCompra");
                 if (dCompra != null) {
                     t.setFechaCompra(dCompra.toLocalDate());
                 }
+
                 t.setMonto(rs.getDouble("monto"));
                 t.setCodigoTicket(rs.getString("codigoTicket"));
 
@@ -267,16 +270,16 @@ public class TicketCompraData {
                     t.setHora(horaInicio.toLocalTime());
                 }
 
-                t.setMonto(rs.getDouble("monto"));
-
                 lista.add(t);
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(
+                    null,
                     "Error al listar tickets por fecha:\n" + ex.getMessage(),
                     "Error",
-                    JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
 
         return lista;
@@ -285,22 +288,21 @@ public class TicketCompraData {
     public List<TicketCompra> listarTicketsPorPelicula(int idPelicula) {
         List<TicketCompra> lista = new ArrayList<>();
 
-        String sql = """
-        SELECT t.idTicket, t.fechaCompra, t.fechaFuncion, t.monto, t.codigoTicket,
-               c.idComprador, c.nombre AS nombreComprador, c.dni, c.medioPago,
-               p.idPelicula, p.titulo, p.genero, p.origen,
-               pr.idProyeccion, pr.fecha AS fechaProyeccion, pr.horaInicio, pr.horaFin,
-               pr.idioma, pr.es3D, pr.subtitulada,
-               s.nroSala, s.apta3D
-        FROM tickets t
-        JOIN compradores c ON t.idComprador = c.idComprador
-        JOIN detalle_tickets dt ON t.idTicket = dt.idTicket
-        JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion
-        JOIN peliculas p ON pr.idPelicula = p.idPelicula
-        JOIN salas s ON pr.idSala = s.idSala
-        WHERE p.idPelicula = ?
-        ORDER BY t.fechaCompra
-    """;
+        String sql
+                = "SELECT t.idTicket, t.fechaCompra, t.fechaFuncion, t.monto, t.codigoTicket, "
+                + "       c.idComprador, c.nombre AS nombreComprador, c.dni, c.medioPago, "
+                + "       p.idPelicula, p.titulo, p.genero, p.origen, "
+                + "       pr.idProyeccion, pr.fecha AS fechaProyeccion, pr.horaInicio, pr.horaFin, "
+                + "       pr.idioma, pr.es3D, pr.subtitulada, "
+                + "       s.nroSala, s.apta3D "
+                + "FROM tickets t "
+                + "JOIN compradores c ON t.idComprador = c.idComprador "
+                + "JOIN detalle_tickets dt ON t.idTicket = dt.idTicket "
+                + "JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion "
+                + "JOIN peliculas p ON pr.idPelicula = p.idPelicula "
+                + "JOIN salas s ON pr.idSala = s.idSala "
+                + "WHERE p.idPelicula = ? "
+                + "ORDER BY t.fechaCompra";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idPelicula);
@@ -309,14 +311,17 @@ public class TicketCompraData {
             while (rs.next()) {
                 TicketCompra t = new TicketCompra();
                 t.setIdTicket(rs.getInt("idTicket"));
+
                 Date dCompra = rs.getDate("fechaCompra");
-                Date dFuncion = rs.getDate("fechaFuncion");
                 if (dCompra != null) {
                     t.setFechaCompra(dCompra.toLocalDate());
                 }
+
+                Date dFuncion = rs.getDate("fechaFuncion");
                 if (dFuncion != null) {
                     t.setFechaFuncion(dFuncion.toLocalDate());
                 }
+
                 t.setMonto(rs.getDouble("monto"));
                 t.setCodigoTicket(rs.getString("codigoTicket"));
 
@@ -343,10 +348,12 @@ public class TicketCompraData {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(
+                    null,
                     "Error al listar tickets por película:\n" + ex.getMessage(),
                     "Error",
-                    JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
 
         return lista;
@@ -380,13 +387,13 @@ public class TicketCompraData {
     }
 
     public int contarTicketsPorPelicula(int idPelicula) {
-        String sql = """
-        SELECT COUNT(t.idTicket) AS cantidad
-        FROM tickets t
-        JOIN detalle_tickets dt ON t.idTicket = dt.idTicket
-        JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion
-        WHERE pr.idPelicula = ?
-    """;
+        String sql
+                = "SELECT COUNT(t.idTicket) AS cantidad "
+                + "FROM tickets t "
+                + "JOIN detalle_tickets dt ON t.idTicket = dt.idTicket "
+                + "JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion "
+                + "WHERE pr.idPelicula = ?";
+
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idPelicula);
             ResultSet rs = ps.executeQuery();
@@ -394,26 +401,28 @@ public class TicketCompraData {
                 return rs.getInt("cantidad");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(
+                    null,
                     "Error al contar tickets por película:\n" + ex.getMessage(),
                     "Error",
-                    JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
         return 0;
     }
 
     public TicketCompra obtenerTicketPorDniYCodigo(String dni, String codigo) {
         TicketCompra t = null;
-        String sql = """
-        SELECT t.idTicket, t.fechaCompra, t.fechaFuncion, t.monto, 
-               t.codigoTicket, c.dni, c.nombre, c.medioPago, p.titulo
-        FROM tickets t
-        JOIN compradores c ON t.idComprador = c.idComprador
-        JOIN detalle_tickets dt ON t.idTicket = dt.idTicket
-        JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion
-        JOIN peliculas p ON pr.idPelicula = p.idPelicula
-        WHERE c.dni = ? AND t.codigoTicket = ?
-    """;
+
+        String sql
+                = "SELECT t.idTicket, t.fechaCompra, t.fechaFuncion, t.monto, t.codigoTicket, "
+                + "       c.dni, c.nombre, c.medioPago, p.titulo "
+                + "FROM tickets t "
+                + "JOIN compradores c ON t.idComprador = c.idComprador "
+                + "JOIN detalle_tickets dt ON t.idTicket = dt.idTicket "
+                + "JOIN proyeccion pr ON dt.idProyeccion = pr.idProyeccion "
+                + "JOIN peliculas p ON pr.idPelicula = p.idPelicula "
+                + "WHERE c.dni = ? AND t.codigoTicket = ?";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, dni);
@@ -439,25 +448,15 @@ public class TicketCompraData {
         return t;
     }
 
-    public List<TicketCompra> obtenerTicketsPorPelicula(int idPelicula) {
-        return listarTicketsPorPelicula(idPelicula);
-    }
-
-    public List<TicketCompra> obtenerTicketsPorFecha(String fecha) {
-        LocalDate localDate = LocalDate.parse(fecha);
-        return listarTicketsPorFecha(localDate);
-    }
-
     public List<entidades.Comprador> listarCompradoresPorFecha(LocalDate fechaFuncion) {
         List<entidades.Comprador> lista = new ArrayList<>();
 
-        String sql = """
-            SELECT DISTINCT c.idComprador, c.nombre, c.dni, c.medioPago
-            FROM compradores c
-            JOIN tickets t ON c.idComprador = t.idComprador
-            WHERE t.fechaFuncion = ?
-            ORDER BY c.nombre
-        """;
+        String sql
+                = "SELECT DISTINCT c.idComprador, c.nombre, c.dni, c.medioPago "
+                + "FROM compradores c "
+                + "JOIN tickets t ON c.idComprador = t.idComprador "
+                + "WHERE t.fechaFuncion = ? "
+                + "ORDER BY c.nombre";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setDate(1, Date.valueOf(fechaFuncion));
@@ -473,19 +472,24 @@ public class TicketCompraData {
             }
 
             if (lista.isEmpty()) {
-                JOptionPane.showMessageDialog(null,
+                JOptionPane.showMessageDialog(
+                        null,
                         "No se registraron compradores en la fecha seleccionada.",
                         "Sin resultados",
-                        JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.INFORMATION_MESSAGE
+                );
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(
+                    null,
                     "Error al listar compradores por fecha:\n" + ex.getMessage(),
                     "Error",
-                    JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
 
         return lista;
     }
+
 }
