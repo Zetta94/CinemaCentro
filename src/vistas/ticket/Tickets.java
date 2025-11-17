@@ -7,20 +7,13 @@ package vistas.ticket;
 import entidades.TicketCompra;
 import javax.swing.JOptionPane;
 import org.mariadb.jdbc.Connection;
-import persistencia.Conexion;
 import persistencia.Context;
 import persistencia.TicketCompraData;
 
-/**
- *
- * @author Sistemas
- */
+
 public class Tickets extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Tickets
-     */
-    private TicketCompraData ticketData= Context.getTicketCompraData();
+    private TicketCompraData ticketData = Context.getTicketCompraData();
     private Connection connection;
     
     public Tickets() {

@@ -33,7 +33,6 @@ public class TicketsView extends javax.swing.JPanel {
         mostrarTicketsEnTabla(ticketData.listarTodos());
     }
 
-
     private void cargarPeliculas() {
         List<Pelicula> peliculas = peliculaData.obtenerTodas();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
@@ -343,9 +342,15 @@ public class TicketsView extends javax.swing.JPanel {
 
         if (ticket != null) {
             TicketEditarView editarView = new TicketEditarView(ticket);
+
+            editarView.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
+                @Override
+                public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
+                    buscarTickets();
+                }
+            });
+
             abrirYCentrar(editarView);
-        } else {
-            JOptionPane.showMessageDialog(this, "No se pudo cargar el ticket seleccionado.");
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 

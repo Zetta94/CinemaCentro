@@ -126,7 +126,14 @@ public class TicketCompraData {
 
     public TicketCompra buscarTicketPorId(int idTicket) {
         TicketCompra t = null;
-        String sql = "SELECT * FROM tickets WHERE idTicket = ?";
+
+        String sql = """
+        SELECT t.*, c.nombre AS nombreComprador, c.dni AS dniComprador
+        FROM tickets t
+        JOIN compradores c ON t.idComprador = c.idComprador
+        WHERE t.idTicket = ?
+    """;
+
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, idTicket);
             ResultSet rs = ps.executeQuery();
@@ -139,18 +146,18 @@ public class TicketCompraData {
                 t.setMonto(rs.getDouble("monto"));
                 t.setIdComprador(rs.getInt("idComprador"));
                 t.setCodigoTicket(rs.getString("codigoTicket"));
-            } else {
-                JOptionPane.showMessageDialog(null,
-                        "No se encontró el ticket con ID: " + idTicket,
-                        "Aviso",
-                        JOptionPane.WARNING_MESSAGE);
+
+                t.setNombreComprador(rs.getString("nombreComprador"));
+                t.setDniComprador(rs.getString("dniComprador"));
             }
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,
                     "Error al buscar el ticket:\n" + ex.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
+
         return t;
     }
 

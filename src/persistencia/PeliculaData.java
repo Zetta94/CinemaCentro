@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -253,39 +254,40 @@ public class PeliculaData {
     }
 
     public List<Pelicula> obtenerPeliculasMasVistas(int limite) {
+        List<Pelicula> lista = new ArrayList<>();
+
         String sql = """
-        SELECT p.*, COUNT(t.idTicket) AS vistas
+        SELECT p.*, COUNT(dt.idDetalle) AS vistas
         FROM peliculas p
         JOIN proyeccion pr ON p.idPelicula = pr.idPelicula
         JOIN detalle_tickets dt ON pr.idProyeccion = dt.idProyeccion
-        JOIN tickets t ON dt.idTicket = t.idTicket
         GROUP BY p.idPelicula
         ORDER BY vistas DESC
         LIMIT ?
     """;
 
-        List<Pelicula> peliculas = new ArrayList<>();
-
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, limite);
             ResultSet rs = ps.executeQuery();
+
             while (rs.next()) {
-                Pelicula pelicula = new Pelicula();
-                pelicula.setIdPelicula(rs.getInt("idPelicula"));
-                pelicula.setTitulo(rs.getString("titulo"));
-                pelicula.setDirector(rs.getString("director"));
-                pelicula.setActores(rs.getString("actores"));
-                pelicula.setOrigen(rs.getString("origen"));
-                pelicula.setGenero(rs.getString("genero"));
-                pelicula.setEstreno(rs.getDate("estreno").toLocalDate());
-                pelicula.setEnCartelera(rs.getBoolean("enCartelera"));
-                peliculas.add(pelicula);
+                Pelicula p = new Pelicula();
+                p.setIdPelicula(rs.getInt("idPelicula"));
+                p.setTitulo(rs.getString("titulo"));
+                p.setGenero(rs.getString("genero"));
+                p.setOrigen(rs.getString("origen"));
+                p.setDirector(rs.getString("director"));
+                p.setEstreno(rs.getDate("estreno").toLocalDate());
+                p.setEnCartelera(rs.getBoolean("enCartelera"));
+                lista.add(p);
             }
+
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al obtener películas más vistas: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null,
+                    "Error al listar películas más vistas:\n" + ex.getMessage());
         }
 
-        return peliculas;
+        return lista;
     }
 
     public Pelicula buscarPorTitulo(String titulo) {
@@ -310,6 +312,26 @@ public class PeliculaData {
             JOptionPane.showMessageDialog(null, "Error al buscar película por título: " + ex.getMessage());
         }
         return null;
+    }
+
+    public LocalDate obtenerProximaFuncion(int idPelicula) {
+        String sql = """
+        SELECT MIN(fecha) AS proxima
+        FROM proyeccion
+        WHERE idPelicula = ?
+    """;
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, idPelicula);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next() && rs.getDate("proxima") != null) {
+                return rs.getDate("proxima").toLocalDate();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null; 
     }
 
 }

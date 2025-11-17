@@ -7,6 +7,7 @@ package vistas.estadisticas;
 import entidades.Pelicula;
 import entidades.TicketCompra;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -31,7 +32,7 @@ public class EstadisticasView extends javax.swing.JPanel {
     }
 
     private void cargarMasVistas() {
-        List<Pelicula> peliculas = peliculaData.obtenerPeliculasMasVistas(4);
+        List<Pelicula> peliculas = peliculaData.obtenerPeliculasMasVistas(6);
         DefaultTableModel model = (DefaultTableModel) tblMasVistas.getModel();
         model.setRowCount(0);
         for (Pelicula p : peliculas) {
@@ -333,14 +334,32 @@ public class EstadisticasView extends javax.swing.JPanel {
         StringBuilder informe = new StringBuilder();
         informe.append("📊 INFORME DE PELÍCULAS MÁS VISTAS\n\n");
 
+        LocalDate hoy = LocalDate.now();
+
         for (Pelicula p : peliculas) {
+
             int espectadores = ticketData.contarTicketsPorPelicula(p.getIdPelicula());
+
+            LocalDate proximaFuncion = peliculaData.obtenerProximaFuncion(p.getIdPelicula());
+
+            String estadoFecha = "";
+            if (proximaFuncion != null) {
+                if (proximaFuncion.isAfter(hoy)) {
+                    estadoFecha = "🔮 Función futura el " + proximaFuncion;
+                } else {
+                    estadoFecha = "✔ Última función el " + proximaFuncion;
+                }
+            } else {
+                estadoFecha = "Sin funciones registradas";
+            }
+
             informe.append("🎬 ").append(p.getTitulo()).append("\n")
                     .append("   • Género: ").append(p.getGenero()).append("\n")
                     .append("   • Director: ").append(p.getDirector()).append("\n")
                     .append("   • País de origen: ").append(p.getOrigen()).append("\n")
                     .append("   • Estreno: ").append(p.getEstreno()).append("\n")
                     .append("   • Espectadores: ").append(espectadores).append("\n")
+                    .append("   • ").append(estadoFecha).append("\n")
                     .append("────────────────────────────\n");
         }
 
