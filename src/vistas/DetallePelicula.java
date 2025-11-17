@@ -98,6 +98,7 @@ public class DetallePelicula extends javax.swing.JInternalFrame {
 
         scrProyecciones.setBackground(new java.awt.Color(51, 51, 51));
 
+        txtaProyecciones.setEditable(false);
         txtaProyecciones.setBackground(new java.awt.Color(51, 51, 51));
         txtaProyecciones.setColumns(20);
         txtaProyecciones.setForeground(new java.awt.Color(255, 255, 255));

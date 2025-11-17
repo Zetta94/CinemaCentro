@@ -24,40 +24,38 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
         this.idProyeccion = id;
         this.precio = precio;
         modeloLista.clear();
+        lblSeleccionadosModificable.setText("0");
+        lblPrecioModificable.setText("$0.0");
         cargarMapaAsientos();
     }
 
-   public SeleccionAsientos() {
-    initComponents();
-    lstInfo.setModel(modeloLista);
+    public SeleccionAsientos() {
+        initComponents();
+        lstInfo.setModel(modeloLista);
 
-  
-    Color fondoGeneral = new Color(33, 33, 33);
-    Color fondoPanel = new Color(45, 45, 45);
-    Color fondoInfo = new Color(50, 50, 50);
-    Color textoClaro = new Color(230, 230, 230);
+        Color fondoGeneral = new Color(33, 33, 33);
+        Color fondoPanel = new Color(45, 45, 45);
+        Color fondoInfo = new Color(50, 50, 50);
+        Color textoClaro = new Color(230, 230, 230);
 
-  
-    setBackground(fondoGeneral);
-    setForeground(textoClaro);
+        setBackground(fondoGeneral);
+        setForeground(textoClaro);
 
-    
-    pnlAsientos.setBackground(fondoPanel);
-    pnlAsientos.setBorder(BorderFactory.createLineBorder(new Color(70, 70, 70), 1));
+        pnlAsientos.setBackground(fondoPanel);
+        pnlAsientos.setBorder(BorderFactory.createLineBorder(new Color(70, 70, 70), 1));
 
-  
-    pnlInfo.setBackground(fondoInfo);
-    pnlInfo.setBorder(BorderFactory.createLineBorder(new Color(70, 70, 70), 1));
+        pnlInfo.setBackground(fondoInfo);
+        pnlInfo.setBorder(BorderFactory.createLineBorder(new Color(70, 70, 70), 1));
 
-  
-    lblTitulo.setBackground(fondoGeneral);
-    lblSeleccionados.setForeground(textoClaro);
-    lblPrecio.setForeground(textoClaro);
-    lblSeleccionadosModificable.setForeground(textoClaro);
-    lblPrecioModificable.setForeground(textoClaro);
-    lstInfo.setBackground(new Color(60, 60, 60));
-    lstInfo.setForeground(textoClaro);
-}
+        lblTitulo.setBackground(fondoGeneral);
+        lblSeleccionados.setForeground(textoClaro);
+        lblPrecio.setForeground(textoClaro);
+        lblSeleccionadosModificable.setForeground(textoClaro);
+        lblPrecioModificable.setForeground(textoClaro);
+        lstInfo.setBackground(new Color(60, 60, 60));
+        lstInfo.setForeground(textoClaro);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -176,7 +174,7 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
         );
     }// </editor-fold>//GEN-END:initComponents
 
-  public void cargarMapaAsientos() {
+    public void cargarMapaAsientos() {
         List<Lugar> ocupados = lugaresData.obtenerLugaresOcupados(idProyeccion);
 
         pnlAsientos.removeAll();
@@ -210,8 +208,8 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
                     btn.addActionListener(evt -> {
                         Lugar seleccionado = null;
                         for (Lugar elegido : elegidos) {
-                            if (elegido.getFila().equals(String.valueOf(filaActual)) &&
-                                elegido.getNumero() == numeroActual) {
+                            if (elegido.getFila().equals(String.valueOf(filaActual))
+                                    && elegido.getNumero() == numeroActual) {
                                 seleccionado = elegido;
                                 break;
                             }
@@ -264,15 +262,16 @@ public class SeleccionAsientos extends javax.swing.JPanel implements EntradasLis
     public List<Lugar> guardarDatos() {
         return elegidos;
     }
-    public void limpiarSeleccion() {
-    elegidos.clear();
-    modeloLista.clear();
-    lblSeleccionadosModificable.setText("0");
-    lblPrecioModificable.setText("$0.0");
-    cargarMapaAsientos(); 
-}
 
-    
+    public void limpiarSeleccion() {
+        elegidos.clear();
+        modeloLista.clear();
+        lblSeleccionadosModificable.setText("0");
+        lblPrecioModificable.setText("$0.0");
+        cargarMapaAsientos();
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblPrecio;
     private javax.swing.JLabel lblPrecioModificable;
