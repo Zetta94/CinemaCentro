@@ -180,33 +180,28 @@ public class PeliculaData {
 
     public Pelicula obtenerPorId(int id) {
         String sql = "SELECT * FROM peliculas WHERE idPelicula = ?";
+        Pelicula pelicula = null;
+
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
-            Pelicula pelicula = new Pelicula();
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    pelicula.setIdPelicula(rs.getInt("idPelicula"));
-                    pelicula.setTitulo(rs.getString("titulo"));
-                    pelicula.setDirector(rs.getString("director"));
-                    pelicula.setActores(rs.getString("actores"));
-                    pelicula.setOrigen(rs.getString("origen"));
-                    pelicula.setGenero(rs.getString("genero"));
-                    pelicula.setEstreno(rs.getDate("estreno").toLocalDate());
-                    pelicula.setEnCartelera(rs.getBoolean("enCartelera"));
-                }
-            }
+            ResultSet rs = ps.executeQuery();
 
-            return pelicula;
+            if (rs.next()) {
+                pelicula = new Pelicula();
+                pelicula.setIdPelicula(rs.getInt("idPelicula"));
+                pelicula.setTitulo(rs.getString("titulo"));
+                pelicula.setDirector(rs.getString("director"));
+                pelicula.setActores(rs.getString("actores"));
+                pelicula.setOrigen(rs.getString("origen"));
+                pelicula.setGenero(rs.getString("genero"));
+                pelicula.setEstreno(rs.getDate("estreno").toLocalDate());
+                pelicula.setEnCartelera(rs.getBoolean("enCartelera"));
+            }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "No se pudo obtener la película",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            ex.printStackTrace();
-            return null;
+            JOptionPane.showMessageDialog(null, "No se pudo obtener la película: " + ex.getMessage());
         }
+
+        return pelicula;
     }
 
     public List<Pelicula> obtenerPeliculasEnCartelera() {
@@ -331,7 +326,7 @@ public class PeliculaData {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return null; 
+        return null;
     }
 
 }

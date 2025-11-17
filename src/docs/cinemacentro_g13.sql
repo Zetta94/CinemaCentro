@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-11-2025 a las 23:17:28
+-- Tiempo de generación: 17-11-2025 a las 16:09:25
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -41,17 +41,11 @@ CREATE TABLE `compradores` (
 --
 
 INSERT INTO `compradores` (`idComprador`, `dni`, `nombre`, `fechaNac`, `password`, `medioPago`) VALUES
-(1, '40123456', 'Manuel Zuñiga', '1995-05-12', '1234', 'Débito'),
-(2, '38999999', 'Lucía Pérez', '1997-09-20', 'abcd', 'Mercado Pago'),
-(3, '42111111', 'Carlos Rojas', '1993-03-15', 'pass', 'Crédito'),
-(4, '43123456', 'María López', '1998-11-02', 'maria123', 'Efectivo'),
-(5, '34182684', 'Mauricio Barca', '1989-04-09', '123', 'Efectivo'),
-(6, '32233444', 'Ana Ortega', '1990-02-10', 'aaa', 'Débito'),
-(7, '39555111', 'Javier Torres', '1998-01-22', 'jt22', 'Mercado Pago'),
-(8, '40222888', 'Sofía Ramírez', '2000-10-07', 'sofi07', 'Crédito'),
-(9, '35566777', 'Tomás Medina', '1995-03-30', 'tomas95', 'Débito'),
-(10, '36544321', 'Paula Gómez', '1996-12-01', 'pau96', 'Efectivo'),
-(11, '38550276', 'Lisandro Zuñiga', '1994-07-02', NULL, 'Efectivo');
+(1, '40011222', 'Agustin Nicolas PEREZ FIGUEROA', '1990-05-12', '4f3d9ac8b12f77d94e38bb0fc52f1cf0a879d134ef5a7ce58f4a2a933cdccab1', 'Tarjeta'),
+(2, '38999111', 'Mauricio Barca', '1988-09-23', '9b7c1a55cc24e91ab48e0ef8f5fbd7a390c6e9220cc1d2f8af33cc67b9e00172', 'Efectivo'),
+(3, '40222333', 'Cesar Tomas Echenique', '1995-02-10', 'e1c54f8ad90b4a4c31f86c3ee6a39015afc2d88d953a8ef4bfc41eb542d7d890', 'Tarjeta'),
+(4, '35555444', 'Joaquín Ezequiel Rodríguez', '1987-11-02', '7dc244a9bb1882e9e4b1c2d9703f28181f9cb4fd49a30833d4b724a19fcd1197', 'MercadoPago'),
+(5, '38550276', 'Manuel Alexis Zuñiga Goddard', '2007-11-08', '22dc98234ffb7a66144a6ce5bce1d0d78e58d8896df4cb33ea0f6ce5df3caa0c', 'Efectivo');
 
 -- --------------------------------------------------------
 
@@ -73,47 +67,32 @@ INSERT INTO `detalle_lugares` (`idDetalleLugar`, `idDetalle`, `idLugar`) VALUES
 (1, 1, 1),
 (2, 1, 2),
 (3, 2, 3),
-(4, 2, 4),
-(5, 2, 5),
-(6, 3, 7),
-(7, 4, 12),
-(8, 4, 13),
-(9, 5, 16),
-(10, 6, 19),
-(11, 6, 20),
-(12, 7, 21),
-(13, 7, 22),
-(14, 7, 23),
-(16, 9, 24),
-(17, 9, 25),
-(18, 10, 26),
-(19, 11, 6),
-(20, 12, 8),
-(21, 12, 9),
-(22, 13, 10),
-(23, 13, 11),
-(24, 13, 14),
-(25, 14, 10),
-(26, 15, 12),
-(27, 15, 15),
-(28, 16, 19),
-(29, 16, 20),
-(30, 17, 28),
-(31, 18, 29),
-(32, 18, 30),
-(33, 18, 31),
-(34, 19, 26),
-(35, 20, 12),
-(36, 20, 15),
-(37, 21, 36),
-(38, 21, 37),
-(39, 22, 38),
-(40, 22, 39),
-(41, 23, 40),
-(42, 23, 41),
-(49, 25, 48),
-(50, 26, 49),
-(51, 27, 50);
+(4, 3, 5),
+(5, 4, 7),
+(6, 6, 11),
+(7, 6, 12),
+(8, 6, 13),
+(9, 6, 14),
+(10, 6, 15),
+(11, 6, 16),
+(12, 6, 17),
+(13, 6, 18),
+(14, 6, 19),
+(15, 6, 20),
+(16, 6, 21),
+(17, 6, 22),
+(18, 6, 23),
+(19, 6, 24),
+(20, 6, 25),
+(21, 6, 26),
+(22, 6, 27),
+(23, 6, 28),
+(24, 6, 29),
+(25, 6, 30),
+(26, 6, 31),
+(27, 6, 32),
+(28, 6, 33),
+(29, 6, 34);
 
 -- --------------------------------------------------------
 
@@ -125,7 +104,7 @@ CREATE TABLE `detalle_tickets` (
   `idDetalle` int(11) NOT NULL,
   `idTicket` int(11) NOT NULL,
   `idProyeccion` int(11) NOT NULL,
-  `cantidad` int(11) NOT NULL,
+  `cantidad` int(11) DEFAULT NULL,
   `subtotal` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -134,31 +113,12 @@ CREATE TABLE `detalle_tickets` (
 --
 
 INSERT INTO `detalle_tickets` (`idDetalle`, `idTicket`, `idProyeccion`, `cantidad`, `subtotal`) VALUES
-(1, 1, 1, 2, 5600.00),
-(2, 2, 1, 3, 8400.00),
-(3, 3, 2, 1, 2800.00),
-(4, 4, 3, 2, 5600.00),
-(5, 5, 4, 1, 2800.00),
-(6, 6, 5, 2, 5600.00),
-(7, 7, 5, 3, 8400.00),
-(9, 9, 6, 2, 5600.00),
-(10, 10, 6, 1, 2800.00),
-(11, 11, 1, 1, 2800.00),
-(12, 12, 2, 2, 5600.00),
-(13, 13, 2, 3, 8400.00),
-(14, 14, 2, 1, 2800.00),
-(15, 15, 3, 2, 5600.00),
-(16, 16, 5, 2, 5600.00),
-(17, 17, 7, 1, 2800.00),
-(18, 18, 7, 3, 8400.00),
-(19, 19, 6, 1, 2800.00),
-(20, 20, 3, 2, 5600.00),
-(21, 21, 8, 2, 4800.00),
-(22, 22, 7, 2, 4600.00),
-(23, 23, 4, 2, 5200.00),
-(25, 25, 2, 1, 2900.00),
-(26, 26, 11, 1, 2500.00),
-(27, 27, 3, 1, 2500.00);
+(1, 1, 1, 2, 5000.00),
+(2, 2, 2, 1, 3000.00),
+(3, 3, 3, 1, 2800.00),
+(4, 4, 4, 2, 4000.00),
+(5, 5, 5, 1, 2000.00),
+(6, 6, 6, 24, 84000.00);
 
 -- --------------------------------------------------------
 
@@ -168,9 +128,9 @@ INSERT INTO `detalle_tickets` (`idDetalle`, `idTicket`, `idProyeccion`, `cantida
 
 CREATE TABLE `lugares` (
   `idLugar` int(11) NOT NULL,
-  `fila` char(1) NOT NULL,
-  `numero` int(11) NOT NULL,
-  `ocupado` tinyint(1) DEFAULT 0,
+  `fila` char(1) DEFAULT NULL,
+  `numero` int(11) DEFAULT NULL,
+  `ocupado` tinyint(1) DEFAULT NULL,
   `idProyeccion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -181,54 +141,38 @@ CREATE TABLE `lugares` (
 INSERT INTO `lugares` (`idLugar`, `fila`, `numero`, `ocupado`, `idProyeccion`) VALUES
 (1, 'A', 1, 1, 1),
 (2, 'A', 2, 1, 1),
-(3, 'B', 1, 1, 1),
-(4, 'B', 2, 1, 1),
-(5, 'A', 3, 1, 1),
-(6, 'C', 1, 1, 1),
-(7, 'A', 1, 1, 2),
-(8, 'A', 2, 1, 2),
-(9, 'B', 1, 1, 2),
-(10, 'C', 2, 1, 2),
-(11, 'D', 1, 1, 2),
-(12, 'A', 1, 1, 3),
-(13, 'A', 2, 1, 3),
-(14, 'B', 3, 1, 3),
-(15, 'C', 1, 1, 3),
-(16, 'A', 1, 1, 4),
-(17, 'B', 2, 1, 4),
-(18, 'C', 3, 1, 4),
-(19, 'A', 1, 1, 5),
-(20, 'A', 2, 1, 5),
-(21, 'B', 1, 1, 5),
-(22, 'C', 1, 1, 5),
-(23, 'D', 2, 1, 5),
-(24, 'A', 1, 1, 6),
-(25, 'B', 1, 1, 6),
-(26, 'C', 2, 1, 6),
-(27, 'D', 3, 1, 6),
-(28, 'A', 1, 1, 7),
-(29, 'A', 2, 1, 7),
-(30, 'B', 1, 1, 7),
-(31, 'C', 2, 1, 7),
-(32, 'A', 1, 1, 8),
-(33, 'B', 2, 1, 8),
-(34, 'C', 3, 1, 8),
-(35, 'D', 4, 1, 8),
-(36, 'C', 4, 1, 8),
-(37, 'C', 5, 1, 8),
-(38, 'D', 3, 1, 7),
-(39, 'D', 4, 1, 7),
-(40, 'B', 5, 1, 4),
-(41, 'B', 4, 1, 4),
-(42, 'B', 4, 1, 8),
-(43, 'B', 5, 1, 8),
-(44, 'B', 6, 1, 8),
-(45, 'C', 6, 1, 8),
-(46, 'D', 6, 1, 8),
-(47, 'D', 5, 1, 8),
-(48, 'C', 5, 1, 2),
-(49, 'D', 1, 1, 11),
-(50, 'B', 5, 1, 3);
+(3, 'B', 5, 0, 2),
+(4, 'B', 6, 0, 2),
+(5, 'C', 3, 1, 3),
+(6, 'C', 4, 0, 3),
+(7, 'D', 1, 0, 4),
+(8, 'D', 2, 1, 4),
+(9, 'E', 8, 0, 5),
+(10, 'E', 9, 1, 5),
+(11, 'D', 6, 1, 6),
+(12, 'D', 5, 1, 6),
+(13, 'D', 4, 1, 6),
+(14, 'D', 3, 1, 6),
+(15, 'D', 2, 1, 6),
+(16, 'D', 1, 1, 6),
+(17, 'C', 1, 1, 6),
+(18, 'C', 2, 1, 6),
+(19, 'C', 3, 1, 6),
+(20, 'C', 4, 1, 6),
+(21, 'C', 5, 1, 6),
+(22, 'C', 6, 1, 6),
+(23, 'B', 6, 1, 6),
+(24, 'B', 5, 1, 6),
+(25, 'B', 4, 1, 6),
+(26, 'B', 3, 1, 6),
+(27, 'B', 2, 1, 6),
+(28, 'B', 1, 1, 6),
+(29, 'A', 1, 1, 6),
+(30, 'A', 2, 1, 6),
+(31, 'A', 3, 1, 6),
+(32, 'A', 4, 1, 6),
+(33, 'A', 5, 1, 6),
+(34, 'A', 6, 1, 6);
 
 -- --------------------------------------------------------
 
@@ -252,21 +196,11 @@ CREATE TABLE `peliculas` (
 --
 
 INSERT INTO `peliculas` (`idPelicula`, `titulo`, `director`, `actores`, `origen`, `genero`, `estreno`, `enCartelera`) VALUES
-(1, 'Dune: Parte Dos', 'Denis Villeneuve', 'Chalamet, Zendaya', 'USA', 'Sci-Fi', '2024-03-01', 0),
-(2, 'Código Eclipse', 'James Carter', 'Michael Reeves, Anna Blake', 'USA', 'Acción', '2024-11-18', 1),
-(3, 'Café en París', 'Louise Marchand', 'Sophie Laurent, Marc Duval', 'Francia', 'Romance', '2025-12-05', 0),
-(4, 'El Último Horizonte', 'Mariano Ledesma', 'Martina Soto, Pablo Gómez', 'Argentina', 'Drama', '2025-01-10', 1),
-(5, 'Sombras en la Nieve', 'Elena Kova', 'Irina Petrov', 'Rusia', 'Suspenso', '2024-12-05', 1),
-(6, 'Universo Paralelo', 'Gustavo Romano', 'Carla Díaz', 'Argentina', 'Sci-Fi', '2026-02-22', 0),
-(7, 'El Eco del Mar', 'Tomoko Sato', 'Hiro Tanaka', 'Japón', 'Drama', '2025-01-03', 1),
-(8, 'Furia Urbana', 'Daniel Ortega', 'Juan Cruz', 'Argentina', 'Acción', '2024-10-10', 1),
-(9, 'Cazadores del Pasado', 'Robert Mills', 'Chris Miller', 'USA', 'Aventura', '2026-04-20', 0),
-(10, 'Pesadilla Digital', 'Hana Kim', 'Kim Soo', 'Corea', 'Terror', '2024-09-13', 0),
-(11, 'Amor en Movimiento', 'Ana Rodríguez', 'Camila Torres', 'Argentina', 'RomCom', '2024-11-01', 1),
-(12, 'Voces del Alma', 'Carmina Fuentes', 'Sergio Ramos', 'México', 'Drama', '2025-01-28', 1),
-(13, 'Más Allá del Silencio', 'Marco Conti', 'Isabella Rossi', 'Italia', 'Drama', '2026-02-10', 0),
-(14, 'Proyecto Fénix', 'Victor Huang', 'Chen Wei', 'China', 'Sci-Fi', '2026-03-02', 0),
-(15, 'El Último Gol', 'Carlos Vega', 'Ramiro López', 'España', 'Deporte', '2024-08-20', 0);
+(1, 'Inception', 'Christopher Nolan', 'Leonardo DiCaprio', 'USA', 'Ciencia Ficción', '2010-07-16', 1),
+(2, 'Avatar 2', 'James Cameron', 'Sam Worthington', 'USA', 'Acción', '2022-12-16', 1),
+(3, 'Interstellar', 'Christopher Nolan', 'Matthew McConaughey', 'USA', 'Ciencia Ficción', '2014-11-07', 1),
+(4, 'Titanic', 'James Cameron', 'Kate Winslet', 'USA', 'Romance', '1997-12-19', 1),
+(5, 'The Batman 2', 'Matt Reeves', 'Robert Pattinson', 'USA', 'Acción', '2022-03-04', 1);
 
 -- --------------------------------------------------------
 
@@ -279,11 +213,11 @@ CREATE TABLE `proyeccion` (
   `idPelicula` int(11) NOT NULL,
   `idSala` int(11) NOT NULL,
   `idioma` varchar(30) DEFAULT NULL,
-  `es3D` tinyint(1) DEFAULT 0,
-  `subtitulada` tinyint(1) DEFAULT 0,
+  `es3D` tinyint(1) DEFAULT NULL,
+  `subtitulada` tinyint(1) DEFAULT NULL,
   `horaInicio` time DEFAULT NULL,
   `horaFin` time DEFAULT NULL,
-  `fecha` date NOT NULL DEFAULT curdate(),
+  `fecha` date DEFAULT NULL,
   `precio` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -292,15 +226,12 @@ CREATE TABLE `proyeccion` (
 --
 
 INSERT INTO `proyeccion` (`idProyeccion`, `idPelicula`, `idSala`, `idioma`, `es3D`, `subtitulada`, `horaInicio`, `horaFin`, `fecha`, `precio`) VALUES
-(1, 2, 1, 'Español', 1, 0, '18:00:00', '20:20:00', '2025-11-20', 2800.00),
-(2, 5, 1, 'Español', 1, 1, '21:00:00', '23:00:00', '2025-11-20', 2900.00),
-(3, 4, 2, 'Español', 0, 0, '19:00:00', '21:30:00', '2025-11-21', 2500.00),
-(4, 11, 2, 'Español', 0, 1, '22:00:00', '00:00:00', '2025-11-21', 2600.00),
-(5, 7, 3, 'Inglés', 1, 1, '18:30:00', '20:40:00', '2025-11-22', 3000.00),
-(6, 12, 3, 'Español', 1, 0, '21:30:00', '23:40:00', '2025-11-22', 3100.00),
-(7, 8, 4, 'Español', 0, 0, '17:00:00', '19:10:00', '2025-11-23', 2300.00),
-(8, 2, 4, 'Inglés', 0, 1, '20:00:00', '22:40:00', '2025-11-23', 2400.00),
-(11, 12, 2, 'Inglés', 1, 1, '09:53:59', '11:53:00', '2025-11-22', 2500.00);
+(1, 1, 1, 'Español', 1, 1, '18:00:00', '20:30:00', '2025-11-20', 2500.00),
+(2, 2, 1, 'Español', 1, 0, '21:00:00', '23:30:00', '2025-11-20', 3000.00),
+(3, 3, 2, 'Español', 0, 1, '19:00:00', '22:00:00', '2025-11-21', 2800.00),
+(4, 4, 3, 'Inglés', 0, 1, '17:00:00', '20:00:00', '2025-11-21', 2000.00),
+(5, 5, 2, 'Español', 0, 0, '22:30:00', '01:00:00', '2025-11-21', 2700.00),
+(6, 4, 4, 'Español', 0, 1, '11:54:07', '14:54:00', '2025-11-28', 3500.00);
 
 -- --------------------------------------------------------
 
@@ -311,9 +242,9 @@ INSERT INTO `proyeccion` (`idProyeccion`, `idPelicula`, `idSala`, `idioma`, `es3
 CREATE TABLE `salas` (
   `idSala` int(11) NOT NULL,
   `nroSala` int(11) NOT NULL,
-  `apta3D` tinyint(1) DEFAULT 0,
-  `capacidad` int(11) NOT NULL,
-  `estado` tinyint(1) DEFAULT 1
+  `apta3D` tinyint(1) DEFAULT NULL,
+  `capacidad` int(11) DEFAULT NULL,
+  `estado` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -324,8 +255,7 @@ INSERT INTO `salas` (`idSala`, `nroSala`, `apta3D`, `capacidad`, `estado`) VALUE
 (1, 1, 1, 24, 1),
 (2, 2, 0, 24, 1),
 (3, 3, 1, 24, 1),
-(4, 4, 0, 24, 1),
-(5, 5, 0, 24, 0);
+(4, 4, 1, 24, 1);
 
 -- --------------------------------------------------------
 
@@ -336,7 +266,7 @@ INSERT INTO `salas` (`idSala`, `nroSala`, `apta3D`, `capacidad`, `estado`) VALUE
 CREATE TABLE `tickets` (
   `idTicket` int(11) NOT NULL,
   `codigoTicket` varchar(16) DEFAULT NULL,
-  `fechaCompra` date NOT NULL,
+  `fechaCompra` date DEFAULT NULL,
   `fechaFuncion` date DEFAULT NULL,
   `monto` decimal(10,2) DEFAULT NULL,
   `idComprador` int(11) NOT NULL
@@ -347,31 +277,12 @@ CREATE TABLE `tickets` (
 --
 
 INSERT INTO `tickets` (`idTicket`, `codigoTicket`, `fechaCompra`, `fechaFuncion`, `monto`, `idComprador`) VALUES
-(1, '916FAC890E763E4B', '2025-11-20', '2025-11-20', 5600.00, 1),
-(2, '401D938F92A44DF9', '2025-11-20', '2025-11-20', 8400.00, 2),
-(3, '028049BD4B75F1F6', '2025-11-21', '2025-11-21', 2800.00, 3),
-(4, '3296B83368C3BFAE', '2025-11-22', '2025-11-22', 5600.00, 4),
-(5, 'DAD5A9B23D954AB0', '2025-11-23', '2025-11-23', 2800.00, 5),
-(6, '99F71A5B2260693E', '2025-11-24', '2025-11-22', 5600.00, 6),
-(7, '861EC4DB511F6FD1', '2025-11-24', '2025-11-22', 8400.00, 7),
-(9, '7CF83E582862CD3B', '2025-11-24', '2025-11-23', 5600.00, 9),
-(10, 'D2D6A109BD8EFFA1', '2025-11-24', '2025-11-23', 2800.00, 10),
-(11, 'C0C9D2B3475D4740', '2025-11-25', '2025-11-20', 2800.00, 1),
-(12, '0D9544CBE3FEE72F', '2025-11-25', '2025-11-21', 5600.00, 2),
-(13, '775A4914E2827AA1', '2025-11-25', '2025-11-21', 8400.00, 3),
-(14, 'CF12277587F494FC', '2025-11-25', '2025-11-21', 2800.00, 4),
-(15, 'E10D02B0CD667734', '2025-11-25', '2025-11-22', 5600.00, 5),
-(16, '98C649125BCC2AD2', '2025-11-26', '2025-11-22', 5600.00, 6),
-(17, 'EF4DDCBA305B132D', '2025-11-26', '2025-11-23', 2800.00, 7),
-(18, 'D8C14A9CD2AE468C', '2025-11-26', '2025-11-23', 8400.00, 8),
-(19, '9B4D614479DB00D9', '2025-11-26', '2025-11-22', 2800.00, 9),
-(20, 'BA90C0C896D90521', '2025-11-26', '2025-11-21', 5600.00, 10),
-(21, 'C9296E7945155179', '2025-11-06', '2025-11-23', 4800.00, 11),
-(22, '605D901F6E49963C', '2025-11-06', '2025-11-23', 4600.00, 11),
-(23, 'F48558CC6DB6B727', '2025-11-07', '2025-11-21', 5200.00, 11),
-(25, 'B8DF28EF38128621', '2025-11-10', '2025-11-20', 2900.00, 11),
-(26, 'E27B25E32EF1B290', '2025-11-10', '2025-11-22', 2500.00, 11),
-(27, 'A8906AC43E6B2779', '2025-11-10', '2025-11-21', 2500.00, 11);
+(1, '6B2A2A0DACA8A6A0', '2025-11-17', '2025-11-20', 5000.00, 1),
+(2, '9F0454B67C115078', '2025-11-17', '2025-11-20', 3000.00, 2),
+(3, 'D99729EB665CA868', '2025-11-18', '2025-11-21', 2800.00, 3),
+(4, '62E6D3F98B9B5170', '2025-11-18', '2025-11-21', 5400.00, 4),
+(5, '61BCA6A186F29B48', '2025-11-19', '2025-11-21', 2000.00, 1),
+(6, 'BFFAC5BEFFEB17B8', '2025-11-17', '2025-11-28', 84000.00, 5);
 
 --
 -- Índices para tablas volcadas
@@ -381,8 +292,7 @@ INSERT INTO `tickets` (`idTicket`, `codigoTicket`, `fechaCompra`, `fechaFuncion`
 -- Indices de la tabla `compradores`
 --
 ALTER TABLE `compradores`
-  ADD PRIMARY KEY (`idComprador`),
-  ADD UNIQUE KEY `dni` (`dni`);
+  ADD PRIMARY KEY (`idComprador`);
 
 --
 -- Indices de la tabla `detalle_lugares`
@@ -432,8 +342,6 @@ ALTER TABLE `salas`
 --
 ALTER TABLE `tickets`
   ADD PRIMARY KEY (`idTicket`),
-  ADD UNIQUE KEY `codigo_ticket` (`codigoTicket`),
-  ADD UNIQUE KEY `codigoTicket` (`codigoTicket`),
   ADD KEY `idComprador` (`idComprador`);
 
 --
@@ -444,49 +352,49 @@ ALTER TABLE `tickets`
 -- AUTO_INCREMENT de la tabla `compradores`
 --
 ALTER TABLE `compradores`
-  MODIFY `idComprador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `idComprador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_lugares`
 --
 ALTER TABLE `detalle_lugares`
-  MODIFY `idDetalleLugar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `idDetalleLugar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_tickets`
 --
 ALTER TABLE `detalle_tickets`
-  MODIFY `idDetalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `idDetalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `lugares`
 --
 ALTER TABLE `lugares`
-  MODIFY `idLugar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `idLugar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `peliculas`
 --
 ALTER TABLE `peliculas`
-  MODIFY `idPelicula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `idPelicula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `proyeccion`
 --
 ALTER TABLE `proyeccion`
-  MODIFY `idProyeccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idProyeccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `salas`
 --
 ALTER TABLE `salas`
-  MODIFY `idSala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idSala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas
@@ -496,34 +404,34 @@ ALTER TABLE `tickets`
 -- Filtros para la tabla `detalle_lugares`
 --
 ALTER TABLE `detalle_lugares`
-  ADD CONSTRAINT `detalle_lugares_ibfk_1` FOREIGN KEY (`idDetalle`) REFERENCES `detalle_tickets` (`idDetalle`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `detalle_lugares_ibfk_2` FOREIGN KEY (`idLugar`) REFERENCES `lugares` (`idLugar`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `detalle_lugares_ibfk_1` FOREIGN KEY (`idDetalle`) REFERENCES `detalle_tickets` (`idDetalle`),
+  ADD CONSTRAINT `detalle_lugares_ibfk_2` FOREIGN KEY (`idLugar`) REFERENCES `lugares` (`idLugar`);
 
 --
 -- Filtros para la tabla `detalle_tickets`
 --
 ALTER TABLE `detalle_tickets`
-  ADD CONSTRAINT `detalle_tickets_ibfk_1` FOREIGN KEY (`idTicket`) REFERENCES `tickets` (`idTicket`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `detalle_tickets_ibfk_2` FOREIGN KEY (`idProyeccion`) REFERENCES `proyeccion` (`idProyeccion`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `detalle_tickets_ibfk_1` FOREIGN KEY (`idTicket`) REFERENCES `tickets` (`idTicket`),
+  ADD CONSTRAINT `detalle_tickets_ibfk_2` FOREIGN KEY (`idProyeccion`) REFERENCES `proyeccion` (`idProyeccion`);
 
 --
 -- Filtros para la tabla `lugares`
 --
 ALTER TABLE `lugares`
-  ADD CONSTRAINT `lugares_ibfk_1` FOREIGN KEY (`idProyeccion`) REFERENCES `proyeccion` (`idProyeccion`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `lugares_ibfk_1` FOREIGN KEY (`idProyeccion`) REFERENCES `proyeccion` (`idProyeccion`);
 
 --
 -- Filtros para la tabla `proyeccion`
 --
 ALTER TABLE `proyeccion`
-  ADD CONSTRAINT `proyeccion_ibfk_1` FOREIGN KEY (`idPelicula`) REFERENCES `peliculas` (`idPelicula`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `proyeccion_ibfk_2` FOREIGN KEY (`idSala`) REFERENCES `salas` (`idSala`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `proyeccion_ibfk_1` FOREIGN KEY (`idPelicula`) REFERENCES `peliculas` (`idPelicula`),
+  ADD CONSTRAINT `proyeccion_ibfk_2` FOREIGN KEY (`idSala`) REFERENCES `salas` (`idSala`);
 
 --
 -- Filtros para la tabla `tickets`
 --
 ALTER TABLE `tickets`
-  ADD CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`idComprador`) REFERENCES `compradores` (`idComprador`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`idComprador`) REFERENCES `compradores` (`idComprador`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

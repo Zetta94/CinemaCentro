@@ -245,11 +245,17 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
         String genero = (String) cbxGenero.getSelectedItem();
         java.util.Date fechaEstreno = dateEstreno.getDate();
 
-        LocalDate fechaLocalEstreno = fechaEstreno.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        if (titulo.isEmpty() || director.isEmpty() || actor.isEmpty() || origen.isEmpty() || genero == null || fechaEstreno == null) {
+        if (titulo.isEmpty() || director.isEmpty() || actor.isEmpty()
+                || origen.isEmpty() || genero == null || fechaEstreno == null) {
+
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos");
             return;
         }
+
+        LocalDate fechaLocalEstreno = fechaEstreno.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
         Pelicula peli = new Pelicula();
         peli.setTitulo(titulo);
         peli.setDirector(director);
@@ -264,14 +270,17 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
         boolean creado = peliculaData.crearPelicula(peli);
 
         if (creado) {
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Pelicula " + peli.getTitulo() + " guardado con éxito.",
-                    "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Pelicula " + peli.getTitulo() + " guardada con éxito.",
+                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
             limpiarCampos();
+
             if (listener != null) {
                 listener.actualizarLista();
             }
-            return;
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al guardar la película.");
         }
 
 

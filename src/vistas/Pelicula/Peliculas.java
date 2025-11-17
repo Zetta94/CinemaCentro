@@ -39,7 +39,7 @@ public class Peliculas extends javax.swing.JPanel {
     }
 
     private void cargarTabla() {
-        
+
         //DefaultTableModel modelo = (DefaultTableModel) jtblePeliculas.getModel();
         modelo.setRowCount(0);
         for (Pelicula p : peliculaData.obtenerTodas()) {
@@ -240,17 +240,30 @@ public class Peliculas extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void abrirYCentrar(JInternalFrame frame) {
-        java.awt.Window window = SwingUtilities.getWindowAncestor(this);
-        if (window instanceof CinemaCentro) {
-            CinemaCentro main = (CinemaCentro) window;
-            JDesktopPane escritorio = main.getEscritorio();
-            escritorio.add(frame);
-            frame.pack();
-            frame.setVisible(true);
-            int x = (escritorio.getWidth() - frame.getWidth()) / 2;
-            int y = (escritorio.getHeight() - frame.getHeight()) / 2;
-            frame.setLocation(x, y);
+        JDesktopPane escritorio = null;
+
+        java.awt.Container parent = this.getParent();
+        while (parent != null) {
+            if (parent instanceof JDesktopPane) {
+                escritorio = (JDesktopPane) parent;
+                break;
+            }
+            parent = parent.getParent();
         }
+
+        if (escritorio == null) {
+            JOptionPane.showMessageDialog(this,
+                    "No se encontró el escritorio para abrir la ventana.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        escritorio.add(frame);
+        frame.setVisible(true);
+        int x = (escritorio.getWidth() - frame.getWidth()) / 2;
+        int y = (escritorio.getHeight() - frame.getHeight()) / 2;
+        frame.setLocation(x, y);
     }
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -289,9 +302,10 @@ public class Peliculas extends javax.swing.JPanel {
             String genero = (String) cbxGenero.getSelectedItem();
             String carteleraSeleccion = (String) cbxCartelera.getSelectedItem();
             Integer enCartelera = null;
-            
-            if (genero.equals("Todas"))
-                genero="";
+
+            if (genero.equals("Todas")) {
+                genero = "";
+            }
 
             if (carteleraSeleccion.equalsIgnoreCase("si")) {
                 enCartelera = 1;
@@ -300,8 +314,8 @@ public class Peliculas extends javax.swing.JPanel {
             }
 
             List<Pelicula> peliculasBuscadas = peliculaData.buscarPeliculas(titulo, genero, enCartelera);
- 
-         cargarResultados(peliculasBuscadas);
+
+            cargarResultados(peliculasBuscadas);
 
             if (peliculasBuscadas.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "No se encontraron películas con esos filtros.");
@@ -311,14 +325,15 @@ public class Peliculas extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Error al buscar películas: " + ex.getMessage());
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
-        private void cargarComboGeneros() {
+    private void cargarComboGeneros() {
         String[] generos = {"Todas", "Acción", "Animación", "Aventura", "Ciencia Ficción",
             "Comedia", "Documental", "Drama", "Fantasía",
             "Terror", "Romance", "Suspenso"
         };
         cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(generos));
     }
-        private void cargarResultados(List<Pelicula>resultados) {
+
+    private void cargarResultados(List<Pelicula> resultados) {
         modelo.setRowCount(0);
         for (Pelicula p : resultados) {
             modelo.addRow(new Object[]{
@@ -332,7 +347,7 @@ public class Peliculas extends javax.swing.JPanel {
                 p.isEnCartelera()
             });
         }
-        }
+    }
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 
         int filaSeleccionada = jtblePeliculas.getSelectedRow();

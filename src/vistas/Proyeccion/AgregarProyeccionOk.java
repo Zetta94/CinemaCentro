@@ -35,6 +35,8 @@ public class AgregarProyeccionOk extends javax.swing.JInternalFrame {
 
     public void setRefreshListener(RefreshListener listener) {
         this.listener = listener;
+        cargarComboPeliculas();
+
     }
 
     SpinnerDateModel modelHoraInicio = new SpinnerDateModel();
@@ -155,6 +157,11 @@ public class AgregarProyeccionOk extends javax.swing.JInternalFrame {
 
         jPanel1.add(cbxSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 210, 170, -1));
 
+        cbxPelicula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxPeliculaActionPerformed(evt);
+            }
+        });
         jPanel1.add(cbxPelicula, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, 170, -1));
 
         cbxIdioma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Español", "Inglés" }));
@@ -362,6 +369,10 @@ public class AgregarProyeccionOk extends javax.swing.JInternalFrame {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void cbxPeliculaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxPeliculaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxPeliculaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
