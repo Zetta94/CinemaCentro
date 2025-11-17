@@ -113,6 +113,7 @@ public class ComprarEntradasOnline extends javax.swing.JInternalFrame {
             }
         });
 
+        btnSiguiente.setBackground(new java.awt.Color(102, 0, 0));
         btnSiguiente.setText("Siguente");
         btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

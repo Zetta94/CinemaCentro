@@ -166,10 +166,12 @@ public class ModificarProyeccion extends javax.swing.JInternalFrame {
         btnGurardar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
+        setForeground(new java.awt.Color(204, 153, 0));
         setMinimumSize(new java.awt.Dimension(676, 536));
         setPreferredSize(new java.awt.Dimension(676, 536));
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setForeground(new java.awt.Color(204, 153, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Agregar Sala.png"))); // NOI18N
@@ -202,6 +204,7 @@ public class ModificarProyeccion extends javax.swing.JInternalFrame {
 
         bgrp3D.add(bSi);
         bSi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        bSi.setForeground(new java.awt.Color(204, 153, 0));
         bSi.setText("Si");
         bSi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -212,6 +215,7 @@ public class ModificarProyeccion extends javax.swing.JInternalFrame {
 
         bgrp3D.add(bNo);
         bNo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        bNo.setForeground(new java.awt.Color(204, 153, 0));
         bNo.setText("No");
         bNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,6 +226,7 @@ public class ModificarProyeccion extends javax.swing.JInternalFrame {
 
         bgrpSub.add(bNo1);
         bNo1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        bNo1.setForeground(new java.awt.Color(204, 153, 0));
         bNo1.setText("No");
         bNo1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -232,6 +237,7 @@ public class ModificarProyeccion extends javax.swing.JInternalFrame {
 
         bgrpSub.add(bSi1);
         bSi1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        bSi1.setForeground(new java.awt.Color(204, 153, 0));
         bSi1.setText("Si");
         bSi1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

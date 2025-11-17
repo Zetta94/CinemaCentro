@@ -114,6 +114,7 @@ public class Confirmar extends javax.swing.JPanel {
 
         txtInfo.setBackground(new java.awt.Color(77, 77, 77));
         txtInfo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtInfo.setForeground(new java.awt.Color(230, 230, 230));
         jScrollPane2.setViewportView(txtInfo);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

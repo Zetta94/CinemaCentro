@@ -197,6 +197,7 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
         panel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 400, -1, -1));
 
         bSi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        bSi.setForeground(new java.awt.Color(204, 153, 0));
         bSi.setText("Si");
         bSi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -206,6 +207,7 @@ public class AgregarPelicula extends javax.swing.JInternalFrame {
         panel1.add(bSi, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 400, -1, -1));
 
         bNo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        bNo.setForeground(new java.awt.Color(204, 153, 0));
         bNo.setText("No");
         bNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

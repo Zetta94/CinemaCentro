@@ -97,10 +97,11 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         pnlMenu.setBackground(new java.awt.Color(30, 41, 59));
         pnlMenu.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        pnlMenu.setForeground(new java.awt.Color(30, 41, 59));
+        pnlMenu.setForeground(null);
 
         btnOnline.setBackground(new java.awt.Color(0, 0, 0));
         btnOnline.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        btnOnline.setForeground(new java.awt.Color(204, 204, 204));
         btnOnline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Online (2).png"))); // NOI18N
         btnOnline.setText("Entradas Online");
         btnOnline.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -115,6 +116,7 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         btnCartelera.setBackground(new java.awt.Color(0, 0, 0));
         btnCartelera.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        btnCartelera.setForeground(new java.awt.Color(204, 204, 204));
         btnCartelera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cartelera.png"))); // NOI18N
         btnCartelera.setText("Cartelera");
         btnCartelera.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -129,6 +131,7 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         btnAdministracion.setBackground(new java.awt.Color(0, 0, 0));
         btnAdministracion.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        btnAdministracion.setForeground(new java.awt.Color(204, 204, 204));
         btnAdministracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Admin.png"))); // NOI18N
         btnAdministracion.setText("Administracion");
         btnAdministracion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -143,6 +146,7 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         btnEntradas1.setBackground(new java.awt.Color(0, 0, 0));
         btnEntradas1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        btnEntradas1.setForeground(new java.awt.Color(204, 204, 204));
         btnEntradas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Tickets (2).png"))); // NOI18N
         btnEntradas1.setText("Entradas");
         btnEntradas1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -158,6 +162,7 @@ public class CinemaCentro extends javax.swing.JFrame {
 
         btnTickets.setBackground(new java.awt.Color(0, 0, 0));
         btnTickets.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        btnTickets.setForeground(new java.awt.Color(204, 204, 204));
         btnTickets.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Ticketsss.png"))); // NOI18N
         btnTickets.setText("Tickets");
         btnTickets.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));

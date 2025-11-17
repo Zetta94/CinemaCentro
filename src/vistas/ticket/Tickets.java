@@ -54,9 +54,11 @@ public class Tickets extends javax.swing.JPanel {
         txtDni = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(33, 33, 33));
+        setForeground(new java.awt.Color(204, 153, 0));
 
         Imprimir.setBackground(new java.awt.Color(7, 10, 20));
         Imprimir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Imprimir.setForeground(new java.awt.Color(204, 204, 204));
         Imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Imprimir.png"))); // NOI18N
         Imprimir.setText("Imprimir");
         Imprimir.addActionListener(new java.awt.event.ActionListener() {
@@ -71,10 +73,12 @@ public class Tickets extends javax.swing.JPanel {
         jScrollPane2.setViewportView(txtInfo);
 
         lblCodigo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblCodigo.setForeground(new java.awt.Color(204, 153, 0));
         lblCodigo.setText("Codigo:");
 
         jButton1.setBackground(new java.awt.Color(7, 10, 20));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(204, 204, 204));
         jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,7 +89,8 @@ public class Tickets extends javax.swing.JPanel {
         lblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/tick.png"))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel1.setText("Dni:");
+        jLabel1.setForeground(new java.awt.Color(204, 153, 0));
+        jLabel1.setText("DNI:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

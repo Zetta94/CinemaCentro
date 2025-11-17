@@ -148,6 +148,7 @@ public class ModificarPelicula extends javax.swing.JInternalFrame {
 
         btnGurardar.setBackground(new java.awt.Color(102, 0, 0));
         btnGurardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnGurardar.setForeground(new java.awt.Color(204, 204, 204));
         btnGurardar.setText("Guardar");
         btnGurardar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnGurardar.addActionListener(new java.awt.event.ActionListener() {

@@ -33,6 +33,7 @@ public class ImprimirTickets extends javax.swing.JInternalFrame {
 
         setClosable(true);
 
+        pnelPrincipal.setBackground(new java.awt.Color(33, 33, 33));
         pnelPrincipal.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

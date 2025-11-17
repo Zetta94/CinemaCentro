@@ -70,19 +70,19 @@ public class ModificarComprador extends javax.swing.JInternalFrame {
         lblCapacidad.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCapacidad.setForeground(new java.awt.Color(255, 204, 0));
         lblCapacidad.setText("Nombre:");
-        panel1.add(lblCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 230, -1, 20));
+        panel1.add(lblCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, -1, 20));
 
         lblNroDeSala.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblNroDeSala.setForeground(new java.awt.Color(255, 204, 0));
         lblNroDeSala.setText("DNI:");
-        panel1.add(lblNroDeSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, -1, 20));
+        panel1.add(lblNroDeSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, -1, 20));
 
         txtDni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDniActionPerformed(evt);
             }
         });
-        panel1.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, 170, 20));
+        panel1.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, 170, 30));
 
         btnSalir.setBackground(new java.awt.Color(102, 102, 102));
         btnSalir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -97,6 +97,7 @@ public class ModificarComprador extends javax.swing.JInternalFrame {
 
         btnGurardar.setBackground(new java.awt.Color(102, 0, 0));
         btnGurardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnGurardar.setForeground(new java.awt.Color(204, 204, 204));
         btnGurardar.setText("Guardar");
         btnGurardar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnGurardar.addActionListener(new java.awt.event.ActionListener() {
@@ -111,7 +112,7 @@ public class ModificarComprador extends javax.swing.JInternalFrame {
                 txtNombreActionPerformed(evt);
             }
         });
-        panel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 170, -1));
+        panel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 170, 30));
 
         lblMedioDePago.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblMedioDePago.setForeground(new java.awt.Color(255, 204, 0));
@@ -123,21 +124,21 @@ public class ModificarComprador extends javax.swing.JInternalFrame {
                 txtPasswordActionPerformed(evt);
             }
         });
-        panel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 340, 170, 20));
+        panel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 170, 30));
 
         lblFecNac.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblFecNac.setForeground(new java.awt.Color(255, 204, 0));
         lblFecNac.setText("Fecha de Nacimiento:");
-        panel1.add(lblFecNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, -1, 20));
+        panel1.add(lblFecNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, -1, 20));
 
         cbxMedioPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        panel1.add(cbxMedioPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 380, 170, -1));
+        panel1.add(cbxMedioPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 372, 170, 30));
 
         lblPassword.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblPassword.setForeground(new java.awt.Color(255, 204, 0));
         lblPassword.setText("Password:");
         panel1.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, -1, 20));
-        panel1.add(jDateFecNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, 170, -1));
+        panel1.add(jDateFecNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, 170, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MOdiCOmpra.png"))); // NOI18N
         panel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, -200, -1, -1));

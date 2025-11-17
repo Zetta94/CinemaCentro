@@ -69,7 +69,7 @@ public class AgregarSalas extends javax.swing.JInternalFrame {
         setBackground(new java.awt.Color(153, 0, 51));
 
         panel1.setBackground(new java.awt.Color(51, 51, 51));
-        panel1.setForeground(new java.awt.Color(38, 64, 107));
+        panel1.setForeground(new java.awt.Color(204, 153, 0));
         panel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtNroSala.addActionListener(new java.awt.event.ActionListener() {
@@ -112,6 +112,7 @@ public class AgregarSalas extends javax.swing.JInternalFrame {
         panel1.add(txtCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 170, -1));
 
         bSi.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        bSi.setForeground(new java.awt.Color(204, 153, 0));
         bSi.setText("Si");
         bSi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,6 +122,7 @@ public class AgregarSalas extends javax.swing.JInternalFrame {
         panel1.add(bSi, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 310, -1, -1));
 
         bNo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        bNo.setForeground(new java.awt.Color(204, 153, 0));
         bNo.setText("No");
         bNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,6 +147,7 @@ public class AgregarSalas extends javax.swing.JInternalFrame {
         panel1.add(lbl3D, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 310, 20, -1));
 
         bSi1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        bSi1.setForeground(new java.awt.Color(204, 153, 0));
         bSi1.setText("Activa");
         bSi1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,6 +157,7 @@ public class AgregarSalas extends javax.swing.JInternalFrame {
         panel1.add(bSi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 370, -1, -1));
 
         bNo1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        bNo1.setForeground(new java.awt.Color(204, 153, 0));
         bNo1.setText("Inactiva");
         bNo1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

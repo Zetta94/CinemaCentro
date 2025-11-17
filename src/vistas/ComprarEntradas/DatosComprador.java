@@ -153,6 +153,7 @@ public class DatosComprador extends javax.swing.JPanel implements EntradasListen
 
         btnBuscar.setBackground(new java.awt.Color(7, 10, 20));
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(204, 204, 204));
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

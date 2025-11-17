@@ -106,8 +106,10 @@ public class SeleccionAsientosOnline extends javax.swing.JPanel implements Entra
 
         pnlInfo.setBackground(new java.awt.Color(51, 51, 51));
 
+        lblSeleccionados.setForeground(new java.awt.Color(153, 0, 0));
         lblSeleccionados.setText("Seleccionados:");
 
+        lblPrecio.setForeground(new java.awt.Color(153, 0, 0));
         lblPrecio.setText("Precio:");
         lblPrecio.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
@@ -170,7 +172,7 @@ public class SeleccionAsientosOnline extends javax.swing.JPanel implements Entra
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(pnlAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, 335, Short.MAX_VALUE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents

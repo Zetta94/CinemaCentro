@@ -7,7 +7,6 @@ package vistas;
 
 import vistas.Proyeccion.ProyeccionesView;
 import vistas.Comprador.CompradorView;
-import vistas.Comprador.Compradores;
 import vistas.Sala.SalasView;
 import persistencia.PeliculaData;
 import vistas.estadisticas.EstadisticasView;
