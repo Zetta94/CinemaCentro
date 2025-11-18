@@ -33,7 +33,9 @@ public class InformeView extends javax.swing.JInternalFrame {
         jTextArea1 = new javax.swing.JTextArea();
 
         jTextArea1.setEditable(false);
+        jTextArea1.setBackground(new java.awt.Color(33, 33, 33));
         jTextArea1.setColumns(20);
+        jTextArea1.setForeground(new java.awt.Color(204, 204, 204));
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
