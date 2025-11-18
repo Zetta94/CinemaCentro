@@ -67,9 +67,10 @@ public class Tickets extends javax.swing.JPanel {
             }
         });
 
+        txtInfo.setEditable(false);
         txtInfo.setBackground(new java.awt.Color(77, 77, 77));
         txtInfo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        txtInfo.setForeground(new java.awt.Color(230, 230, 230));
+        txtInfo.setForeground(new java.awt.Color(0, 0, 0));
         jScrollPane2.setViewportView(txtInfo);
 
         lblCodigo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N

@@ -104,7 +104,7 @@ getContentPane().setBackground(new java.awt.Color(33, 33, 33));
         txtMonto = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(33, 33, 33));
+        setBackground(new java.awt.Color(51, 51, 51));
 
         lblCodigo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblCodigo.setForeground(new java.awt.Color(204, 153, 0));

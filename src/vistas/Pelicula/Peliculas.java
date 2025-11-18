@@ -228,7 +228,7 @@ public class Peliculas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        AgregarPelicula agregarPeli = new AgregarPelicula();
+        AgregarPeliculaOk agregarPeli = new AgregarPeliculaOk();
         agregarPeli.setRefreshListener(new RefreshListener() {
             @Override
             public void actualizarLista() {

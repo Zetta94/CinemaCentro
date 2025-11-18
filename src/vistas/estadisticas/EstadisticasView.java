@@ -126,7 +126,7 @@ public class EstadisticasView extends javax.swing.JPanel {
         TicketDate = new com.toedter.calendar.JDateChooser();
         btnMasVistas = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(33, 33, 33));
+        setBackground(new java.awt.Color(51, 51, 51));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 153, 0));
